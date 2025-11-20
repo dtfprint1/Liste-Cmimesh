@@ -686,7 +686,7 @@
 
     .calc-actions {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 8px;
       margin-bottom: 8px;
@@ -712,6 +712,30 @@
       background: rgba(15, 23, 42, 0.9);
       border: 1px dashed rgba(148, 163, 184, 0.5);
       color: var(--text-muted);
+    }
+
+    #cartButtons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+
+    /* multi-oferta */
+
+    #packageBreakdownContainer {
+      margin-top: 10px;
+    }
+
+    .btn-mini-danger {
+      border-radius: 999px;
+      border: 1px solid rgba(248, 113, 113, 0.8);
+      background: rgba(127, 29, 29, 0.9);
+      color: #fee2e2;
+      font-size: 10px;
+      padding: 2px 8px;
+      cursor: pointer;
     }
 
     /* ================= RESPONSIVE ================= */
@@ -772,6 +796,14 @@
 
       .calc-form {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .calc-actions {
+        flex-direction: column;
+      }
+
+      #cartButtons {
+        justify-content: flex-start;
       }
     }
   </style>
@@ -857,14 +889,14 @@
       </div>
     </section>
 
-    <!-- ================= KALKULATORI (NË KRYE) ================= -->
+    <!-- ================= KALKULATORI ================= -->
     <section class="section" id="kalkulatori">
       <div class="section-header">
         <div>
           <h2 class="section-title">Kalkulator oferte (live)</h2>
           <p class="section-subtitle">
-            Zgjidh produktin, vendos sasinë dhe numrin e stampave. Çmimi për copë llogaritet automatikisht
-            sipas listës së cmimeve, stampave shtesë dhe zbritjeve nga sasia.
+            Zgjidh produktin, vendos sasinë dhe numrin e stampave. Më pas shtoje në ofertë.
+            Mund të kesh disa produkte dhe në fund llogaritet totali.
           </p>
         </div>
         <div class="pill-soft">
@@ -876,8 +908,8 @@
       <article class="calc-card">
         <h3>Kalkulator i shpejtë – bazuar te cmimet dtfprint.al</h3>
         <p>
-          Shërben për llogaritje të shpejtë oferte për klientë normal dhe rishitës. Segmentin e zgjedh sipër
-          (Klient normal / Rishitës). Cmimet janë orientuese; ti vendos përfundimisht ofertën.
+          Përllogarit çmime për një produkt të vetëm ose për oferta me disa produkte.
+          Segmentin (Klient normal / Rishitës) e zgjedh lart në seksionin “Segmenti aktiv”.
         </p>
 
         <div class="calc-form">
@@ -907,8 +939,19 @@
             <div class="calc-result" id="unitPriceDisplay">Çmimi për copë: –</div>
             <div class="calc-result" id="totalPriceDisplay">Totali: –</div>
           </div>
-          <div class="calc-pill" id="breakdownDisplay">
-            Formula: baza e produktit + stampat shtesë + zbritja nga sasia/segmenti.
+
+          <div style="flex:1; min-width:260px;">
+            <div class="calc-pill" id="breakdownDisplay">
+              Formula: baza e produktit + stampat shtesë + zbritja nga sasia/segmenti.
+            </div>
+            <div id="cartButtons">
+              <button class="btn btn-outline btn-xs" onclick="addCurrentToCart();">
+                Shto këtë produkt në ofertë
+              </button>
+              <button class="btn btn-outline btn-xs" onclick="clearCart();">
+                Pastro ofertën
+              </button>
+            </div>
           </div>
         </div>
 
@@ -916,6 +959,28 @@
           * Zbritjet nga sasia aplikohen automatikisht: 1–5 copë (cmim i plotë), 6–10 (−5%), 11–20 (−10%),
           21–50 (−15%), 51+ (−20%). Segmenti Rishitës merr edhe −10% ekstra mbi total.
         </p>
+
+        <!-- Oferta me disa produkte -->
+        <div id="packageBreakdownContainer" style="display:none;">
+          <div class="calc-pill" id="packageTitle">
+            Oferta aktuale (multi-produkte):
+          </div>
+          <div class="prices-table-wrapper" style="max-height:220px;">
+            <table class="prices-table">
+              <thead>
+                <tr>
+                  <th>Produkti</th>
+                  <th>Sasia</th>
+                  <th>Stampat</th>
+                  <th>Çmimi / copë</th>
+                  <th>Totali</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="packageBreakdownBody"></tbody>
+            </table>
+          </div>
+        </div>
       </article>
     </section>
 
@@ -935,7 +1000,6 @@
       </div>
 
       <div class="client-grid">
-        <!-- Klientë normal -->
         <article class="client-card">
           <p class="client-label">Segmenti 1</p>
           <h3 class="client-name">Klientë normal</h3>
@@ -959,7 +1023,6 @@
           </div>
         </article>
 
-        <!-- Rishitës -->
         <article class="client-card reseller">
           <p class="client-label">Segmenti 2</p>
           <h3 class="client-name">Rishitës & Biznese (B2B)</h3>
@@ -1039,16 +1102,15 @@
       </div>
 
       <div class="packages-grid">
-        <!-- Starter Pack Personal -->
         <article class="package-card">
           <p class="package-badge">Për klientë normal</p>
           <h3 class="package-name">Starter Pack Personal</h3>
           <p class="package-items">
-            1 hoodie HOODIE 300 GSM · 1 PREMIUM 180 · 1 totbag NATURELLA 120 me dizajn personal.
+            1 HOODIE 300 GSM · 1 PREMIUM 180 · 1 NATURELLA 120 totebag me dizajn personal.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Përdor kalkulatorin për të llogaritur cmimin për secilin produkt dhe totalin e kombinuar.
+              Llogarit automatikisht gjithë paketën me një klik.
             </p>
             <button class="btn btn-primary btn-xs"
                     onclick="setSegment('normal'); applyPreset('starter-personal'); scrollToCalculator();">
@@ -1057,16 +1119,15 @@
           </div>
         </article>
 
-        <!-- Brand Starter Pack -->
         <article class="package-card">
           <p class="package-badge">Për rishitës & brand-e</p>
           <h3 class="package-name">Brand Starter Pack</h3>
           <p class="package-items">
-            5 HOODIE 300 GSM + 10 PREMIUM 180 + 20 CAMPUS MAT. Paketë për nisjen e një brandi.
+            5 HOODIE 300 GSM + 10 PREMIUM 180 + 20 CAMPUS MAT.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Vendos sasi më të larta në kalkulator, aktivizo segmentin Rishitës dhe shto zbritje sipas marrëveshjes.
+              Llogaritet total-i i gjithë paketës për rishitës, me zbritje ekstra.
             </p>
             <button class="btn btn-outline btn-xs"
                     onclick="setSegment('reseller'); applyPreset('brand-pack'); scrollToCalculator();">
@@ -1075,16 +1136,15 @@
           </div>
         </article>
 
-        <!-- Office Promo Pack -->
         <article class="package-card">
           <p class="package-badge">Për kompani & zyra</p>
           <h3 class="package-name">Office Promo Pack</h3>
           <p class="package-items">
-            20 CAMPOS PLUS (çadra) + promocione të ndryshme për staf & klientë.
+            20 CAMPOS PLUS (çadra) + promo të tjera sipas kërkesës.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Përdor si bazë çmimin e çadrës dhe shto produktet e tjera sipas kërkesës së kompanisë.
+              Merr cmimin total për çadrat dhe shto pastaj produktet e tjera.
             </p>
             <button class="btn btn-outline btn-xs"
                     onclick="setSegment('reseller'); applyPreset('office-pack'); scrollToCalculator();">
@@ -1127,9 +1187,7 @@
                 <th>Çmimi / copë</th>
               </tr>
             </thead>
-            <tbody id="pricesTableBody">
-              <!-- Mbushen nga JavaScript -->
-            </tbody>
+            <tbody id="pricesTableBody"></tbody>
           </table>
         </div>
       </article>
@@ -1139,10 +1197,8 @@
 
   <script>
     // ------------------- KONFIGURIM -------------------
-    // Çmimi fiks për çdo stampë shtesë për copë (mbi stampën e parë)
-    const EXTRA_PRINT_PRICE = 200; // Lekë
+    const EXTRA_PRINT_PRICE = 200; // Lekë / stampë shtesë për copë
 
-    // Zbritje sipas sasisë
     const quantityTiers = [
       { max: 5, label: "1–5 copë", multiplier: 1.0 },
       { max: 10, label: "6–10 copë", multiplier: 0.95 },
@@ -1151,86 +1207,52 @@
       { max: Infinity, label: "51+ copë", multiplier: 0.80 }
     ];
 
-    // Zbritje ekstra për rishitës (10%)
-    const resellerMultiplier = 0.90;
+    const resellerMultiplier = 0.90; // −10% për rishitës
 
-    // Produktet kryesore (cmimi bazë për 1 copë, pa stampë shtesë)
     const products = [
-      {
-        id: "premium180",
-        name: "PREMIUM 180 – Bluze 180 GSM",
-        category: "Tekstil",
-        price: 700
-      },
-      {
-        id: "azzuroPolo",
-        name: "AZZURO POLO – Bluze polo 180 GSM",
-        category: "Tekstil",
-        price: 900
-      },
-      {
-        id: "gator",
-        name: "GATOR – Bluze polo 180 GSM",
-        category: "Tekstil",
-        price: 1000
-      },
-      {
-        id: "spring",
-        name: "SPRING – Sweatshirt 300 GSM",
-        category: "Tekstil",
-        price: 1700
-      },
-      {
-        id: "hoodie300",
-        name: "HOODIE – Hoodie 300 GSM",
-        category: "Tekstil",
-        price: 1900
-      },
-      {
-        id: "campusMat",
-        name: "CAMPUS MAT – Mouse Pad",
-        category: "Promo",
-        price: 450
-      },
-      {
-        id: "lager",
-        name: "LAGER – Thermal Bag",
-        category: "Çanta",
-        price: 350
-      },
-      {
-        id: "naturella",
-        name: "NATURELLA 120 – Totebag 120 gr",
-        category: "Çanta",
-        price: 250
-      },
-      {
-        id: "documento",
-        name: "DOCUMENTO – Çantë dokumentash",
-        category: "Çanta",
-        price: 300
-      },
-      {
-        id: "camposPlus",
-        name: "CAMPOS PLUS – Çadër",
-        category: "Çadra",
-        price: 750
-      },
-      {
-        id: "nimbus",
-        name: "NIMBUS – Çadër",
-        category: "Çadra",
-        price: 800
-      },
-      {
-        id: "rossi",
-        name: "ROSSI – Çadër",
-        category: "Çadra",
-        price: 850
-      }
+      { id: "premium180", name: "PREMIUM 180 – Bluze 180 GSM", category: "Tekstil", price: 700 },
+      { id: "azzuroPolo", name: "AZZURO POLO – Bluze polo 180 GSM", category: "Tekstil", price: 900 },
+      { id: "gator", name: "GATOR – Bluze polo 180 GSM", category: "Tekstil", price: 1000 },
+      { id: "spring", name: "SPRING – Sweatshirt 300 GSM", category: "Tekstil", price: 1700 },
+      { id: "hoodie300", name: "HOODIE – Hoodie 300 GSM", category: "Tekstil", price: 1900 },
+      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 },
+      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta", price: 350 },
+      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta", price: 250 },
+      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta", price: 300 },
+      { id: "camposPlus", name: "CAMPOS PLUS – Çadër", category: "Çadra", price: 750 },
+      { id: "nimbus", name: "NIMBUS – Çadër", category: "Çadra", price: 800 },
+      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850 }
     ];
 
-    let currentSegment = "normal"; // ose "reseller"
+    // Paketa – preset që mbush listën
+    const packagePresets = {
+      "starter-personal": {
+        name: "Starter Pack Personal",
+        items: [
+          { productId: "hoodie300", qty: 1, prints: 2 },
+          { productId: "premium180", qty: 1, prints: 1 },
+          { productId: "naturella", qty: 1, prints: 1 }
+        ]
+      },
+      "brand-pack": {
+        name: "Brand Starter Pack",
+        items: [
+          { productId: "hoodie300", qty: 5, prints: 2 },
+          { productId: "premium180", qty: 10, prints: 1 },
+          { productId: "campusMat", qty: 20, prints: 1 }
+        ]
+      },
+      "office-pack": {
+        name: "Office Promo Pack",
+        items: [
+          { productId: "camposPlus", qty: 20, prints: 1 }
+        ]
+      }
+    };
+
+    let currentSegment = "normal";    // "normal" ose "reseller"
+    let cartItems = [];               // lista e produkteve në ofertë
+    let cartLabel = "Oferta aktuale (multi-produkte)";
 
     // ------------------- FUNKSIONE NDIHMËSE -------------------
 
@@ -1252,6 +1274,43 @@
         if (qty <= tier.max) return tier;
       }
       return quantityTiers[quantityTiers.length - 1];
+    }
+
+    function findProduct(id) {
+      return products.find(p => p.id === id) || null;
+    }
+
+    function computeLine(productId, qty, prints) {
+      const p = findProduct(productId);
+      if (!p) return null;
+
+      const safeQty = Math.max(qty || 1, 1);
+      const safePrints = Math.max(prints || 1, 1);
+
+      const extraPrints = Math.max(safePrints - 1, 0);
+      const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
+      const baseUnitPrice = p.price;
+      const unitWithPrints = baseUnitPrice + extraPerUnit;
+
+      const tier = getQuantityTier(safeQty);
+      const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
+
+      const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
+      const finalUnit = Math.round(unitAfterQty);
+      const total = finalUnit * safeQty;
+
+      return {
+        product: p,
+        qty: safeQty,
+        prints: safePrints,
+        baseUnitPrice,
+        extraPrints,
+        extraPerUnit,
+        unitWithPrints,
+        tier,
+        finalUnit,
+        total
+      };
     }
 
     function populatePricesTable() {
@@ -1292,9 +1351,9 @@
       });
     }
 
-    // ------------------- KALKULATORI -------------------
+    // ------------------- KALKULATORI SINGLE -------------------
 
-    function calculateTotal() {
+    function calculateSingleTotal() {
       const select = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
@@ -1302,49 +1361,44 @@
       const unitDisplay = document.getElementById("unitPriceDisplay");
       const totalDisplay = document.getElementById("totalPriceDisplay");
       const breakdownDisplay = document.getElementById("breakdownDisplay");
+      const container = document.getElementById("packageBreakdownContainer");
+
+      if (container && cartItems.length === 0) {
+        container.style.display = "none";
+      }
 
       if (!select || !quantityInput || !printsInput ||
           !unitDisplay || !totalDisplay || !breakdownDisplay) {
         return;
       }
 
-      const selected = products.find((p) => p.id === select.value);
-      if (!selected) {
+      const line = computeLine(
+        select.value,
+        parseInt(quantityInput.value, 10),
+        parseInt(printsInput.value, 10)
+      );
+
+      if (!line) {
         unitDisplay.textContent = "Çmimi për copë: –";
         totalDisplay.textContent = "Totali: –";
         breakdownDisplay.textContent = "Zgjidh produktin për të llogaritur.";
         return;
       }
 
-      const qty = Math.max(parseInt(quantityInput.value, 10) || 0, 0);
-      const prints = Math.max(parseInt(printsInput.value, 10) || 1, 1);
+      unitDisplay.textContent = "Çmimi për copë: " + formatALL(line.finalUnit);
+      totalDisplay.textContent = "Totali për " + line.qty + " copë: " + formatALL(line.total);
 
-      const extraPrints = Math.max(prints - 1, 0);
-      const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
-      const baseUnitPrice = selected.price;
-      const unitWithPrints = baseUnitPrice + extraPerUnit;
-
-      const tier = getQuantityTier(qty || 1);
-      const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
-
-      const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
-      const finalUnit = Math.round(unitAfterQty);
-      const grandTotal = finalUnit * (qty || 1);
-
-      unitDisplay.textContent = "Çmimi për copë: " + formatALL(finalUnit);
-      totalDisplay.textContent = "Totali për " + (qty || 1) + " copë: " + formatALL(grandTotal);
-
-      const qtyDiscountPercent = Math.round((1 - tier.multiplier) * 100);
+      const qtyDiscountPercent = Math.round((1 - line.tier.multiplier) * 100);
       const resellerDiscountPercent = currentSegment === "reseller"
         ? Math.round((1 - resellerMultiplier) * 100)
         : 0;
 
       const parts = [
-        `Baza: ${formatALL(baseUnitPrice)}`,
-        extraPrints > 0
-          ? `+ ${extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
+        `Baza: ${formatALL(line.baseUnitPrice)}`,
+        line.extraPrints > 0
+          ? `+ ${line.extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
           : "+ pa stampë shtesë",
-        `· Zbritje sasia: ${tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
+        `· Zbritje sasia: ${line.tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
       ];
 
       if (resellerDiscountPercent > 0) {
@@ -1354,7 +1408,133 @@
       breakdownDisplay.textContent = parts.join("  ");
     }
 
-    // ------------------- SEGMENTI & BUTONAT -------------------
+    // ------------------- CART / MULTI-PRODUKT -------------------
+
+    function calculateCartTotal() {
+      const unitDisplay = document.getElementById("unitPriceDisplay");
+      const totalDisplay = document.getElementById("totalPriceDisplay");
+      const breakdownDisplay = document.getElementById("breakdownDisplay");
+      const container = document.getElementById("packageBreakdownContainer");
+      const titleEl = document.getElementById("packageTitle");
+      const body = document.getElementById("packageBreakdownBody");
+
+      if (!unitDisplay || !totalDisplay || !breakdownDisplay ||
+          !container || !titleEl || !body) return;
+
+      if (cartItems.length === 0) {
+        container.style.display = "none";
+        calculateSingleTotal();
+        return;
+      }
+
+      container.style.display = "block";
+      titleEl.textContent = cartLabel;
+
+      body.innerHTML = "";
+      let grandTotal = 0;
+      let totalQty = 0;
+
+      cartItems.forEach((item, index) => {
+        const line = computeLine(item.productId, item.qty, item.prints);
+        if (!line) return;
+
+        grandTotal += line.total;
+        totalQty += line.qty;
+
+        const tr = document.createElement("tr");
+
+        const nameTd = document.createElement("td");
+        nameTd.className = "name-cell";
+        nameTd.textContent = line.product.name;
+        tr.appendChild(nameTd);
+
+        const qtyTd = document.createElement("td");
+        qtyTd.textContent = line.qty;
+        tr.appendChild(qtyTd);
+
+        const printsTd = document.createElement("td");
+        printsTd.textContent = line.prints;
+        tr.appendChild(printsTd);
+
+        const unitTd = document.createElement("td");
+        unitTd.className = "price-cell";
+        unitTd.textContent = formatALL(line.finalUnit);
+        tr.appendChild(unitTd);
+
+        const totalTd = document.createElement("td");
+        totalTd.className = "price-cell";
+        totalTd.textContent = formatALL(line.total);
+        tr.appendChild(totalTd);
+
+        const removeTd = document.createElement("td");
+        const btn = document.createElement("button");
+        btn.className = "btn-mini-danger";
+        btn.textContent = "Hiq";
+        btn.onclick = () => removeCartItem(index);
+        removeTd.appendChild(btn);
+        tr.appendChild(removeTd);
+
+        body.appendChild(tr);
+      });
+
+      const trTotal = document.createElement("tr");
+      const tdLabel = document.createElement("td");
+      tdLabel.colSpan = 4;
+      tdLabel.textContent = "Totali i ofertës";
+      tdLabel.style.fontWeight = "600";
+      tdLabel.style.textAlign = "right";
+      trTotal.appendChild(tdLabel);
+
+      const tdTotal = document.createElement("td");
+      tdTotal.className = "price-cell";
+      tdTotal.style.fontWeight = "600";
+      tdTotal.textContent = formatALL(grandTotal);
+      trTotal.appendChild(tdTotal);
+
+      const tdEmpty = document.createElement("td");
+      trTotal.appendChild(tdEmpty);
+
+      body.appendChild(trTotal);
+
+      const avg = totalQty > 0 ? Math.round(grandTotal / totalQty) : 0;
+
+      unitDisplay.textContent = "Çmimi mesatar për copë (ofertë): " + formatALL(avg);
+      totalDisplay.textContent = "Totali i ofertës për " + totalQty + " copë: " + formatALL(grandTotal);
+      breakdownDisplay.textContent =
+        "Ofertë me disa produkte: çdo rresht ka zbritjen e vet sipas sasisë + rishitës; më pas mblidhen të gjitha.";
+    }
+
+    function addCurrentToCart() {
+      const select = document.getElementById("productSelect");
+      const quantityInput = document.getElementById("quantityInput");
+      const printsInput = document.getElementById("printsInput");
+      if (!select || !quantityInput || !printsInput) return;
+
+      const item = {
+        productId: select.value,
+        qty: Math.max(parseInt(quantityInput.value, 10) || 1, 1),
+        prints: Math.max(parseInt(printsInput.value, 10) || 1, 1)
+      };
+
+      cartItems.push(item);
+      cartLabel = "Oferta aktuale (multi-produkte)";
+      calculateCartTotal();
+    }
+
+    function clearCart() {
+      cartItems = [];
+      cartLabel = "Oferta aktuale (multi-produkte)";
+      const container = document.getElementById("packageBreakdownContainer");
+      if (container) container.style.display = "none";
+      calculateSingleTotal();
+    }
+
+    function removeCartItem(index) {
+      cartItems.splice(index, 1);
+      calculateCartTotal();
+    }
+
+    // ------------------- SEGMENTI & PRESET -------------------
 
     function setSegment(segment) {
       currentSegment = segment === "reseller" ? "reseller" : "normal";
@@ -1377,7 +1557,11 @@
         }
       }
 
-      calculateTotal();
+      if (cartItems.length > 0) {
+        calculateCartTotal();
+      } else {
+        calculateSingleTotal();
+      }
     }
 
     function scrollToCalculator() {
@@ -1394,52 +1578,51 @@
       }
     }
 
-    // Preset-e të thjeshta për butonat
     function presetForSingle() {
+      clearCart();
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
       if (quantityInput) quantityInput.value = 1;
       if (printsInput) printsInput.value = 1;
-      calculateTotal();
+      calculateSingleTotal();
     }
 
     function presetForReseller() {
+      clearCart();
       const quantityInput = document.getElementById("quantityInput");
       if (quantityInput) quantityInput.value = 20;
-      calculateTotal();
+      calculateSingleTotal();
     }
 
     function applyPreset(presetId) {
+      const preset = packagePresets[presetId];
       const productSelect = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
 
-      if (!productSelect || !quantityInput || !printsInput) return;
+      if (!preset || !productSelect || !quantityInput || !printsInput) return;
 
-      if (presetId === "starter-personal") {
-        productSelect.value = "hoodie300";
-        quantityInput.value = 1;
-        printsInput.value = 2; // p.sh. gjoks + shpinë
-      } else if (presetId === "brand-pack") {
-        productSelect.value = "hoodie300";
-        quantityInput.value = 5; // fokus te hoodiet në pakete
-        printsInput.value = 2;
-      } else if (presetId === "office-pack") {
-        productSelect.value = "camposPlus";
-        quantityInput.value = 20;
-        printsInput.value = 1;
-      }
+      cartItems = preset.items.map(i => ({ ...i }));
+      cartLabel = "Paketa e zgjedhur: " + preset.name;
 
-      calculateTotal();
+      // vendos si default rreshtin e parë te inputet
+      const first = preset.items[0];
+      productSelect.value = first.productId;
+      quantityInput.value = first.qty;
+      printsInput.value = first.prints;
+
+      calculateCartTotal();
     }
 
-    // Bëji funksionet të aksesueshme nga HTML (onclick)
+    // bëji funksionet accesible nga HTML
     window.setSegment = setSegment;
     window.scrollToCalculator = scrollToCalculator;
     window.scrollToPrices = scrollToPrices;
     window.presetForSingle = presetForSingle;
     window.presetForReseller = presetForReseller;
     window.applyPreset = applyPreset;
+    window.addCurrentToCart = addCurrentToCart;
+    window.clearCart = clearCart;
 
     // ------------------- INIT -------------------
 
@@ -1447,15 +1630,27 @@
       populatePricesTable();
       populateProductSelect();
       setSegment("normal");
-      calculateTotal();
+      calculateSingleTotal();
 
       const select = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
 
-      if (select) select.addEventListener("change", calculateTotal);
-      if (quantityInput) quantityInput.addEventListener("input", calculateTotal);
-      if (printsInput) printsInput.addEventListener("input", calculateTotal);
+      if (select) {
+        select.addEventListener("change", () => {
+          if (cartItems.length === 0) calculateSingleTotal();
+        });
+      }
+      if (quantityInput) {
+        quantityInput.addEventListener("input", () => {
+          if (cartItems.length === 0) calculateSingleTotal();
+        });
+      }
+      if (printsInput) {
+        printsInput.addEventListener("input", () => {
+          if (cartItems.length === 0) calculateSingleTotal();
+        });
+      }
     });
   </script>
 </body>
