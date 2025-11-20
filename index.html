@@ -916,6 +916,27 @@
           * Zbritjet nga sasia aplikohen automatikisht: 1–5 copë (cmim i plotë), 6–10 (−5%), 11–20 (−10%),
           21–50 (−15%), 51+ (−20%). Segmenti Rishitës merr edhe −10% ekstra mbi total.
         </p>
+
+        <!-- Paketë e zgjedhur – multi-produkte -->
+        <div id="packageBreakdownContainer" style="margin-top:10px; display:none;">
+          <div class="calc-pill" id="packageTitle">
+            Paketa e zgjedhur:
+          </div>
+          <div class="prices-table-wrapper" style="max-height:220px;">
+            <table class="prices-table">
+              <thead>
+                <tr>
+                  <th>Produkti</th>
+                  <th>Sasia</th>
+                  <th>Stampat</th>
+                  <th>Çmimi/copë</th>
+                  <th>Totali</th>
+                </tr>
+              </thead>
+              <tbody id="packageBreakdownBody"></tbody>
+            </table>
+          </div>
+        </div>
       </article>
     </section>
 
@@ -1044,11 +1065,11 @@
           <p class="package-badge">Për klientë normal</p>
           <h3 class="package-name">Starter Pack Personal</h3>
           <p class="package-items">
-            1 hoodie HOODIE 300 GSM · 1 PREMIUM 180 · 1 totbag NATURELLA 120 me dizajn personal.
+            1 HOODIE 300 GSM · 1 PREMIUM 180 · 1 NATURELLA 120 totebag me dizajn personal.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Përdor kalkulatorin për të llogaritur cmimin për secilin produkt dhe totalin e kombinuar.
+              Përdor kalkulatorin për të llogaritur çmimin për secilin produkt dhe totalin e kombinuar.
             </p>
             <button class="btn btn-primary btn-xs"
                     onclick="setSegment('normal'); applyPreset('starter-personal'); scrollToCalculator();">
@@ -1066,7 +1087,7 @@
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Vendos sasi më të larta në kalkulator, aktivizo segmentin Rishitës dhe shto zbritje sipas marrëveshjes.
+              Vendos sasi më të larta në kalkulator; Rishitës merr edhe zbritje ekstra.
             </p>
             <button class="btn btn-outline btn-xs"
                     onclick="setSegment('reseller'); applyPreset('brand-pack'); scrollToCalculator();">
@@ -1080,11 +1101,11 @@
           <p class="package-badge">Për kompani & zyra</p>
           <h3 class="package-name">Office Promo Pack</h3>
           <p class="package-items">
-            20 CAMPOS PLUS (çadra) + promocione të ndryshme për staf & klientë.
+            20 CAMPOS PLUS (çadra) + PROMO të tjera për staf & klientë.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Përdor si bazë çmimin e çadrës dhe shto produktet e tjera sipas kërkesës së kompanisë.
+              Përdor çmimin e çadrës si bazë dhe shto produktet e tjera sipas kërkesës.
             </p>
             <button class="btn btn-outline btn-xs"
                     onclick="setSegment('reseller'); applyPreset('office-pack'); scrollToCalculator();">
@@ -1139,10 +1160,8 @@
 
   <script>
     // ------------------- KONFIGURIM -------------------
-    // Çmimi fiks për çdo stampë shtesë për copë (mbi stampën e parë)
-    const EXTRA_PRINT_PRICE = 200; // Lekë
+    const EXTRA_PRINT_PRICE = 200; // Lekë / stampë shtesë për copë
 
-    // Zbritje sipas sasisë
     const quantityTiers = [
       { max: 5, label: "1–5 copë", multiplier: 1.0 },
       { max: 10, label: "6–10 copë", multiplier: 0.95 },
@@ -1151,86 +1170,51 @@
       { max: Infinity, label: "51+ copë", multiplier: 0.80 }
     ];
 
-    // Zbritje ekstra për rishitës (10%)
-    const resellerMultiplier = 0.90;
+    const resellerMultiplier = 0.90; // −10% për rishitës
 
-    // Produktet kryesore (cmimi bazë për 1 copë, pa stampë shtesë)
     const products = [
-      {
-        id: "premium180",
-        name: "PREMIUM 180 – Bluze 180 GSM",
-        category: "Tekstil",
-        price: 700
-      },
-      {
-        id: "azzuroPolo",
-        name: "AZZURO POLO – Bluze polo 180 GSM",
-        category: "Tekstil",
-        price: 900
-      },
-      {
-        id: "gator",
-        name: "GATOR – Bluze polo 180 GSM",
-        category: "Tekstil",
-        price: 1000
-      },
-      {
-        id: "spring",
-        name: "SPRING – Sweatshirt 300 GSM",
-        category: "Tekstil",
-        price: 1700
-      },
-      {
-        id: "hoodie300",
-        name: "HOODIE – Hoodie 300 GSM",
-        category: "Tekstil",
-        price: 1900
-      },
-      {
-        id: "campusMat",
-        name: "CAMPUS MAT – Mouse Pad",
-        category: "Promo",
-        price: 450
-      },
-      {
-        id: "lager",
-        name: "LAGER – Thermal Bag",
-        category: "Çanta",
-        price: 350
-      },
-      {
-        id: "naturella",
-        name: "NATURELLA 120 – Totebag 120 gr",
-        category: "Çanta",
-        price: 250
-      },
-      {
-        id: "documento",
-        name: "DOCUMENTO – Çantë dokumentash",
-        category: "Çanta",
-        price: 300
-      },
-      {
-        id: "camposPlus",
-        name: "CAMPOS PLUS – Çadër",
-        category: "Çadra",
-        price: 750
-      },
-      {
-        id: "nimbus",
-        name: "NIMBUS – Çadër",
-        category: "Çadra",
-        price: 800
-      },
-      {
-        id: "rossi",
-        name: "ROSSI – Çadër",
-        category: "Çadra",
-        price: 850
-      }
+      { id: "premium180", name: "PREMIUM 180 – Bluze 180 GSM", category: "Tekstil", price: 700 },
+      { id: "azzuroPolo", name: "AZZURO POLO – Bluze polo 180 GSM", category: "Tekstil", price: 900 },
+      { id: "gator", name: "GATOR – Bluze polo 180 GSM", category: "Tekstil", price: 1000 },
+      { id: "spring", name: "SPRING – Sweatshirt 300 GSM", category: "Tekstil", price: 1700 },
+      { id: "hoodie300", name: "HOODIE – Hoodie 300 GSM", category: "Tekstil", price: 1900 },
+      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 },
+      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta", price: 350 },
+      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta", price: 250 },
+      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta", price: 300 },
+      { id: "camposPlus", name: "CAMPOS PLUS – Çadër", category: "Çadra", price: 750 },
+      { id: "nimbus", name: "NIMBUS – Çadër", category: "Çadra", price: 800 },
+      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850 }
     ];
 
-    let currentSegment = "normal"; // ose "reseller"
+    // Paketa – përbërja
+    const packagePresets = {
+      "starter-personal": {
+        name: "Starter Pack Personal",
+        items: [
+          { productId: "hoodie300", qty: 1, prints: 2 },
+          { productId: "premium180", qty: 1, prints: 1 },
+          { productId: "naturella", qty: 1, prints: 1 }
+        ]
+      },
+      "brand-pack": {
+        name: "Brand Starter Pack",
+        items: [
+          { productId: "hoodie300", qty: 5, prints: 2 },
+          { productId: "premium180", qty: 10, prints: 1 },
+          { productId: "campusMat", qty: 20, prints: 1 }
+        ]
+      },
+      "office-pack": {
+        name: "Office Promo Pack",
+        items: [
+          { productId: "camposPlus", qty: 20, prints: 1 }
+        ]
+      }
+    };
+
+    let currentSegment = "normal";    // "normal" ose "reseller"
+    let currentPackage = null;        // paketa aktive (nëse ka)
 
     // ------------------- FUNKSIONE NDIHMËSE -------------------
 
@@ -1252,6 +1236,43 @@
         if (qty <= tier.max) return tier;
       }
       return quantityTiers[quantityTiers.length - 1];
+    }
+
+    function findProduct(id) {
+      return products.find(p => p.id === id) || null;
+    }
+
+    function computeLine(productId, qty, prints) {
+      const p = findProduct(productId);
+      if (!p) return null;
+
+      const safeQty = Math.max(qty || 1, 1);
+      const safePrints = Math.max(prints || 1, 1);
+
+      const extraPrints = Math.max(safePrints - 1, 0);
+      const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
+      const baseUnitPrice = p.price;
+      const unitWithPrints = baseUnitPrice + extraPerUnit;
+
+      const tier = getQuantityTier(safeQty);
+      const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
+
+      const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
+      const finalUnit = Math.round(unitAfterQty);
+      const total = finalUnit * safeQty;
+
+      return {
+        product: p,
+        qty: safeQty,
+        prints: safePrints,
+        baseUnitPrice,
+        extraPrints,
+        extraPerUnit,
+        unitWithPrints,
+        tier,
+        finalUnit,
+        total
+      };
     }
 
     function populatePricesTable() {
@@ -1308,50 +1329,112 @@
         return;
       }
 
-      const selected = products.find((p) => p.id === select.value);
-      if (!selected) {
+      const line = computeLine(
+        select.value,
+        parseInt(quantityInput.value, 10),
+        parseInt(printsInput.value, 10)
+      );
+
+      if (!line) {
         unitDisplay.textContent = "Çmimi për copë: –";
         totalDisplay.textContent = "Totali: –";
         breakdownDisplay.textContent = "Zgjidh produktin për të llogaritur.";
+      } else {
+        unitDisplay.textContent = "Çmimi për copë: " + formatALL(line.finalUnit);
+        totalDisplay.textContent = "Totali për " + line.qty + " copë: " + formatALL(line.total);
+
+        const qtyDiscountPercent = Math.round((1 - line.tier.multiplier) * 100);
+        const resellerDiscountPercent = currentSegment === "reseller"
+          ? Math.round((1 - resellerMultiplier) * 100)
+          : 0;
+
+        const parts = [
+          `Baza: ${formatALL(line.baseUnitPrice)}`,
+          line.extraPrints > 0
+            ? `+ ${line.extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
+            : "+ pa stampë shtesë",
+          `· Zbritje sasia: ${line.tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
+        ];
+
+        if (resellerDiscountPercent > 0) {
+          parts.push(`· Rishitës: −${resellerDiscountPercent}% ekstra`);
+        }
+
+        breakdownDisplay.textContent = parts.join("  ");
+      }
+
+      updatePackageBreakdown();
+    }
+
+    function updatePackageBreakdown() {
+      const container = document.getElementById("packageBreakdownContainer");
+      const titleEl = document.getElementById("packageTitle");
+      const body = document.getElementById("packageBreakdownBody");
+
+      if (!container || !titleEl || !body) return;
+
+      if (!currentPackage || !currentPackage.items || currentPackage.items.length === 0) {
+        container.style.display = "none";
+        body.innerHTML = "";
         return;
       }
 
-      const qty = Math.max(parseInt(quantityInput.value, 10) || 0, 0);
-      const prints = Math.max(parseInt(printsInput.value, 10) || 1, 1);
+      container.style.display = "block";
+      titleEl.textContent = "Paketa e zgjedhur: " + currentPackage.name;
 
-      const extraPrints = Math.max(prints - 1, 0);
-      const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
-      const baseUnitPrice = selected.price;
-      const unitWithPrints = baseUnitPrice + extraPerUnit;
+      body.innerHTML = "";
+      let grandTotal = 0;
 
-      const tier = getQuantityTier(qty || 1);
-      const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
+      currentPackage.items.forEach((item) => {
+        const line = computeLine(item.productId, item.qty, item.prints);
+        if (!line) return;
 
-      const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
-      const finalUnit = Math.round(unitAfterQty);
-      const grandTotal = finalUnit * (qty || 1);
+        grandTotal += line.total;
 
-      unitDisplay.textContent = "Çmimi për copë: " + formatALL(finalUnit);
-      totalDisplay.textContent = "Totali për " + (qty || 1) + " copë: " + formatALL(grandTotal);
+        const tr = document.createElement("tr");
 
-      const qtyDiscountPercent = Math.round((1 - tier.multiplier) * 100);
-      const resellerDiscountPercent = currentSegment === "reseller"
-        ? Math.round((1 - resellerMultiplier) * 100)
-        : 0;
+        const nameTd = document.createElement("td");
+        nameTd.className = "name-cell";
+        nameTd.textContent = line.product.name;
+        tr.appendChild(nameTd);
 
-      const parts = [
-        `Baza: ${formatALL(baseUnitPrice)}`,
-        extraPrints > 0
-          ? `+ ${extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
-          : "+ pa stampë shtesë",
-        `· Zbritje sasia: ${tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
-      ];
+        const qtyTd = document.createElement("td");
+        qtyTd.textContent = line.qty;
+        tr.appendChild(qtyTd);
 
-      if (resellerDiscountPercent > 0) {
-        parts.push(`· Rishitës: −${resellerDiscountPercent}% ekstra`);
-      }
+        const printsTd = document.createElement("td");
+        printsTd.textContent = line.prints;
+        tr.appendChild(printsTd);
 
-      breakdownDisplay.textContent = parts.join("  ");
+        const unitTd = document.createElement("td");
+        unitTd.className = "price-cell";
+        unitTd.textContent = formatALL(line.finalUnit);
+        tr.appendChild(unitTd);
+
+        const totalTd = document.createElement("td");
+        totalTd.className = "price-cell";
+        totalTd.textContent = formatALL(line.total);
+        tr.appendChild(totalTd);
+
+        body.appendChild(tr);
+      });
+
+      // rresht final total
+      const trTotal = document.createElement("tr");
+      const tdLabel = document.createElement("td");
+      tdLabel.colSpan = 4;
+      tdLabel.textContent = "Totali i paketës";
+      tdLabel.style.fontWeight = "600";
+      tdLabel.style.textAlign = "right";
+      trTotal.appendChild(tdLabel);
+
+      const tdTotal = document.createElement("td");
+      tdTotal.className = "price-cell";
+      tdTotal.style.fontWeight = "600";
+      tdTotal.textContent = formatALL(grandTotal);
+      trTotal.appendChild(tdTotal);
+
+      body.appendChild(trTotal);
     }
 
     // ------------------- SEGMENTI & BUTONAT -------------------
@@ -1394,8 +1477,8 @@
       }
     }
 
-    // Preset-e të thjeshta për butonat
     function presetForSingle() {
+      currentPackage = null;
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
       if (quantityInput) quantityInput.value = 1;
@@ -1404,36 +1487,32 @@
     }
 
     function presetForReseller() {
+      currentPackage = null;
       const quantityInput = document.getElementById("quantityInput");
       if (quantityInput) quantityInput.value = 20;
       calculateTotal();
     }
 
     function applyPreset(presetId) {
+      const preset = packagePresets[presetId];
       const productSelect = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
 
-      if (!productSelect || !quantityInput || !printsInput) return;
+      if (!preset || !productSelect || !quantityInput || !printsInput) return;
 
-      if (presetId === "starter-personal") {
-        productSelect.value = "hoodie300";
-        quantityInput.value = 1;
-        printsInput.value = 2; // p.sh. gjoks + shpinë
-      } else if (presetId === "brand-pack") {
-        productSelect.value = "hoodie300";
-        quantityInput.value = 5; // fokus te hoodiet në pakete
-        printsInput.value = 2;
-      } else if (presetId === "office-pack") {
-        productSelect.value = "camposPlus";
-        quantityInput.value = 20;
-        printsInput.value = 1;
-      }
+      currentPackage = preset;
+
+      // Përdor produktin e parë të paketës si fokus në kalkulator
+      const first = preset.items[0];
+      productSelect.value = first.productId;
+      quantityInput.value = first.qty;
+      printsInput.value = first.prints;
 
       calculateTotal();
     }
 
-    // Bëji funksionet të aksesueshme nga HTML (onclick)
+    // Bëji funksionet të aksesueshme nga HTML
     window.setSegment = setSegment;
     window.scrollToCalculator = scrollToCalculator;
     window.scrollToPrices = scrollToPrices;
@@ -1453,9 +1532,24 @@
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
 
-      if (select) select.addEventListener("change", calculateTotal);
-      if (quantityInput) quantityInput.addEventListener("input", calculateTotal);
-      if (printsInput) printsInput.addEventListener("input", calculateTotal);
+      if (select) {
+        select.addEventListener("change", () => {
+          currentPackage = null;
+          calculateTotal();
+        });
+      }
+      if (quantityInput) {
+        quantityInput.addEventListener("input", () => {
+          currentPackage = null;
+          calculateTotal();
+        });
+      }
+      if (printsInput) {
+        printsInput.addEventListener("input", () => {
+          currentPackage = null;
+          calculateTotal();
+        });
+      }
     });
   </script>
 </body>
