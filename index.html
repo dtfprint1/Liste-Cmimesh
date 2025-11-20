@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <title>Produkte të Personalizuara - Klientë & Rishitës</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font (mund ta heqësh nëse s’e do) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-page: #0f172a;
+      --bg-section: #020617;
+      --card-bg: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-strong: #0ea5e9;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2937;
+      --danger: #f97373;
+      --radius-xl: 1.5rem;
+      --radius-lg: 1rem;
+      --radius-full: 999px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.75);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.9);
+      --transition-fast: 0.18s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 52%, #000 100%);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 32px 16px 48px;
+    }
+
+    .page-wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      gap: 32px;
+      padding: 28px 28px 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.05), transparent 55%),
+        rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(15, 118, 110, 0.15), transparent 55%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 4px;
+      border-radius: var(--radius-full);
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      margin-bottom: 14px;
+      backdrop-filter: blur(12px);
+    }
+
+    .badge-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #f9fafb, #22c55e 55%, #15803d 100%);
+      box-shadow:
+        0 0 18px rgba(34, 197, 94, 0.9),
+        0 0 35px rgba(16, 185, 129, 0.55);
+      border: 2px solid rgba(15, 23, 42, 0.85);
+    }
+
+    .badge-text {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--text-muted);
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 4vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #38bdf8, #a855f7, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+    }
+
+    .tag strong {
+      color: var(--accent-strong);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #020617;
+      box-shadow: 0 13px 30px rgba(8, 47, 73, 0.9);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 45px rgba(8, 47, 73, 1);
+    }
+
+    .btn-outline {
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .btn-outline:hover {
+      background: rgba(15, 23, 42, 1);
+      border-color: var(--accent);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+      color: var(--accent);
+    }
+
+    .btn-pill-note {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-pricing-card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(2, 6, 23, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 16px 16px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(14px);
+    }
+
+    .hpc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .hpc-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .hpc-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(22, 163, 74, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.45);
+    }
+
+    .hpc-toggle {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: var(--radius-full);
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .hpc-toggle span {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .hpc-toggle span.active {
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+
+    .hpc-main {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
+      border-radius: 16px;
+      padding: 10px 12px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      margin-bottom: 12px;
+    }
+
+    .hpc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hpc-row strong {
+      color: var(--text-main);
+      font-size: 13px;
+    }
+
+    .hpc-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .hpc-label {
+      opacity: 0.9;
+    }
+
+    .hpc-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .hpc-step {
+      font-size: 10px;
+      padding: 6px 6px;
+      border-radius: 12px;
+      border: 1px dashed rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-muted);
+    }
+
+    .hpc-step span {
+      display: block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .hpc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hpc-footer-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      max-width: 180px;
+    }
+
+    .btn-xs {
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+    }
+
+    /* ================= MAIN SECTIONS ================= */
+
+    .section {
+      margin-top: 32px;
+      padding: 22px 20px 20px;
+      border-radius: 22px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(30, 64, 175, 0.5);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 360px;
+    }
+
+    /* ================= GRID: CLIENT TYPES ================= */
+
+    .client-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .client-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 16px 15px 14px;
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 55%), #020617;
+      border: 1px solid rgba(55, 65, 81, 0.85);
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .client-card.reseller {
+      background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.18), transparent 55%), #020617;
+      border-color: rgba(22, 163, 74, 0.65);
+    }
+
+    .client-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.95);
+      border-color: var(--accent);
+    }
+
+    .client-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .client-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .client-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      max-width: 300px;
+    }
+
+    .client-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .client-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      color: var(--text-muted);
+    }
+
+    .client-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .client-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      max-width: 160px;
+    }
+
+    /* ================= GRID: CATEGORIES ================= */
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .category-card {
+      border-radius: 14px;
+      padding: 10px 10px 9px;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.06), transparent 60%);
+      border: 1px solid rgba(55, 65, 81, 0.85);
+      font-size: 12px;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .category-card:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.95);
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%);
+    }
+
+    .category-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .category-list {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ================= PACKAGES ================= */
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .package-card {
+      border-radius: 16px;
+      padding: 13px 12px 12px;
+      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.18), transparent 60%), #020617;
+      border: 1px solid rgba(79, 70, 229, 0.7);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.95);
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .package-card:nth-child(2) {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%), #020617;
+      border-color: rgba(56, 189, 248, 0.9);
+    }
+
+    .package-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+      border-color: var(--accent-strong);
+    }
+
+    .package-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .package-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .package-items {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .package-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .package-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      max-width: 140px;
+    }
+
+    /* ================= UTILITIES ================= */
+
+    .pill-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.85);
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e, #16a34a);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.85);
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 960px) {
+      body {
+        padding: 20px 14px 28px;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 22px 18px 18px;
+      }
+
+      .hero-pricing-card {
+        max-width: 100%;
+      }
+
+      .section {
+        padding: 18px 16px 16px;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .packages-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .client-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .category-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .packages-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section-subtitle {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="badge">
+          <div class="badge-dot"></div>
+          <span class="badge-text">Segmentim profesional i klienteve</span>
+        </div>
+
+        <h1 class="hero-title">
+          Produkte të personalizuara për
+          <span>klientë normal & rishitës</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Ndarje e qartë midis porosive personale dhe atyre me shumicë, me çmim që ndryshon sipas sasisë,
+          madhësisë dhe numrit të stampave për çdo lloj produkti.
+        </p>
+
+        <div class="hero-tags">
+          <div class="tag"><strong>Klientë normal:</strong> porosi të vogla & dhurata</div>
+          <div class="tag"><strong>Rishitës:</strong> çmime me shumicë & B2B</div>
+          <div class="tag">Veshje · Promo · Aksesorë · Home & Office</div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#klientet" class="btn btn-primary">
+            Shiko strukturën e ndarjes
+          </a>
+          <a href="#paketat" class="btn btn-outline">
+            Paketa të gatshme për biznese
+          </a>
+          <span class="btn-pill-note">
+            Mjafton të përshtasësh emrat e produkteve & çmimet sipas biznesit tënd.
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-pricing-card">
+          <div class="hpc-header">
+            <div>
+              <p class="hpc-title">Model kalkulimi</p>
+            </div>
+            <span class="hpc-pill">Automatik & fleksibël</span>
+          </div>
+
+          <div class="hpc-toggle">
+            <span class="active">Klient normal</span>
+            <span>Rishitës</span>
+          </div>
+
+          <div class="hpc-main">
+            <div class="hpc-row">
+              <span class="hpc-label">Sasia</span>
+              <strong>1 – 5 copë</strong>
+            </div>
+            <div class="hpc-row">
+              <span class="hpc-label">Stampat</span>
+              <strong>Gjoks + shpinë</strong>
+            </div>
+            <div class="hpc-row">
+              <span class="hpc-label">Lloji produktit</span>
+              <strong>Oversized hoodie premium</strong>
+            </div>
+          </div>
+
+          <div class="hpc-steps">
+            <div class="hpc-step">
+              <span>Hapi 1</span>
+              Zgjidh kategorinë (veshje, promo, aksesorë, etj.)
+            </div>
+            <div class="hpc-step">
+              <span>Hapi 2</span>
+              Vendos sasinë, madhësinë dhe numrin e stampave.
+            </div>
+            <div class="hpc-step">
+              <span>Hapi 3</span>
+              Sistemi llogarit çmimin sipas rregullave që vendos ti.
+            </div>
+          </div>
+
+          <div class="hpc-footer">
+            <p class="hpc-footer-note">
+              Ky bllok mund të kthehet në një kalkulator çmimi direkt në faqe / shop.
+            </p>
+            <button class="btn btn-primary btn-xs">
+              + Shto kalkulator
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= KLIENTËT ================= -->
+    <section class="section" id="klientet">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Ndarja kryesore e klientëve</h2>
+          <p class="section-subtitle">
+            Dy seksione të qarta: një për porosi personale dhe një për rishitës / biznese me çmim me shumicë.
+          </p>
+        </div>
+        <div class="pill-soft">
+          <span class="pill-dot"></span>
+          Strukturë ideale për website, katalog ose sistem porosish.
+        </div>
+      </div>
+
+      <div class="client-grid">
+        <!-- Klientë normal -->
+        <article class="client-card">
+          <p class="client-label">Segmenti 1</p>
+          <h3 class="client-name">Klientë normal</h3>
+          <p class="client-desc">
+            Fokusuar te porositë personale, dhuratat, porositë e vogla dhe të mesme për përdorim individual.
+          </p>
+          <div class="client-meta">
+            <span class="client-pill">Sasi tipike: 1–10 copë</span>
+            <span class="client-pill">Çmim bazë + zbritje të vogla</span>
+            <span class="client-pill">Ideal për: dhurata, evente, personalizim individual</span>
+          </div>
+          <div class="client-footer">
+            <a href="#" class="btn btn-primary btn-xs">
+              Hape seksionin &quot;Klientë normal&quot;
+            </a>
+            <p class="client-note">
+              Shfaq çmime me fokus tek 1–5 copë dhe tekst që flet me gjuhë më personale.
+            </p>
+          </div>
+        </article>
+
+        <!-- Rishitës -->
+        <article class="client-card reseller">
+          <p class="client-label">Segmenti 2</p>
+          <h3 class="client-name">Rishitës & Biznese (B2B)</h3>
+          <p class="client-desc">
+            Dyqane, brand-e dhe kompani që porosisin sasi më të mëdha me çmime të personalizuara me shumicë.
+          </p>
+          <div class="client-meta">
+            <span class="client-pill">Sasi tipike: 10+ copë</span>
+            <span class="client-pill">Çmime të diferencuara sipas sasisë</span>
+            <span class="client-pill">Paketa & oferta afatgjata</span>
+          </div>
+          <div class="client-footer">
+            <a href="#" class="btn btn-outline btn-xs">
+              Seksion i veçantë për rishitës
+            </a>
+            <p class="client-note">
+              Mund të jetë i mbrojtur me login ose formë &quot;Kërko ofertë&quot;.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= KATEGORITË ================= -->
+    <section class="section" id="kategorite">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Kategoritë e produkteve</h2>
+          <p class="section-subtitle">
+            Të njëjtat kategori për klientë normal dhe rishitës – ndryshon vetëm çmimi dhe tekstet sipas segmentit.
+          </p>
+        </div>
+      </div>
+
+      <div class="category-grid">
+        <article class="category-card">
+          <h3 class="category-title">Veshje</h3>
+          <p class="category-list">
+            Oversized hoodies, T-shirt, sweatpants, sete 2-pjesëshe, xhaketa, bluza stafi.
+          </p>
+        </article>
+
+        <article class="category-card">
+          <h3 class="category-title">Produkte promocionale</h3>
+          <p class="category-list">
+            Tasa, çadra, çelësa, mousepad, fletore, gota termike, pllaka dekorative.
+          </p>
+        </article>
+
+        <article class="category-card">
+          <h3 class="category-title">Aksesorë</h3>
+          <p class="category-list">
+            Kapele, beanie, tote bag, çanta sportive, qese pambuku, bandana.
+          </p>
+        </article>
+
+        <article class="category-card">
+          <h3 class="category-title">Home & Office</h3>
+          <p class="category-list">
+            Jastekë, batanije, kupa me foto, dekor zyre, mbajtëse lapsash, poster.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= PAKETAT ================= -->
+    <section class="section" id="paketat">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Paketa të gatshme për shitje</h2>
+          <p class="section-subtitle">
+            Paketat i bëjnë rishitësit të marrin vendim më shpejt dhe klientët normal të zgjedhin kombo me vlerë më të lartë.
+          </p>
+        </div>
+      </div>
+
+      <div class="packages-grid">
+        <!-- Starter Pack Personal -->
+        <article class="package-card">
+          <p class="package-badge">Për klientë normal</p>
+          <h3 class="package-name">Starter Pack Personal</h3>
+          <p class="package-items">
+            1 hoodie e personalizuar · 1 T-shirt · 1 tote bag me dizajnin që zgjedh klienti.
+          </p>
+          <div class="package-footer">
+            <p class="package-note">
+              Ideal për dhurata, ditëlindje, surpriza ose fillimin e një mini-brandi personal.
+            </p>
+            <button class="btn btn-primary btn-xs">Shto në listë</button>
+          </div>
+        </article>
+
+        <!-- Brand Starter Pack -->
+        <article class="package-card">
+          <p class="package-badge">Për rishitës & brand-e</p>
+          <h3 class="package-name">Brand Starter Pack</h3>
+          <p class="package-items">
+            5 hoodies + 10 T-shirts + 20 mousepad me logo. Paketë perfekte për lanse brandi ose ribranding.
+          </p>
+          <div class="package-footer">
+            <p class="package-note">
+              Këtij paketi mund t’i shtosh çmim special B2B dhe seksion &quot;Kërko ofertë&quot;.
+            </p>
+            <button class="btn btn-outline btn-xs">Kërko ofertë</button>
+          </div>
+        </article>
+
+        <!-- Office Promo Pack -->
+        <article class="package-card">
+          <p class="package-badge">Për kompani & zyra</p>
+          <h3 class="package-name">Office Promo Pack</h3>
+          <p class="package-items">
+            20 mugs · 20 çadra · 20 çelësa me logo. Set perfekt për stafin ose klientët e biznesit.
+          </p>
+          <div class="package-footer">
+            <p class="package-note">
+              Mund të personalizosh numrin e copëve dhe llojin e produkteve për çdo kompani.
+            </p>
+            <button class="btn btn-outline btn-xs">Personalizo paketën</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
