@@ -2,7 +2,7 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8" />
-  <title>Liste cmimesh & segmentim klientësh - dtfprint</title>
+  <title>Liste cmimesh & kalkulator – dtfprint</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +18,6 @@
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --border-subtle: #1f2937;
-      --danger: #f97373;
       --radius-xl: 1.5rem;
       --radius-lg: 1rem;
       --radius-full: 999px;
@@ -267,11 +266,11 @@
     }
 
     .hpc-main {
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
       border-radius: 16px;
       padding: 10px 12px 10px;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
     }
 
     .hpc-row {
@@ -294,31 +293,6 @@
 
     .hpc-label {
       opacity: 0.9;
-    }
-
-    .hpc-steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .hpc-step {
-      font-size: 10px;
-      padding: 6px 6px;
-      border-radius: 12px;
-      border: 1px dashed rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.85);
-      color: var(--text-muted);
-    }
-
-    .hpc-step span {
-      display: block;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 2px;
     }
 
     .hpc-footer {
@@ -576,39 +550,21 @@
       margin-top: 32px;
     }
 
-    .prices-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 18px;
-      margin-top: 10px;
-    }
-
-    .prices-card,
-    .calc-card {
+    .prices-card {
       border-radius: 18px;
       padding: 14px 14px 12px;
       box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
-    }
-
-    .prices-card {
       background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%), #020617;
       border: 1px solid rgba(55, 65, 81, 0.85);
     }
 
-    .calc-card {
-      background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.15), transparent 55%), #020617;
-      border: 1px solid rgba(79, 70, 229, 0.85);
-    }
-
-    .prices-card h3,
-    .calc-card h3 {
+    .prices-card h3 {
       font-size: 14px;
       margin-bottom: 6px;
       font-weight: 600;
     }
 
-    .prices-card p,
-    .calc-card p {
+    .prices-card p {
       font-size: 11px;
       color: var(--text-muted);
       margin-bottom: 8px;
@@ -668,6 +624,28 @@
 
     .prices-table tr:nth-child(even) td {
       background: rgba(15, 23, 42, 0.65);
+    }
+
+    /* ===== Kalkulator ===== */
+
+    .calc-card {
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
+      background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.15), transparent 55%), #020617;
+      border: 1px solid rgba(79, 70, 229, 0.85);
+    }
+
+    .calc-card h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .calc-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
     }
 
     .calc-form {
@@ -763,10 +741,6 @@
       .packages-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-
-      .prices-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
     }
 
     @media (max-width: 640px) {
@@ -826,18 +800,18 @@
         <div class="hero-tags">
           <div class="tag"><strong>Klientë normal:</strong> porosi të vogla & dhurata</div>
           <div class="tag"><strong>Rishitës:</strong> çmime me shumicë & B2B</div>
-          <div class="tag">Veshje · Promo · Aksesorë · Home & Office</div>
+          <div class="tag">Veshje · Promo · Aksesorë · Çadra</div>
         </div>
 
         <div class="hero-actions">
-          <a href="#cmimet" class="btn btn-primary">
-            Shiko çmimet & kalkulatorin
+          <a href="#kalkulatori" class="btn btn-primary" onclick="scrollToCalculator(); return false;">
+            Hap kalkulatorin
           </a>
-          <a href="#klientet" class="btn btn-outline">
-            Struktura e klientëve
+          <a href="#cmimet" class="btn btn-outline" onclick="scrollToPrices(); return false;">
+            Shiko listën e cmimeve
           </a>
           <span class="btn-pill-note">
-            Këtu mund të mbështetesh për ofertat, komunikimin me rishitësit dhe përllogaritjet e shpejta.
+            Të gjitha përllogaritjet bëhen live sipas sasisë dhe stampave.
           </span>
         </div>
       </div>
@@ -846,56 +820,103 @@
         <div class="hero-pricing-card">
           <div class="hpc-header">
             <div>
-              <p class="hpc-title">Model kalkulimi</p>
+              <p class="hpc-title">Segmenti aktiv</p>
             </div>
-            <span class="hpc-pill">Automatik & fleksibël</span>
+            <span class="hpc-pill">dtfprint – cmime orientuese</span>
           </div>
 
           <div class="hpc-toggle">
-            <span class="active">Klient normal</span>
-            <span>Rishitës</span>
+            <span id="segmentNormalBtn" class="active" onclick="setSegment('normal');">Klient normal</span>
+            <span id="segmentResellerBtn" onclick="setSegment('reseller');">Rishitës</span>
           </div>
 
           <div class="hpc-main">
             <div class="hpc-row">
               <span class="hpc-label">Sasia</span>
-              <strong>1 – 5 copë</strong>
+              <strong>1 – 50+ copë</strong>
             </div>
             <div class="hpc-row">
-              <span class="hpc-label">Stampat</span>
-              <strong>Gjoks + shpinë</strong>
+              <span class="hpc-label">Shtesë për stampë shtesë</span>
+              <strong>200 Lekë / copë</strong>
             </div>
             <div class="hpc-row">
-              <span class="hpc-label">Lloji produktit</span>
-              <strong>Oversized hoodie / promo</strong>
-            </div>
-          </div>
-
-          <div class="hpc-steps">
-            <div class="hpc-step">
-              <span>Hapi 1</span>
-              Zgjidh produktin nga lista e cmimeve.
-            </div>
-            <div class="hpc-step">
-              <span>Hapi 2</span>
-              Vendos sasinë dhe numrin e stampave.
-            </div>
-            <div class="hpc-step">
-              <span>Hapi 3</span>
-              Kalkulatori llogarit vlerën totale automatikisht.
+              <span class="hpc-label">Zbritje automatike</span>
+              <strong>sipas sasisë & segmentit</strong>
             </div>
           </div>
 
           <div class="hpc-footer">
-            <p class="hpc-footer-note">
-              Formula mund të ndryshohet sipas marzhit të fitimit ose ofertave.
+            <p class="hpc-footer-note" id="segmentInfo">
+              Segment: Klient normal – çmim standard për 1–5 copë, zbritje graduale për sasira më të mëdha.
             </p>
-            <button class="btn btn-primary btn-xs" onclick="document.getElementById('cmimet').scrollIntoView({behavior:'smooth'});">
-              + Shko te kalkulatori
+            <button class="btn btn-primary btn-xs" onclick="scrollToCalculator();">
+              Shko te kalkulatori
             </button>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ================= KALKULATORI (NË KRYE) ================= -->
+    <section class="section" id="kalkulatori">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Kalkulator oferte (live)</h2>
+          <p class="section-subtitle">
+            Zgjidh produktin, vendos sasinë dhe numrin e stampave. Çmimi për copë llogaritet automatikisht
+            sipas listës së cmimeve, stampave shtesë dhe zbritjeve nga sasia.
+          </p>
+        </div>
+        <div class="pill-soft">
+          <span class="pill-dot"></span>
+          Shtesa për stampë shtesë: 200 Lekë / copë (fiks, e vendosur nga ti).
+        </div>
+      </div>
+
+      <article class="calc-card">
+        <h3>Kalkulator i shpejtë – bazuar te cmimet dtfprint.al</h3>
+        <p>
+          Shërben për llogaritje të shpejtë oferte për klientë normal dhe rishitës. Segmentin e zgjedh sipër
+          (Klient normal / Rishitës). Cmimet janë orientuese; ti vendos përfundimisht ofertën.
+        </p>
+
+        <div class="calc-form">
+          <div class="calc-field">
+            <label class="calc-label" for="productSelect">Produkti</label>
+            <select id="productSelect" class="calc-select"></select>
+          </div>
+
+          <div class="calc-field">
+            <label class="calc-label" for="quantityInput">Sasia (copë)</label>
+            <input id="quantityInput" type="number" min="1" value="1" class="calc-input" />
+          </div>
+
+          <div class="calc-field">
+            <label class="calc-label" for="printsInput">Nr. stampave për copë</label>
+            <input id="printsInput" type="number" min="1" value="1" class="calc-input" />
+          </div>
+
+          <div class="calc-field">
+            <label class="calc-label">Shtesa për stampë shtesë</label>
+            <input type="text" class="calc-input" value="200 Lekë / stampë shtesë" disabled />
+          </div>
+        </div>
+
+        <div class="calc-actions">
+          <div>
+            <div class="calc-result" id="unitPriceDisplay">Çmimi për copë: –</div>
+            <div class="calc-result" id="totalPriceDisplay">Totali: –</div>
+          </div>
+          <div class="calc-pill" id="breakdownDisplay">
+            Formula: baza e produktit + stampat shtesë + zbritja nga sasia/segmenti.
+          </div>
+        </div>
+
+        <p class="calc-note">
+          * Zbritjet nga sasia aplikohen automatikisht: 1–5 copë (cmim i plotë), 6–10 (−5%), 11–20 (−10%),
+          21–50 (−15%), 51+ (−20%). Segmenti Rishitës merr edhe −10% ekstra mbi total.
+        </p>
+      </article>
     </section>
 
     <!-- ================= KLIENTËT ================= -->
@@ -909,7 +930,7 @@
         </div>
         <div class="pill-soft">
           <span class="pill-dot"></span>
-          Strukturë ideale për website, katalog ose sistem porosish.
+          Përdor kalkulatorin si bazë për ofertat.
         </div>
       </div>
 
@@ -927,11 +948,13 @@
             <span class="client-pill">Ideal për: dhurata, evente, personalizim individual</span>
           </div>
           <div class="client-footer">
-            <a href="#cmimet" class="btn btn-primary btn-xs">
-              Shiko cmimet për 1 copë
+            <a href="#kalkulatori"
+               class="btn btn-primary btn-xs"
+               onclick="setSegment('normal'); presetForSingle(); scrollToCalculator(); return false;">
+              Shiko cmimin për 1 copë
             </a>
             <p class="client-note">
-              Shfaq çmime me fokus tek 1–5 copë dhe komunikim personal.
+              Vendoset automatikisht sasia 1 dhe segmenti Klient normal në kalkulator.
             </p>
           </div>
         </article>
@@ -949,11 +972,13 @@
             <span class="client-pill">Paketa & oferta afatgjata</span>
           </div>
           <div class="client-footer">
-            <a href="#cmimet" class="btn btn-outline btn-xs">
+            <a href="#kalkulatori"
+               class="btn btn-outline btn-xs"
+               onclick="setSegment('reseller'); presetForReseller(); scrollToCalculator(); return false;">
               Bazohu te cmimet & bëj ofertë
             </a>
             <p class="client-note">
-              Mund të aplikosh zbritje shtesë sipas volumit dhe marzhit.
+              Aktivizohet modu Rishitës dhe vendoset automatikisht sasi më e madhe.
             </p>
           </div>
         </article>
@@ -975,28 +1000,28 @@
         <article class="category-card">
           <h3 class="category-title">Veshje</h3>
           <p class="category-list">
-            Hoodies, sweatshirt, T-shirt, polo, veshje pune, felpe me zinxhir.
+            PREMIUM 180, AZZURO POLO, GATOR, SPRING, HOODIE 300 GSM, veshje pune.
           </p>
         </article>
 
         <article class="category-card">
           <h3 class="category-title">Produkte promocionale</h3>
           <p class="category-list">
-            Mouse pad, stilolapsa, blloqe shënimesh, kartë plastike, USB, gota & termus.
+            CAMPUS MAT, stilolapsa, blloqe shënimesh, USB, gota & termus.
           </p>
         </article>
 
         <article class="category-card">
           <h3 class="category-title">Aksesorë & çanta</h3>
           <p class="category-list">
-            Totebag, çanta shpine, çanta dokumentash, thermo bag, backpack.
+            NATURELLA 120, DOCUMENTO, LAGER, çanta shpine, çanta dokumentash.
           </p>
         </article>
 
         <article class="category-card">
           <h3 class="category-title">Çadra & të tjera</h3>
           <p class="category-list">
-            Çadra promocionale, paketa për evente, set-e kancelarie.
+            CAMPOS PLUS, NIMBUS, ROSSI dhe çadra të tjera promocionale.
           </p>
         </article>
       </div>
@@ -1019,13 +1044,16 @@
           <p class="package-badge">Për klientë normal</p>
           <h3 class="package-name">Starter Pack Personal</h3>
           <p class="package-items">
-            1 hoodie e personalizuar · 1 T-shirt · 1 tote bag me dizajnin që zgjedh klienti.
+            1 hoodie HOODIE 300 GSM · 1 PREMIUM 180 · 1 totbag NATURELLA 120 me dizajn personal.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Ideal për dhurata, ditëlindje, surpriza ose fillimin e një mini-brandi personal.
+              Përdor kalkulatorin për të llogaritur cmimin për secilin produkt dhe totalin e kombinuar.
             </p>
-            <button class="btn btn-primary btn-xs">Shto në ofertë</button>
+            <button class="btn btn-primary btn-xs"
+                    onclick="setSegment('normal'); applyPreset('starter-personal'); scrollToCalculator();">
+              Shto në ofertë
+            </button>
           </div>
         </article>
 
@@ -1034,13 +1062,16 @@
           <p class="package-badge">Për rishitës & brand-e</p>
           <h3 class="package-name">Brand Starter Pack</h3>
           <p class="package-items">
-            5 hoodies + 10 T-shirts + 20 mousepad me logo. Paketë perfekte për lanse brandi ose ribranding.
+            5 HOODIE 300 GSM + 10 PREMIUM 180 + 20 CAMPUS MAT. Paketë për nisjen e një brandi.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Këtij paketi mund t’i shtosh çmim special B2B dhe seksion &quot;Kërko ofertë&quot;.
+              Vendos sasi më të larta në kalkulator, aktivizo segmentin Rishitës dhe shto zbritje sipas marrëveshjes.
             </p>
-            <button class="btn btn-outline btn-xs">Kërko ofertë</button>
+            <button class="btn btn-outline btn-xs"
+                    onclick="setSegment('reseller'); applyPreset('brand-pack'); scrollToCalculator();">
+              Kërko ofertë
+            </button>
           </div>
         </article>
 
@@ -1049,111 +1080,81 @@
           <p class="package-badge">Për kompani & zyra</p>
           <h3 class="package-name">Office Promo Pack</h3>
           <p class="package-items">
-            20 mugs · 20 çadra · 20 çelësa/promocionale me logo. Set perfekt për stafin ose klientët e biznesit.
+            20 CAMPOS PLUS (çadra) + promocione të ndryshme për staf & klientë.
           </p>
           <div class="package-footer">
             <p class="package-note">
-              Mund të personalizosh numrin e copëve dhe llojin e produkteve për çdo kompani.
+              Përdor si bazë çmimin e çadrës dhe shto produktet e tjera sipas kërkesës së kompanisë.
             </p>
-            <button class="btn btn-outline btn-xs">Personalizo paketën</button>
+            <button class="btn btn-outline btn-xs"
+                    onclick="setSegment('reseller'); applyPreset('office-pack'); scrollToCalculator();">
+              Personalizo paketën
+            </button>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- ================= LISTA E CMIMEVE & KALKULATORI ================= -->
+    <!-- ================= LISTA E CMIMEVE ================= -->
     <section class="section prices-section" id="cmimet">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Lista e cmimeve & kalkulatori</h2>
+          <h2 class="section-title">Lista bazë e cmimeve (1 copë)</h2>
           <p class="section-subtitle">
-            Çmimet bazë për 1 copë të loguar, të marrë nga lista e produkteve dtfprint.al
-            (PREMIUM 180, HOODIE, CAMPUS MAT, CAMPOS PLUS, etj.).
+            Cmime orientuese për 1 copë, bazuar në listën e cmimeve dtfprint.al.
+            Kalkulatori përdor këto vlera si bazë për përllogaritje.
           </p>
         </div>
         <div class="pill-soft">
           <span class="pill-dot"></span>
-          Ndrysho shifrat në kod kur përditëson PDF-n e cmimeve.
+          Përditëso shifrat në kod sa herë ndryshon PDF-i i cmimeve.
         </div>
       </div>
 
-      <div class="prices-grid">
-        <!-- Lista e cmimeve -->
-        <article class="prices-card">
-          <h3>Lista bazë e cmimeve (për 1 copë)</h3>
-          <p>
-            Këtu ke disa nga produktet kryesore: veshje, çadra, çanta dhe promo. Çmimi është për 1 njësi,
-            bazuar në cmimin për copë nga lista e dtfprint.al (MOQ nuk merret parasysh në kalkulim).
-          </p>
+      <article class="prices-card">
+        <h3>Produktet kryesore</h3>
+        <p>
+          Këto janë disa nga produktet që përdoren më shpesh në oferta. Mund të shtosh ose të ndryshosh cmimet
+          direkt te seksioni <code>products</code> në fund të kësaj faqeje.
+        </p>
 
-          <div class="prices-table-wrapper">
-            <table class="prices-table">
-              <thead>
-                <tr>
-                  <th>Produkti</th>
-                  <th>Kategoria</th>
-                  <th>Çmimi / copë</th>
-                </tr>
-              </thead>
-              <tbody id="pricesTableBody">
-                <!-- Plotësohet nga JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <!-- Kalkulatori -->
-        <article class="calc-card">
-          <h3>Kalkulator i shpejtë i ofertes</h3>
-          <p>
-            Zgjidh produktin, vendos sasinë dhe numrin e stampave për copë.
-            Shtesa për çdo stampë shtesë është llogaritur me një vlerë fikse (mund ta ndryshosh).
-          </p>
-
-          <div class="calc-form">
-            <div class="calc-field">
-              <label class="calc-label" for="productSelect">Produkti</label>
-              <select id="productSelect" class="calc-select"></select>
-            </div>
-
-            <div class="calc-field">
-              <label class="calc-label" for="quantityInput">Sasia (copë)</label>
-              <input id="quantityInput" type="number" min="1" value="1" class="calc-input" />
-            </div>
-
-            <div class="calc-field">
-              <label class="calc-label" for="printsInput">Nr. stampave për copë</label>
-              <input id="printsInput" type="number" min="1" value="1" class="calc-input" />
-            </div>
-
-            <div class="calc-field">
-              <label class="calc-label" for="extraPriceInput">Shtesë për stampë shtesë (Lekë)</label>
-              <input id="extraPriceInput" type="number" min="0" value="200" class="calc-input" />
-            </div>
-          </div>
-
-          <div class="calc-actions">
-            <div>
-              <div class="calc-result" id="unitPriceDisplay">Çmimi për copë: –</div>
-              <div class="calc-result" id="totalPriceDisplay">Totali: –</div>
-            </div>
-            <div class="calc-pill" id="breakdownDisplay">
-              Formula: çmim bazë + shtesë stampash × sasi
-            </div>
-          </div>
-
-          <p class="calc-note">
-            * Ky kalkulim është orientues për ofertë të shpejtë.
-            Për rishitës mund të aplikosh zbritje shtesë (% ose çmim fiks) duke llogaritur mbi total.
-          </p>
-        </article>
-      </div>
+        <div class="prices-table-wrapper">
+          <table class="prices-table">
+            <thead>
+              <tr>
+                <th>Produkti</th>
+                <th>Kategoria</th>
+                <th>Çmimi / copë</th>
+              </tr>
+            </thead>
+            <tbody id="pricesTableBody">
+              <!-- Mbushen nga JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </article>
     </section>
 
   </div>
 
   <script>
-    // Produkte të marra nga lista e cmimeve dtfprint.al (çmimi për 1 copë)
+    // ------------------- KONFIGURIM -------------------
+    // Çmimi fiks për çdo stampë shtesë për copë (mbi stampën e parë)
+    const EXTRA_PRINT_PRICE = 200; // Lekë
+
+    // Zbritje sipas sasisë
+    const quantityTiers = [
+      { max: 5, label: "1–5 copë", multiplier: 1.0 },
+      { max: 10, label: "6–10 copë", multiplier: 0.95 },
+      { max: 20, label: "11–20 copë", multiplier: 0.90 },
+      { max: 50, label: "21–50 copë", multiplier: 0.85 },
+      { max: Infinity, label: "51+ copë", multiplier: 0.80 }
+    ];
+
+    // Zbritje ekstra për rishitës (10%)
+    const resellerMultiplier = 0.90;
+
+    // Produktet kryesore (cmimi bazë për 1 copë, pa stampë shtesë)
     const products = [
       {
         id: "premium180",
@@ -1229,6 +1230,10 @@
       }
     ];
 
+    let currentSegment = "normal"; // ose "reseller"
+
+    // ------------------- FUNKSIONE NDIHMËSE -------------------
+
     function formatALL(value) {
       if (isNaN(value)) return "–";
       try {
@@ -1242,8 +1247,16 @@
       }
     }
 
+    function getQuantityTier(qty) {
+      for (const tier of quantityTiers) {
+        if (qty <= tier.max) return tier;
+      }
+      return quantityTiers[quantityTiers.length - 1];
+    }
+
     function populatePricesTable() {
       const tbody = document.getElementById("pricesTableBody");
+      if (!tbody) return;
       tbody.innerHTML = "";
       products.forEach((p) => {
         const tr = document.createElement("tr");
@@ -1269,6 +1282,7 @@
 
     function populateProductSelect() {
       const select = document.getElementById("productSelect");
+      if (!select) return;
       select.innerHTML = "";
       products.forEach((p) => {
         const opt = document.createElement("option");
@@ -1278,15 +1292,21 @@
       });
     }
 
+    // ------------------- KALKULATORI -------------------
+
     function calculateTotal() {
       const select = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
-      const extraPriceInput = document.getElementById("extraPriceInput");
 
       const unitDisplay = document.getElementById("unitPriceDisplay");
       const totalDisplay = document.getElementById("totalPriceDisplay");
       const breakdownDisplay = document.getElementById("breakdownDisplay");
+
+      if (!select || !quantityInput || !printsInput ||
+          !unitDisplay || !totalDisplay || !breakdownDisplay) {
+        return;
+      }
 
       const selected = products.find((p) => p.id === select.value);
       if (!selected) {
@@ -1298,30 +1318,144 @@
 
       const qty = Math.max(parseInt(quantityInput.value, 10) || 0, 0);
       const prints = Math.max(parseInt(printsInput.value, 10) || 1, 1);
-      const extraPrice = Math.max(parseInt(extraPriceInput.value, 10) || 0, 0);
 
       const extraPrints = Math.max(prints - 1, 0);
-      const extraPerUnit = extraPrints * extraPrice;
-      const unitTotal = selected.price + extraPerUnit;
-      const grandTotal = unitTotal * qty;
+      const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
+      const baseUnitPrice = selected.price;
+      const unitWithPrints = baseUnitPrice + extraPerUnit;
 
-      unitDisplay.textContent = "Çmimi për copë: " + formatALL(unitTotal);
-      totalDisplay.textContent = "Totali për " + qty + " copë: " + formatALL(grandTotal);
+      const tier = getQuantityTier(qty || 1);
+      const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
 
-      breakdownDisplay.textContent =
-        `Baza: ${formatALL(selected.price)} + (${extraPrints} stamp. shtesë × ` +
-        `${formatALL(extraPrice)} /copë) × ${qty} copë`;
+      const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
+      const finalUnit = Math.round(unitAfterQty);
+      const grandTotal = finalUnit * (qty || 1);
+
+      unitDisplay.textContent = "Çmimi për copë: " + formatALL(finalUnit);
+      totalDisplay.textContent = "Totali për " + (qty || 1) + " copë: " + formatALL(grandTotal);
+
+      const qtyDiscountPercent = Math.round((1 - tier.multiplier) * 100);
+      const resellerDiscountPercent = currentSegment === "reseller"
+        ? Math.round((1 - resellerMultiplier) * 100)
+        : 0;
+
+      const parts = [
+        `Baza: ${formatALL(baseUnitPrice)}`,
+        extraPrints > 0
+          ? `+ ${extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
+          : "+ pa stampë shtesë",
+        `· Zbritje sasia: ${tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
+      ];
+
+      if (resellerDiscountPercent > 0) {
+        parts.push(`· Rishitës: −${resellerDiscountPercent}% ekstra`);
+      }
+
+      breakdownDisplay.textContent = parts.join("  ");
     }
+
+    // ------------------- SEGMENTI & BUTONAT -------------------
+
+    function setSegment(segment) {
+      currentSegment = segment === "reseller" ? "reseller" : "normal";
+      const normalBtn = document.getElementById("segmentNormalBtn");
+      const resellerBtn = document.getElementById("segmentResellerBtn");
+      const segmentInfo = document.getElementById("segmentInfo");
+
+      if (normalBtn && resellerBtn) {
+        normalBtn.classList.toggle("active", currentSegment === "normal");
+        resellerBtn.classList.toggle("active", currentSegment === "reseller");
+      }
+
+      if (segmentInfo) {
+        if (currentSegment === "normal") {
+          segmentInfo.textContent =
+            "Segment: Klient normal – cmim standard për 1–5 copë, zbritje graduale për sasira më të mëdha.";
+        } else {
+          segmentInfo.textContent =
+            "Segment: Rishitës – zbritje ekstra −10% mbi cmimin me pakicë + zbritjet nga sasia.";
+        }
+      }
+
+      calculateTotal();
+    }
+
+    function scrollToCalculator() {
+      const el = document.getElementById("kalkulatori");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function scrollToPrices() {
+      const el = document.getElementById("cmimet");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    // Preset-e të thjeshta për butonat
+    function presetForSingle() {
+      const quantityInput = document.getElementById("quantityInput");
+      const printsInput = document.getElementById("printsInput");
+      if (quantityInput) quantityInput.value = 1;
+      if (printsInput) printsInput.value = 1;
+      calculateTotal();
+    }
+
+    function presetForReseller() {
+      const quantityInput = document.getElementById("quantityInput");
+      if (quantityInput) quantityInput.value = 20;
+      calculateTotal();
+    }
+
+    function applyPreset(presetId) {
+      const productSelect = document.getElementById("productSelect");
+      const quantityInput = document.getElementById("quantityInput");
+      const printsInput = document.getElementById("printsInput");
+
+      if (!productSelect || !quantityInput || !printsInput) return;
+
+      if (presetId === "starter-personal") {
+        productSelect.value = "hoodie300";
+        quantityInput.value = 1;
+        printsInput.value = 2; // p.sh. gjoks + shpinë
+      } else if (presetId === "brand-pack") {
+        productSelect.value = "hoodie300";
+        quantityInput.value = 5; // fokus te hoodiet në pakete
+        printsInput.value = 2;
+      } else if (presetId === "office-pack") {
+        productSelect.value = "camposPlus";
+        quantityInput.value = 20;
+        printsInput.value = 1;
+      }
+
+      calculateTotal();
+    }
+
+    // Bëji funksionet të aksesueshme nga HTML (onclick)
+    window.setSegment = setSegment;
+    window.scrollToCalculator = scrollToCalculator;
+    window.scrollToPrices = scrollToPrices;
+    window.presetForSingle = presetForSingle;
+    window.presetForReseller = presetForReseller;
+    window.applyPreset = applyPreset;
+
+    // ------------------- INIT -------------------
 
     document.addEventListener("DOMContentLoaded", () => {
       populatePricesTable();
       populateProductSelect();
+      setSegment("normal");
       calculateTotal();
 
-      document.getElementById("productSelect").addEventListener("change", calculateTotal);
-      document.getElementById("quantityInput").addEventListener("input", calculateTotal);
-      document.getElementById("printsInput").addEventListener("input", calculateTotal);
-      document.getElementById("extraPriceInput").addEventListener("input", calculateTotal);
+      const select = document.getElementById("productSelect");
+      const quantityInput = document.getElementById("quantityInput");
+      const printsInput = document.getElementById("printsInput");
+
+      if (select) select.addEventListener("change", calculateTotal);
+      if (quantityInput) quantityInput.addEventListener("input", calculateTotal);
+      if (printsInput) printsInput.addEventListener("input", calculateTotal);
     });
   </script>
 </body>
