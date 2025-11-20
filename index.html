@@ -2,10 +2,9 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8" />
-  <title>Produkte të Personalizuara - Klientë & Rishitës</title>
+  <title>Liste cmimesh & segmentim klientësh - dtfprint</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Google Font (mund ta heqësh nëse s’e do) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -341,7 +340,7 @@
       border-radius: 999px;
     }
 
-    /* ================= MAIN SECTIONS ================= */
+    /* ================= COMMON SECTIONS ================= */
 
     .section {
       margin-top: 32px;
@@ -372,7 +371,27 @@
       max-width: 360px;
     }
 
-    /* ================= GRID: CLIENT TYPES ================= */
+    .pill-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.85);
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e, #16a34a);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.85);
+    }
+
+    /* ================= KLIENTËT ================= */
 
     .client-grid {
       display: grid;
@@ -451,7 +470,7 @@
       max-width: 160px;
     }
 
-    /* ================= GRID: CATEGORIES ================= */
+    /* ================= KATEGORITË ================= */
 
     .category-grid {
       display: grid;
@@ -486,7 +505,7 @@
       color: var(--text-muted);
     }
 
-    /* ================= PACKAGES ================= */
+    /* ================= PAKETAT ================= */
 
     .packages-grid {
       display: grid;
@@ -551,26 +570,170 @@
       max-width: 140px;
     }
 
-    /* ================= UTILITIES ================= */
+    /* ================= PRICES & CALCULATOR ================= */
 
-    .pill-soft {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
+    .prices-section {
+      margin-top: 32px;
+    }
+
+    .prices-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .prices-card,
+    .calc-card {
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
+    }
+
+    .prices-card {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%), #020617;
       border: 1px solid rgba(55, 65, 81, 0.85);
+    }
+
+    .calc-card {
+      background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.15), transparent 55%), #020617;
+      border: 1px solid rgba(79, 70, 229, 0.85);
+    }
+
+    .prices-card h3,
+    .calc-card h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .prices-card p,
+    .calc-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .prices-table-wrapper {
+      max-height: 260px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .prices-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      min-width: 100%;
+    }
+
+    .prices-table thead {
+      position: sticky;
+      top: 0;
+      background: rgba(15, 23, 42, 0.98);
+      z-index: 1;
+    }
+
+    .prices-table th,
+    .prices-table td {
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.7);
+      white-space: nowrap;
+    }
+
+    .prices-table th {
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 10px;
+    }
+
+    .prices-table td.name-cell {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .prices-table td.category-cell {
+      color: var(--accent);
+    }
+
+    .prices-table td.price-cell {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .prices-table tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    .calc-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .calc-field {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 11px;
+    }
+
+    .calc-label {
       color: var(--text-muted);
     }
 
-    .pill-dot {
-      width: 8px;
-      height: 8px;
+    .calc-input,
+    .calc-select {
+      padding: 6px 8px;
       border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #16a34a);
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.85);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-main);
+      font-size: 11px;
+      outline: none;
+      transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+    }
+
+    .calc-input:focus,
+    .calc-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+
+    .calc-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .calc-result {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent-strong);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .calc-note {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .calc-pill {
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
     }
 
     /* ================= RESPONSIVE ================= */
@@ -600,6 +763,10 @@
       .packages-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
+      .prices-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     @media (max-width: 640px) {
@@ -627,6 +794,10 @@
 
       .section-subtitle {
         max-width: 100%;
+      }
+
+      .calc-form {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
   </style>
@@ -659,14 +830,14 @@
         </div>
 
         <div class="hero-actions">
-          <a href="#klientet" class="btn btn-primary">
-            Shiko strukturën e ndarjes
+          <a href="#cmimet" class="btn btn-primary">
+            Shiko çmimet & kalkulatorin
           </a>
-          <a href="#paketat" class="btn btn-outline">
-            Paketa të gatshme për biznese
+          <a href="#klientet" class="btn btn-outline">
+            Struktura e klientëve
           </a>
           <span class="btn-pill-note">
-            Mjafton të përshtasësh emrat e produkteve & çmimet sipas biznesit tënd.
+            Këtu mund të mbështetesh për ofertat, komunikimin me rishitësit dhe përllogaritjet e shpejta.
           </span>
         </div>
       </div>
@@ -696,31 +867,31 @@
             </div>
             <div class="hpc-row">
               <span class="hpc-label">Lloji produktit</span>
-              <strong>Oversized hoodie premium</strong>
+              <strong>Oversized hoodie / promo</strong>
             </div>
           </div>
 
           <div class="hpc-steps">
             <div class="hpc-step">
               <span>Hapi 1</span>
-              Zgjidh kategorinë (veshje, promo, aksesorë, etj.)
+              Zgjidh produktin nga lista e cmimeve.
             </div>
             <div class="hpc-step">
               <span>Hapi 2</span>
-              Vendos sasinë, madhësinë dhe numrin e stampave.
+              Vendos sasinë dhe numrin e stampave.
             </div>
             <div class="hpc-step">
               <span>Hapi 3</span>
-              Sistemi llogarit çmimin sipas rregullave që vendos ti.
+              Kalkulatori llogarit vlerën totale automatikisht.
             </div>
           </div>
 
           <div class="hpc-footer">
             <p class="hpc-footer-note">
-              Ky bllok mund të kthehet në një kalkulator çmimi direkt në faqe / shop.
+              Formula mund të ndryshohet sipas marzhit të fitimit ose ofertave.
             </p>
-            <button class="btn btn-primary btn-xs">
-              + Shto kalkulator
+            <button class="btn btn-primary btn-xs" onclick="document.getElementById('cmimet').scrollIntoView({behavior:'smooth'});">
+              + Shko te kalkulatori
             </button>
           </div>
         </div>
@@ -756,11 +927,11 @@
             <span class="client-pill">Ideal për: dhurata, evente, personalizim individual</span>
           </div>
           <div class="client-footer">
-            <a href="#" class="btn btn-primary btn-xs">
-              Hape seksionin &quot;Klientë normal&quot;
+            <a href="#cmimet" class="btn btn-primary btn-xs">
+              Shiko cmimet për 1 copë
             </a>
             <p class="client-note">
-              Shfaq çmime me fokus tek 1–5 copë dhe tekst që flet me gjuhë më personale.
+              Shfaq çmime me fokus tek 1–5 copë dhe komunikim personal.
             </p>
           </div>
         </article>
@@ -778,11 +949,11 @@
             <span class="client-pill">Paketa & oferta afatgjata</span>
           </div>
           <div class="client-footer">
-            <a href="#" class="btn btn-outline btn-xs">
-              Seksion i veçantë për rishitës
+            <a href="#cmimet" class="btn btn-outline btn-xs">
+              Bazohu te cmimet & bëj ofertë
             </a>
             <p class="client-note">
-              Mund të jetë i mbrojtur me login ose formë &quot;Kërko ofertë&quot;.
+              Mund të aplikosh zbritje shtesë sipas volumit dhe marzhit.
             </p>
           </div>
         </article>
@@ -804,28 +975,28 @@
         <article class="category-card">
           <h3 class="category-title">Veshje</h3>
           <p class="category-list">
-            Oversized hoodies, T-shirt, sweatpants, sete 2-pjesëshe, xhaketa, bluza stafi.
+            Hoodies, sweatshirt, T-shirt, polo, veshje pune, felpe me zinxhir.
           </p>
         </article>
 
         <article class="category-card">
           <h3 class="category-title">Produkte promocionale</h3>
           <p class="category-list">
-            Tasa, çadra, çelësa, mousepad, fletore, gota termike, pllaka dekorative.
+            Mouse pad, stilolapsa, blloqe shënimesh, kartë plastike, USB, gota & termus.
           </p>
         </article>
 
         <article class="category-card">
-          <h3 class="category-title">Aksesorë</h3>
+          <h3 class="category-title">Aksesorë & çanta</h3>
           <p class="category-list">
-            Kapele, beanie, tote bag, çanta sportive, qese pambuku, bandana.
+            Totebag, çanta shpine, çanta dokumentash, thermo bag, backpack.
           </p>
         </article>
 
         <article class="category-card">
-          <h3 class="category-title">Home & Office</h3>
+          <h3 class="category-title">Çadra & të tjera</h3>
           <p class="category-list">
-            Jastekë, batanije, kupa me foto, dekor zyre, mbajtëse lapsash, poster.
+            Çadra promocionale, paketa për evente, set-e kancelarie.
           </p>
         </article>
       </div>
@@ -854,7 +1025,7 @@
             <p class="package-note">
               Ideal për dhurata, ditëlindje, surpriza ose fillimin e një mini-brandi personal.
             </p>
-            <button class="btn btn-primary btn-xs">Shto në listë</button>
+            <button class="btn btn-primary btn-xs">Shto në ofertë</button>
           </div>
         </article>
 
@@ -878,7 +1049,7 @@
           <p class="package-badge">Për kompani & zyra</p>
           <h3 class="package-name">Office Promo Pack</h3>
           <p class="package-items">
-            20 mugs · 20 çadra · 20 çelësa me logo. Set perfekt për stafin ose klientët e biznesit.
+            20 mugs · 20 çadra · 20 çelësa/promocionale me logo. Set perfekt për stafin ose klientët e biznesit.
           </p>
           <div class="package-footer">
             <p class="package-note">
@@ -890,6 +1061,268 @@
       </div>
     </section>
 
+    <!-- ================= LISTA E CMIMEVE & KALKULATORI ================= -->
+    <section class="section prices-section" id="cmimet">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Lista e cmimeve & kalkulatori</h2>
+          <p class="section-subtitle">
+            Çmimet bazë për 1 copë të loguar, të marrë nga lista e produkteve dtfprint.al
+            (PREMIUM 180, HOODIE, CAMPUS MAT, CAMPOS PLUS, etj.).
+          </p>
+        </div>
+        <div class="pill-soft">
+          <span class="pill-dot"></span>
+          Ndrysho shifrat në kod kur përditëson PDF-n e cmimeve.
+        </div>
+      </div>
+
+      <div class="prices-grid">
+        <!-- Lista e cmimeve -->
+        <article class="prices-card">
+          <h3>Lista bazë e cmimeve (për 1 copë)</h3>
+          <p>
+            Këtu ke disa nga produktet kryesore: veshje, çadra, çanta dhe promo. Çmimi është për 1 njësi,
+            bazuar në cmimin për copë nga lista e dtfprint.al (MOQ nuk merret parasysh në kalkulim).
+          </p>
+
+          <div class="prices-table-wrapper">
+            <table class="prices-table">
+              <thead>
+                <tr>
+                  <th>Produkti</th>
+                  <th>Kategoria</th>
+                  <th>Çmimi / copë</th>
+                </tr>
+              </thead>
+              <tbody id="pricesTableBody">
+                <!-- Plotësohet nga JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- Kalkulatori -->
+        <article class="calc-card">
+          <h3>Kalkulator i shpejtë i ofertes</h3>
+          <p>
+            Zgjidh produktin, vendos sasinë dhe numrin e stampave për copë.
+            Shtesa për çdo stampë shtesë është llogaritur me një vlerë fikse (mund ta ndryshosh).
+          </p>
+
+          <div class="calc-form">
+            <div class="calc-field">
+              <label class="calc-label" for="productSelect">Produkti</label>
+              <select id="productSelect" class="calc-select"></select>
+            </div>
+
+            <div class="calc-field">
+              <label class="calc-label" for="quantityInput">Sasia (copë)</label>
+              <input id="quantityInput" type="number" min="1" value="1" class="calc-input" />
+            </div>
+
+            <div class="calc-field">
+              <label class="calc-label" for="printsInput">Nr. stampave për copë</label>
+              <input id="printsInput" type="number" min="1" value="1" class="calc-input" />
+            </div>
+
+            <div class="calc-field">
+              <label class="calc-label" for="extraPriceInput">Shtesë për stampë shtesë (Lekë)</label>
+              <input id="extraPriceInput" type="number" min="0" value="200" class="calc-input" />
+            </div>
+          </div>
+
+          <div class="calc-actions">
+            <div>
+              <div class="calc-result" id="unitPriceDisplay">Çmimi për copë: –</div>
+              <div class="calc-result" id="totalPriceDisplay">Totali: –</div>
+            </div>
+            <div class="calc-pill" id="breakdownDisplay">
+              Formula: çmim bazë + shtesë stampash × sasi
+            </div>
+          </div>
+
+          <p class="calc-note">
+            * Ky kalkulim është orientues për ofertë të shpejtë.
+            Për rishitës mund të aplikosh zbritje shtesë (% ose çmim fiks) duke llogaritur mbi total.
+          </p>
+        </article>
+      </div>
+    </section>
+
   </div>
+
+  <script>
+    // Produkte të marra nga lista e cmimeve dtfprint.al (çmimi për 1 copë)
+    const products = [
+      {
+        id: "premium180",
+        name: "PREMIUM 180 – Bluze 180 GSM",
+        category: "Tekstil",
+        price: 700
+      },
+      {
+        id: "azzuroPolo",
+        name: "AZZURO POLO – Bluze polo 180 GSM",
+        category: "Tekstil",
+        price: 900
+      },
+      {
+        id: "gator",
+        name: "GATOR – Bluze polo 180 GSM",
+        category: "Tekstil",
+        price: 1000
+      },
+      {
+        id: "spring",
+        name: "SPRING – Sweatshirt 300 GSM",
+        category: "Tekstil",
+        price: 1700
+      },
+      {
+        id: "hoodie300",
+        name: "HOODIE – Hoodie 300 GSM",
+        category: "Tekstil",
+        price: 1900
+      },
+      {
+        id: "campusMat",
+        name: "CAMPUS MAT – Mouse Pad",
+        category: "Promo",
+        price: 450
+      },
+      {
+        id: "lager",
+        name: "LAGER – Thermal Bag",
+        category: "Çanta",
+        price: 350
+      },
+      {
+        id: "naturella",
+        name: "NATURELLA 120 – Totebag 120 gr",
+        category: "Çanta",
+        price: 250
+      },
+      {
+        id: "documento",
+        name: "DOCUMENTO – Çantë dokumentash",
+        category: "Çanta",
+        price: 300
+      },
+      {
+        id: "camposPlus",
+        name: "CAMPOS PLUS – Çadër",
+        category: "Çadra",
+        price: 750
+      },
+      {
+        id: "nimbus",
+        name: "NIMBUS – Çadër",
+        category: "Çadra",
+        price: 800
+      },
+      {
+        id: "rossi",
+        name: "ROSSI – Çadër",
+        category: "Çadra",
+        price: 850
+      }
+    ];
+
+    function formatALL(value) {
+      if (isNaN(value)) return "–";
+      try {
+        return value.toLocaleString("sq-AL", {
+          style: "currency",
+          currency: "ALL",
+          maximumFractionDigits: 0
+        });
+      } catch (e) {
+        return value.toLocaleString("sq-AL") + " Lekë";
+      }
+    }
+
+    function populatePricesTable() {
+      const tbody = document.getElementById("pricesTableBody");
+      tbody.innerHTML = "";
+      products.forEach((p) => {
+        const tr = document.createElement("tr");
+
+        const nameTd = document.createElement("td");
+        nameTd.className = "name-cell";
+        nameTd.textContent = p.name;
+        tr.appendChild(nameTd);
+
+        const catTd = document.createElement("td");
+        catTd.className = "category-cell";
+        catTd.textContent = p.category;
+        tr.appendChild(catTd);
+
+        const priceTd = document.createElement("td");
+        priceTd.className = "price-cell";
+        priceTd.textContent = formatALL(p.price);
+        tr.appendChild(priceTd);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function populateProductSelect() {
+      const select = document.getElementById("productSelect");
+      select.innerHTML = "";
+      products.forEach((p) => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.textContent = `${p.name} – ${formatALL(p.price)}`;
+        select.appendChild(opt);
+      });
+    }
+
+    function calculateTotal() {
+      const select = document.getElementById("productSelect");
+      const quantityInput = document.getElementById("quantityInput");
+      const printsInput = document.getElementById("printsInput");
+      const extraPriceInput = document.getElementById("extraPriceInput");
+
+      const unitDisplay = document.getElementById("unitPriceDisplay");
+      const totalDisplay = document.getElementById("totalPriceDisplay");
+      const breakdownDisplay = document.getElementById("breakdownDisplay");
+
+      const selected = products.find((p) => p.id === select.value);
+      if (!selected) {
+        unitDisplay.textContent = "Çmimi për copë: –";
+        totalDisplay.textContent = "Totali: –";
+        breakdownDisplay.textContent = "Zgjidh produktin për të llogaritur.";
+        return;
+      }
+
+      const qty = Math.max(parseInt(quantityInput.value, 10) || 0, 0);
+      const prints = Math.max(parseInt(printsInput.value, 10) || 1, 1);
+      const extraPrice = Math.max(parseInt(extraPriceInput.value, 10) || 0, 0);
+
+      const extraPrints = Math.max(prints - 1, 0);
+      const extraPerUnit = extraPrints * extraPrice;
+      const unitTotal = selected.price + extraPerUnit;
+      const grandTotal = unitTotal * qty;
+
+      unitDisplay.textContent = "Çmimi për copë: " + formatALL(unitTotal);
+      totalDisplay.textContent = "Totali për " + qty + " copë: " + formatALL(grandTotal);
+
+      breakdownDisplay.textContent =
+        `Baza: ${formatALL(selected.price)} + (${extraPrints} stamp. shtesë × ` +
+        `${formatALL(extraPrice)} /copë) × ${qty} copë`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      populatePricesTable();
+      populateProductSelect();
+      calculateTotal();
+
+      document.getElementById("productSelect").addEventListener("change", calculateTotal);
+      document.getElementById("quantityInput").addEventListener("input", calculateTotal);
+      document.getElementById("printsInput").addEventListener("input", calculateTotal);
+      document.getElementById("extraPriceInput").addEventListener("input", calculateTotal);
+    });
+  </script>
 </body>
 </html>
