@@ -1,1657 +1,444 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sq">
 <head>
-  <meta charset="UTF-8" />
-  <title>Liste cmimesh & kalkulator – dtfprint</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-page: #0f172a;
-      --bg-section: #020617;
-      --card-bg: #020617;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.12);
-      --accent-strong: #0ea5e9;
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --border-subtle: #1f2937;
-      --radius-xl: 1.5rem;
-      --radius-lg: 1rem;
-      --radius-full: 999px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.75);
-      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.9);
-      --transition-fast: 0.18s ease-out;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #0f172a 0, #020617 52%, #000 100%);
-      color: var(--text-main);
-      line-height: 1.5;
-      padding: 32px 16px 48px;
-    }
-
-    .page-wrapper {
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
-      gap: 32px;
-      padding: 28px 28px 24px;
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.05), transparent 55%),
-        rgba(15, 23, 42, 0.9);
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(15, 118, 110, 0.15), transparent 55%);
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 2;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px 4px 4px;
-      border-radius: var(--radius-full);
-      background: rgba(15, 23, 42, 0.78);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      margin-bottom: 14px;
-      backdrop-filter: blur(12px);
-    }
-
-    .badge-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #f9fafb, #22c55e 55%, #15803d 100%);
-      box-shadow:
-        0 0 18px rgba(34, 197, 94, 0.9),
-        0 0 35px rgba(16, 185, 129, 0.55);
-      border: 2px solid rgba(15, 23, 42, 0.85);
-    }
-
-    .badge-text {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-      color: var(--text-muted);
-    }
-
-    .hero-title {
-      font-size: clamp(26px, 4vw, 34px);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-
-    .hero-title span {
-      background: linear-gradient(120deg, #38bdf8, #a855f7, #22c55e);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 500px;
-      margin-bottom: 20px;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .tag {
-      font-size: 11px;
-      padding: 5px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      color: var(--text-muted);
-    }
-
-    .tag strong {
-      color: var(--accent-strong);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 9px 16px;
-      border-radius: var(--radius-full);
-      font-size: 13px;
-      font-weight: 500;
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #020617;
-      box-shadow: 0 13px 30px rgba(8, 47, 73, 0.9);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 45px rgba(8, 47, 73, 1);
-    }
-
-    .btn-outline {
-      background: rgba(15, 23, 42, 0.85);
-      color: var(--text-main);
-      border-color: rgba(148, 163, 184, 0.5);
-    }
-
-    .btn-outline:hover {
-      background: rgba(15, 23, 42, 1);
-      border-color: var(--accent);
-      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9);
-      transform: translateY(-1px);
-      color: var(--accent);
-    }
-
-    .btn-pill-note {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-pricing-card {
-      width: 100%;
-      max-width: 360px;
-      background: rgba(2, 6, 23, 0.95);
-      border-radius: var(--radius-xl);
-      padding: 16px 16px 14px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: var(--shadow-card);
-      backdrop-filter: blur(14px);
-    }
-
-    .hpc-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .hpc-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-    }
-
-    .hpc-pill {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(22, 163, 74, 0.12);
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.45);
-    }
-
-    .hpc-toggle {
-      display: inline-flex;
-      padding: 3px;
-      border-radius: var(--radius-full);
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      margin-bottom: 10px;
-    }
-
-    .hpc-toggle span {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast);
-    }
-
-    .hpc-toggle span.active {
-      background: var(--accent-soft);
-      color: var(--accent-strong);
-    }
-
-    .hpc-main {
-      border-radius: 16px;
-      padding: 10px 12px 10px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      margin-bottom: 10px;
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
-    }
-
-    .hpc-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 4px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .hpc-row strong {
-      color: var(--text-main);
-      font-size: 13px;
-    }
-
-    .hpc-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .hpc-label {
-      opacity: 0.9;
-    }
-
-    .hpc-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .hpc-footer-note {
-      font-size: 10px;
-      color: var(--text-muted);
-      max-width: 180px;
-    }
-
-    .btn-xs {
-      padding: 6px 10px;
-      font-size: 11px;
-      border-radius: 999px;
-    }
-
-    /* ================= COMMON SECTIONS ================= */
-
-    .section {
-      margin-top: 32px;
-      padding: 22px 20px 20px;
-      border-radius: 22px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(30, 64, 175, 0.5);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .section-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-      max-width: 360px;
-    }
-
-    .pill-soft {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      color: var(--text-muted);
-    }
-
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #16a34a);
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.85);
-    }
-
-    /* ================= KLIENTËT ================= */
-
-    .client-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .client-card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      padding: 16px 15px 14px;
-      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 55%), #020617;
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      overflow: hidden;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
-    }
-
-    .client-card.reseller {
-      background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.18), transparent 55%), #020617;
-      border-color: rgba(22, 163, 74, 0.65);
-    }
-
-    .client-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.95);
-      border-color: var(--accent);
-    }
-
-    .client-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 3px;
-    }
-
-    .client-name {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .client-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      max-width: 300px;
-    }
-
-    .client-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .client-pill {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(55, 65, 81, 0.8);
-      color: var(--text-muted);
-    }
-
-    .client-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .client-note {
-      font-size: 10px;
-      color: var(--text-muted);
-      max-width: 160px;
-    }
-
-    /* ================= KATEGORITË ================= */
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .category-card {
-      border-radius: 14px;
-      padding: 10px 10px 9px;
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.06), transparent 60%);
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      font-size: 12px;
-      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-    }
-
-    .category-card:hover {
-      transform: translateY(-1px);
-      border-color: var(--accent);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.95);
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%);
-    }
-
-    .category-title {
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .category-list {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* ================= PAKETAT ================= */
-
-    .packages-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .package-card {
-      border-radius: 16px;
-      padding: 13px 12px 12px;
-      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.18), transparent 60%), #020617;
-      border: 1px solid rgba(79, 70, 229, 0.7);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.95);
-      font-size: 12px;
-      position: relative;
-      overflow: hidden;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-    }
-
-    .package-card:nth-child(2) {
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%), #020617;
-      border-color: rgba(56, 189, 248, 0.9);
-    }
-
-    .package-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
-      border-color: var(--accent-strong);
-    }
-
-    .package-badge {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .package-name {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .package-items {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .package-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .package-note {
-      font-size: 10px;
-      color: var(--text-muted);
-      max-width: 140px;
-    }
-
-    /* ================= PRICES & CALCULATOR ================= */
-
-    .prices-section {
-      margin-top: 32px;
-    }
-
-    .prices-card {
-      border-radius: 18px;
-      padding: 14px 14px 12px;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%), #020617;
-      border: 1px solid rgba(55, 65, 81, 0.85);
-    }
-
-    .prices-card h3 {
-      font-size: 14px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .prices-card p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .prices-table-wrapper {
-      max-height: 260px;
-      overflow: auto;
-      border-radius: 12px;
-      border: 1px solid rgba(31, 41, 55, 0.9);
-      background: rgba(15, 23, 42, 0.85);
-    }
-
-    .prices-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-      min-width: 100%;
-    }
-
-    .prices-table thead {
-      position: sticky;
-      top: 0;
-      background: rgba(15, 23, 42, 0.98);
-      z-index: 1;
-    }
-
-    .prices-table th,
-    .prices-table td {
-      padding: 6px 8px;
-      text-align: left;
-      border-bottom: 1px solid rgba(31, 41, 55, 0.7);
-      white-space: nowrap;
-    }
-
-    .prices-table th {
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 10px;
-    }
-
-    .prices-table td.name-cell {
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    .prices-table td.category-cell {
-      color: var(--accent);
-    }
-
-    .prices-table td.price-cell {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .prices-table tr:nth-child(even) td {
-      background: rgba(15, 23, 42, 0.65);
-    }
-
-    /* ===== Kalkulator ===== */
-
-    .calc-card {
-      border-radius: 18px;
-      padding: 14px 14px 12px;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
-      background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.15), transparent 55%), #020617;
-      border: 1px solid rgba(79, 70, 229, 0.85);
-    }
-
-    .calc-card h3 {
-      font-size: 14px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .calc-card p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .calc-form {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .calc-field {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      font-size: 11px;
-    }
-
-    .calc-label {
-      color: var(--text-muted);
-    }
-
-    .calc-input,
-    .calc-select {
-      padding: 6px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: rgba(15, 23, 42, 0.95);
-      color: var(--text-main);
-      font-size: 11px;
-      outline: none;
-      transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
-    }
-
-    .calc-input:focus,
-    .calc-select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
-    }
-
-    .calc-actions {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-
-    .calc-result {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent-strong);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .calc-note {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .calc-pill {
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      color: var(--text-muted);
-    }
-
-    #cartButtons {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      margin-top: 6px;
-    }
-
-    /* multi-oferta */
-
-    #packageBreakdownContainer {
-      margin-top: 10px;
-    }
-
-    .btn-mini-danger {
-      border-radius: 999px;
-      border: 1px solid rgba(248, 113, 113, 0.8);
-      background: rgba(127, 29, 29, 0.9);
-      color: #fee2e2;
-      font-size: 10px;
-      padding: 2px 8px;
-      cursor: pointer;
-    }
-
-    /* ================= RESPONSIVE ================= */
-
-    @media (max-width: 960px) {
-      body {
-        padding: 20px 14px 28px;
-      }
-
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 22px 18px 18px;
-      }
-
-      .hero-pricing-card {
-        max-width: 100%;
-      }
-
-      .section {
-        padding: 18px 16px 16px;
-      }
-
-      .category-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .packages-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .client-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .category-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .packages-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .section-subtitle {
-        max-width: 100%;
-      }
-
-      .calc-form {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .calc-actions {
-        flex-direction: column;
-      }
-
-      #cartButtons {
-        justify-content: flex-start;
-      }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>dtfprint — Kalkulator & Shporta</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#040616; --card:rgba(255,255,255,0.03);
+    --muted:#9aa6b3; --accent:#38bdf8; --accent2:#8b5cf6;
+    --glass: rgba(255,255,255,0.03);
+    --radius-xl:20px; --radius-md:12px; --radius-sm:8px;
+    --shadow-lg: 0 18px 45px rgba(2,6,23,0.7);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#e9fbff;background:
+    radial-gradient(800px 360px at 8% 8%, rgba(56,189,248,0.04), transparent 12%),
+    linear-gradient(180deg,#02051a 0%, #030618 45%);padding:36px;}
+  .container{max-width:1180px;margin:0 auto}
+
+  /* HERO */
+  .hero{
+    display:grid;grid-template-columns:1fr 420px;gap:26px;padding:28px;border-radius:22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.02);
+    box-shadow: var(--shadow-lg); position:relative; overflow:hidden;
+  }
+  .hero::after{
+    content:""; position:absolute; right:24px; bottom:0; width:520px; height:300px;
+    background-image: url('/mnt/data/d3cca1db-4407-4c88-94e2-3ab1098923d7.png');
+    background-size: cover; background-position: center; opacity:0.08; filter:grayscale(30%) blur(1px);
+    pointer-events:none;
+  }
+  h1{font-size:34px;margin:0 0 8px;line-height:1.02}
+  .accent{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;color:transparent}
+  .muted{color:var(--muted); font-size:14px}
+
+  .hero-actions{margin-top:18px;display:flex;gap:12px}
+  .btn{padding:10px 14px;border-radius:999px;font-weight:700;border:1px solid transparent;cursor:pointer}
+  .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#031428}
+  .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#e9fbff}
+
+  .hero-right{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.02)}
+  .seg-row{display:flex;gap:8px;margin-bottom:8px}
+
+  /* SECTION - calculator */
+  .section{margin-top:26px}
+  .card{background:var(--card);border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 30px rgba(2,6,23,0.6)}
+  .calc-grid{display:grid;grid-template-columns:1fr 380px;gap:18px}
+  .form-row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+  .label{width:160px;color:var(--muted);font-size:13px}
+  select,input[type=number],input[type=text]{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+  .calc-result{font-weight:700;color:var(--accent);margin-bottom:6px}
+  .note{font-size:12px;color:var(--muted)}
+
+  /* packages */
+  .packages{display:flex;gap:12px;margin-top:12px}
+  .pkg{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(100,116,239,0.03), rgba(0,0,0,0.02))}
+  .pkg h4{margin:0 0 6px}
+
+  /* small table */
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.02);font-size:13px}
+  th{color:var(--muted);text-transform:uppercase;font-size:12px}
+  .price{white-space:nowrap;text-align:right}
+
+  /* floating cart button */
+  .cart-btn{
+    position:fixed; right:22px; bottom:22px; z-index:2000;
+    width:64px;height:64px;border-radius:999px;background:linear-gradient(180deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;color:#041426;font-weight:800;box-shadow:0 14px 36px rgba(8,45,72,0.6);cursor:pointer;border:0;
+  }
+  .cart-badge{position:absolute; top:-6px; right:-6px; background:#ff3b3b;color:white;padding:2px 6px;border-radius:999px;font-size:12px;box-shadow:0 6px 16px rgba(0,0,0,0.5)}
+
+  /* cart drawer */
+  .drawer{
+    position:fixed; right:0; top:0; height:100vh; width:420px; transform:translateX(110%); transition:transform .28s cubic-bezier(.2,.9,.3,1);
+    z-index:2500; box-shadow: -30px 0 60px rgba(2,6,23,0.6); padding:18px; background:linear-gradient(180deg, rgba(2,6,23,0.97), rgba(3,6,18,0.98));
+    border-left:1px solid rgba(255,255,255,0.02);
+  }
+  .drawer.open{transform:translateX(0)}
+  .drawer h3{margin-top:4px}
+  .drawer .mini-btn{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);cursor:pointer}
+
+  .cart-list{max-height:60vh; overflow:auto; margin-top:12px}
+  .cart-item{display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);margin-bottom:8px}
+  .cart-item .info{flex:1}
+  .cart-item .q{display:flex;gap:6px;align-items:center}
+  .small-muted{color:var(--muted);font-size:13px}
+
+  .drawer-footer{position:absolute; left:0; bottom:0; width:100%; padding:18px; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03)); border-top:1px solid rgba(255,255,255,0.02)}
+  .drawer-total{font-weight:800;font-size:18px;color:var(--accent); margin-bottom:8px}
+
+  /* responsive */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr}
+    .calc-grid{grid-template-columns:1fr}
+    .drawer{width:100%}
+  }
+</style>
 </head>
 <body>
-  <div class="page-wrapper">
+  <div class="container">
 
-    <!-- ================= HERO ================= -->
-    <section class="hero">
-      <div class="hero-left">
-        <div class="badge">
-          <div class="badge-dot"></div>
-          <span class="badge-text">Segmentim profesional i klienteve</span>
-        </div>
+    <!-- HERO -->
+    <header class="hero" role="banner">
+      <div>
+        <span style="display:inline-flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="width:12px;height:12px;border-radius:999px;background:linear-gradient(180deg,#34d399,#059669);box-shadow:0 6px 18px rgba(16,185,129,0.12)"></span>
+          <strong class="small-muted">Segmentim profesional | klientëve</strong>
+        </span>
 
-        <h1 class="hero-title">
-          Produkte të personalizuara për
-          <span>klientë normal & rishitës</span>
-        </h1>
-
-        <p class="hero-subtitle">
-          Ndarje e qartë midis porosive personale dhe atyre me shumicë, me çmim që ndryshon sipas sasisë,
-          madhësisë dhe numrit të stampave për çdo lloj produkti.
-        </p>
-
-        <div class="hero-tags">
-          <div class="tag"><strong>Klientë normal:</strong> porosi të vogla & dhurata</div>
-          <div class="tag"><strong>Rishitës:</strong> çmime me shumicë & B2B</div>
-          <div class="tag">Veshje · Promo · Aksesorë · Çadra</div>
-        </div>
+        <h1>Produkte të personalizuara për <span class="accent">klientë normal</span> & <span class="accent">rishitës</span></h1>
+        <p class="muted">Ndarje e qartë midis porosive personale dhe atyre me shumicë — çmimet ndryshojnë sipas sasisë, madhësisë dhe numrit të stampave.</p>
 
         <div class="hero-actions">
-          <a href="#kalkulatori" class="btn btn-primary" onclick="scrollToCalculator(); return false;">
-            Hap kalkulatorin
-          </a>
-          <a href="#cmimet" class="btn btn-outline" onclick="scrollToPrices(); return false;">
-            Shiko listën e cmimeve
-          </a>
-          <span class="btn-pill-note">
-            Të gjitha përllogaritjet bëhen live sipas sasisë dhe stampave.
-          </span>
+          <button class="btn btn-primary" onclick="document.getElementById('kalkulatori').scrollIntoView({behavior:'smooth'})">Hap kalkulatorin</button>
+          <a class="btn btn-outline" href="#cmimet">Shiko listën e cmimeve</a>
         </div>
       </div>
 
-      <div class="hero-right">
-        <div class="hero-pricing-card">
-          <div class="hpc-header">
-            <div>
-              <p class="hpc-title">Segmenti aktiv</p>
-            </div>
-            <span class="hpc-pill">dtfprint – cmime orientuese</span>
-          </div>
-
-          <div class="hpc-toggle">
-            <span id="segmentNormalBtn" class="active" onclick="setSegment('normal');">Klient normal</span>
-            <span id="segmentResellerBtn" onclick="setSegment('reseller');">Rishitës</span>
-          </div>
-
-          <div class="hpc-main">
-            <div class="hpc-row">
-              <span class="hpc-label">Sasia</span>
-              <strong>1 – 50+ copë</strong>
-            </div>
-            <div class="hpc-row">
-              <span class="hpc-label">Shtesë për stampë shtesë</span>
-              <strong>200 Lekë / copë</strong>
-            </div>
-            <div class="hpc-row">
-              <span class="hpc-label">Zbritje automatike</span>
-              <strong>sipas sasisë & segmentit</strong>
-            </div>
-          </div>
-
-          <div class="hpc-footer">
-            <p class="hpc-footer-note" id="segmentInfo">
-              Segment: Klient normal – çmim standard për 1–5 copë, zbritje graduale për sasira më të mëdha.
-            </p>
-            <button class="btn btn-primary btn-xs" onclick="scrollToCalculator();">
-              Shko te kalkulatori
-            </button>
-          </div>
+      <aside class="hero-right">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="color:var(--muted);font-size:13px">Segmenti aktiv</div>
+          <div style="color:var(--muted);font-size:13px">dtfprint — çmime orientuese</div>
         </div>
-      </div>
-    </section>
 
-    <!-- ================= KALKULATORI ================= -->
-    <section class="section" id="kalkulatori">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Kalkulator oferte (live)</h2>
-          <p class="section-subtitle">
-            Zgjidh produktin, vendos sasinë dhe numrin e stampave. Më pas shtoje në ofertë.
-            Mund të kesh disa produkte dhe në fund llogaritet totali.
-          </p>
+        <div class="seg-row">
+          <div id="segNormal" class="mini-btn seg-btn" onclick="setSegment('normal')" style="background:rgba(255,255,255,0.02);border-radius:999px;padding:6px 10px;color:var(--muted)">Klient normal</div>
+          <div id="segReseller" class="mini-btn seg-btn" onclick="setSegment('reseller')" style="border-radius:999px;padding:6px 10px;color:var(--muted)">Rishitës</div>
         </div>
-        <div class="pill-soft">
-          <span class="pill-dot"></span>
-          Shtesa për stampë shtesë: 200 Lekë / copë (fiks, e vendosur nga ti).
+
+        <div style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between"><small class="small-muted">Sasia</small><strong>1 — 50+ copë</strong></div>
+          <div style="display:flex;justify-content:space-between"><small class="small-muted">Shtesë / stampë</small><strong>200 Lekë / copë</strong></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px"><small class="small-muted">Zbritje</small><small class="small-muted">sipas sasisë & segmentit</small></div>
         </div>
-      </div>
 
-      <article class="calc-card">
-        <h3>Kalkulator i shpejtë – bazuar te cmimet dtfprint.al</h3>
-        <p>
-          Përllogarit çmime për një produkt të vetëm ose për oferta me disa produkte.
-          Segmentin (Klient normal / Rishitës) e zgjedh lart në seksionin “Segmenti aktiv”.
-        </p>
+        <div style="margin-top:14px;display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="document.getElementById('kalkulatori').scrollIntoView({behavior:'smooth'})">Shko te kalkulatori</button></div>
+      </aside>
+    </header>
 
-        <div class="calc-form">
-          <div class="calc-field">
-            <label class="calc-label" for="productSelect">Produkti</label>
-            <select id="productSelect" class="calc-select"></select>
-          </div>
+    <!-- CALCULATOR -->
+    <section id="kalkulatori" class="section">
+      <div class="calc-grid">
+        <!-- LEFT: kalkulator -->
+        <div class="card">
+          <h3 style="margin:0 0 8px">Kalkulator oferte (live)</h3>
+          <p class="note">Zgjidh produktin, vendos sasinë dhe numrin e stampave. Pastaj shtoje në shportë.</p>
 
-          <div class="calc-field">
-            <label class="calc-label" for="quantityInput">Sasia (copë)</label>
-            <input id="quantityInput" type="number" min="1" value="1" class="calc-input" />
-          </div>
+          <div style="margin-top:12px">
+            <div class="form-row"><div class="label">Produkti</div>
+              <select id="productSelect"></select>
+            </div>
 
-          <div class="calc-field">
-            <label class="calc-label" for="printsInput">Nr. stampave për copë</label>
-            <input id="printsInput" type="number" min="1" value="1" class="calc-input" />
-          </div>
+            <div class="form-row"><div class="label">Sasia (copë)</div>
+              <input id="quantityInput" type="number" min="1" value="1" />
+            </div>
 
-          <div class="calc-field">
-            <label class="calc-label">Shtesa për stampë shtesë</label>
-            <input type="text" class="calc-input" value="200 Lekë / stampë shtesë" disabled />
+            <div class="form-row"><div class="label">Nr. stampave / copë</div>
+              <input id="printsInput" type="number" min="1" value="1" />
+            </div>
+
+            <div class="form-row"><div class="label">Shtesa stampë</div>
+              <input type="text" value="200 Lekë / stampë shtesë (fiks)" disabled />
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+              <div>
+                <div class="calc-result" id="unitPriceDisplay">Çmimi për copë: —</div>
+                <div class="note" id="totalPriceDisplay">Totali: —</div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-outline" onclick="addCurrentToCart()">Shto në shportë</button>
+                <button class="btn btn-outline" onclick="clearCart()">Pastro</button>
+              </div>
+            </div>
+
+            <p class="note" style="margin-top:10px">* Zbritjet nga sasia: 1–5 (0%), 6–10 (−5%), 11–20 (−10%), 21–50 (−15%), 51+ (−20%). Rishitës: −10% ekstra.</p>
           </div>
         </div>
 
-        <div class="calc-actions">
-          <div>
-            <div class="calc-result" id="unitPriceDisplay">Çmimi për copë: –</div>
-            <div class="calc-result" id="totalPriceDisplay">Totali: –</div>
-          </div>
-
-          <div style="flex:1; min-width:260px;">
-            <div class="calc-pill" id="breakdownDisplay">
-              Formula: baza e produktit + stampat shtesë + zbritja nga sasia/segmenti.
-            </div>
-            <div id="cartButtons">
-              <button class="btn btn-outline btn-xs" onclick="addCurrentToCart();">
-                Shto këtë produkt në ofertë
-              </button>
-              <button class="btn btn-outline btn-xs" onclick="clearCart();">
-                Pastro ofertën
-              </button>
+        <!-- RIGHT: packages + prices -->
+        <aside>
+          <div class="card">
+            <h4 style="margin:0 0 8px">Paketa të gatshme</h4>
+            <div class="packages">
+              <div class="pkg">
+                <h4>Starter Pack Personal</h4>
+                <p class="small-muted">1 HOODIE · 1 PREMIUM · 1 NATURELLA</p>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <button class="btn btn-primary" onclick="applyPreset('starter-personal')">Shto paketën</button>
+                </div>
+              </div>
+              <div class="pkg">
+                <h4>Brand Starter</h4>
+                <p class="small-muted">5 HOODIE · 10 PREMIUM · 20 CAMPUS MAT</p>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <button class="btn btn-outline" onclick="applyPreset('brand-pack')">Shto paketën</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <p class="calc-note">
-          * Zbritjet nga sasia aplikohen automatikisht: 1–5 copë (cmim i plotë), 6–10 (−5%), 11–20 (−10%),
-          21–50 (−15%), 51+ (−20%). Segmenti Rishitës merr edhe −10% ekstra mbi total.
-        </p>
-
-        <!-- Oferta me disa produkte -->
-        <div id="packageBreakdownContainer" style="display:none;">
-          <div class="calc-pill" id="packageTitle">
-            Oferta aktuale (multi-produkte):
+          <div class="card" style="margin-top:12px">
+            <h4 style="margin:0 0 8px">Lista e cmimeve (bazë)</h4>
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;justify-content:space-between"><span class="small-muted">HOODIE 300 GSM</span><strong>1,900 Lekë</strong></div>
+              <div style="display:flex;justify-content:space-between"><span class="small-muted">PREMIUM 180</span><strong>700 Lekë</strong></div>
+              <div style="display:flex;justify-content:space-between"><span class="small-muted">NATURELLA 120</span><strong>250 Lekë</strong></div>
+              <div style="display:flex;justify-content:space-between"><span class="small-muted">CAMPUS MAT</span><strong>450 Lekë</strong></div>
+            </div>
           </div>
-          <div class="prices-table-wrapper" style="max-height:220px;">
-            <table class="prices-table">
-              <thead>
-                <tr>
-                  <th>Produkti</th>
-                  <th>Sasia</th>
-                  <th>Stampat</th>
-                  <th>Çmimi / copë</th>
-                  <th>Totali</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="packageBreakdownBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- ================= KLIENTËT ================= -->
-    <section class="section" id="klientet">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Ndarja kryesore e klientëve</h2>
-          <p class="section-subtitle">
-            Dy seksione të qarta: një për porosi personale dhe një për rishitës / biznese me çmim me shumicë.
-          </p>
-        </div>
-        <div class="pill-soft">
-          <span class="pill-dot"></span>
-          Përdor kalkulatorin si bazë për ofertat.
-        </div>
+        </aside>
       </div>
-
-      <div class="client-grid">
-        <article class="client-card">
-          <p class="client-label">Segmenti 1</p>
-          <h3 class="client-name">Klientë normal</h3>
-          <p class="client-desc">
-            Fokusuar te porositë personale, dhuratat, porositë e vogla dhe të mesme për përdorim individual.
-          </p>
-          <div class="client-meta">
-            <span class="client-pill">Sasi tipike: 1–10 copë</span>
-            <span class="client-pill">Çmim bazë + zbritje të vogla</span>
-            <span class="client-pill">Ideal për: dhurata, evente, personalizim individual</span>
-          </div>
-          <div class="client-footer">
-            <a href="#kalkulatori"
-               class="btn btn-primary btn-xs"
-               onclick="setSegment('normal'); presetForSingle(); scrollToCalculator(); return false;">
-              Shiko cmimin për 1 copë
-            </a>
-            <p class="client-note">
-              Vendoset automatikisht sasia 1 dhe segmenti Klient normal në kalkulator.
-            </p>
-          </div>
-        </article>
-
-        <article class="client-card reseller">
-          <p class="client-label">Segmenti 2</p>
-          <h3 class="client-name">Rishitës & Biznese (B2B)</h3>
-          <p class="client-desc">
-            Dyqane, brand-e dhe kompani që porosisin sasi më të mëdha me çmime të personalizuara me shumicë.
-          </p>
-          <div class="client-meta">
-            <span class="client-pill">Sasi tipike: 10+ copë</span>
-            <span class="client-pill">Çmime të diferencuara sipas sasisë</span>
-            <span class="client-pill">Paketa & oferta afatgjata</span>
-          </div>
-          <div class="client-footer">
-            <a href="#kalkulatori"
-               class="btn btn-outline btn-xs"
-               onclick="setSegment('reseller'); presetForReseller(); scrollToCalculator(); return false;">
-              Bazohu te cmimet & bëj ofertë
-            </a>
-            <p class="client-note">
-              Aktivizohet modu Rishitës dhe vendoset automatikisht sasi më e madhe.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ================= KATEGORITË ================= -->
-    <section class="section" id="kategorite">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Kategoritë e produkteve</h2>
-          <p class="section-subtitle">
-            Të njëjtat kategori për klientë normal dhe rishitës – ndryshon vetëm çmimi dhe tekstet sipas segmentit.
-          </p>
-        </div>
-      </div>
-
-      <div class="category-grid">
-        <article class="category-card">
-          <h3 class="category-title">Veshje</h3>
-          <p class="category-list">
-            PREMIUM 180, AZZURO POLO, GATOR, SPRING, HOODIE 300 GSM, veshje pune.
-          </p>
-        </article>
-
-        <article class="category-card">
-          <h3 class="category-title">Produkte promocionale</h3>
-          <p class="category-list">
-            CAMPUS MAT, stilolapsa, blloqe shënimesh, USB, gota & termus.
-          </p>
-        </article>
-
-        <article class="category-card">
-          <h3 class="category-title">Aksesorë & çanta</h3>
-          <p class="category-list">
-            NATURELLA 120, DOCUMENTO, LAGER, çanta shpine, çanta dokumentash.
-          </p>
-        </article>
-
-        <article class="category-card">
-          <h3 class="category-title">Çadra & të tjera</h3>
-          <p class="category-list">
-            CAMPOS PLUS, NIMBUS, ROSSI dhe çadra të tjera promocionale.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ================= PAKETAT ================= -->
-    <section class="section" id="paketat">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Paketa të gatshme për shitje</h2>
-          <p class="section-subtitle">
-            Paketat i bëjnë rishitësit të marrin vendim më shpejt dhe klientët normal të zgjedhin kombo me vlerë më të lartë.
-          </p>
-        </div>
-      </div>
-
-      <div class="packages-grid">
-        <article class="package-card">
-          <p class="package-badge">Për klientë normal</p>
-          <h3 class="package-name">Starter Pack Personal</h3>
-          <p class="package-items">
-            1 HOODIE 300 GSM · 1 PREMIUM 180 · 1 NATURELLA 120 totebag me dizajn personal.
-          </p>
-          <div class="package-footer">
-            <p class="package-note">
-              Llogarit automatikisht gjithë paketën me një klik.
-            </p>
-            <button class="btn btn-primary btn-xs"
-                    onclick="setSegment('normal'); applyPreset('starter-personal'); scrollToCalculator();">
-              Shto në ofertë
-            </button>
-          </div>
-        </article>
-
-        <article class="package-card">
-          <p class="package-badge">Për rishitës & brand-e</p>
-          <h3 class="package-name">Brand Starter Pack</h3>
-          <p class="package-items">
-            5 HOODIE 300 GSM + 10 PREMIUM 180 + 20 CAMPUS MAT.
-          </p>
-          <div class="package-footer">
-            <p class="package-note">
-              Llogaritet total-i i gjithë paketës për rishitës, me zbritje ekstra.
-            </p>
-            <button class="btn btn-outline btn-xs"
-                    onclick="setSegment('reseller'); applyPreset('brand-pack'); scrollToCalculator();">
-              Kërko ofertë
-            </button>
-          </div>
-        </article>
-
-        <article class="package-card">
-          <p class="package-badge">Për kompani & zyra</p>
-          <h3 class="package-name">Office Promo Pack</h3>
-          <p class="package-items">
-            20 CAMPOS PLUS (çadra) + promo të tjera sipas kërkesës.
-          </p>
-          <div class="package-footer">
-            <p class="package-note">
-              Merr cmimin total për çadrat dhe shto pastaj produktet e tjera.
-            </p>
-            <button class="btn btn-outline btn-xs"
-                    onclick="setSegment('reseller'); applyPreset('office-pack'); scrollToCalculator();">
-              Personalizo paketën
-            </button>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ================= LISTA E CMIMEVE ================= -->
-    <section class="section prices-section" id="cmimet">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Lista bazë e cmimeve (1 copë)</h2>
-          <p class="section-subtitle">
-            Cmime orientuese për 1 copë, bazuar në listën e cmimeve dtfprint.al.
-            Kalkulatori përdor këto vlera si bazë për përllogaritje.
-          </p>
-        </div>
-        <div class="pill-soft">
-          <span class="pill-dot"></span>
-          Përditëso shifrat në kod sa herë ndryshon PDF-i i cmimeve.
-        </div>
-      </div>
-
-      <article class="prices-card">
-        <h3>Produktet kryesore</h3>
-        <p>
-          Këto janë disa nga produktet që përdoren më shpesh në oferta. Mund të shtosh ose të ndryshosh cmimet
-          direkt te seksioni <code>products</code> në fund të kësaj faqeje.
-        </p>
-
-        <div class="prices-table-wrapper">
-          <table class="prices-table">
-            <thead>
-              <tr>
-                <th>Produkti</th>
-                <th>Kategoria</th>
-                <th>Çmimi / copë</th>
-              </tr>
-            </thead>
-            <tbody id="pricesTableBody"></tbody>
-          </table>
-        </div>
-      </article>
     </section>
 
   </div>
 
-  <script>
-    // ------------------- KONFIGURIM -------------------
-    const EXTRA_PRINT_PRICE = 200; // Lekë / stampë shtesë për copë
+  <!-- FLOATING CART BUTTON -->
+  <button id="cartBtn" class="cart-btn" title="Shporta" aria-label="Shporta">
+    🛒
+    <span id="cartCount" class="cart-badge" style="display:none">0</span>
+  </button>
 
-    const quantityTiers = [
-      { max: 5, label: "1–5 copë", multiplier: 1.0 },
-      { max: 10, label: "6–10 copë", multiplier: 0.95 },
-      { max: 20, label: "11–20 copë", multiplier: 0.90 },
-      { max: 50, label: "21–50 copë", multiplier: 0.85 },
-      { max: Infinity, label: "51+ copë", multiplier: 0.80 }
-    ];
+  <!-- CART DRAWER -->
+  <aside id="cartDrawer" class="drawer" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <small class="small-muted">Shporta</small>
+        <h3>Oferta & Shporta</h3>
+      </div>
+      <div><button class="mini-btn" onclick="toggleCart()">Mbyll</button></div>
+    </div>
 
-    const resellerMultiplier = 0.90; // −10% për rishitës
+    <div class="cart-list card" id="cartList">
+      <!-- items will be injected here -->
+    </div>
 
-    const products = [
-      { id: "premium180", name: "PREMIUM 180 – Bluze 180 GSM", category: "Tekstil", price: 700 },
-      { id: "azzuroPolo", name: "AZZURO POLO – Bluze polo 180 GSM", category: "Tekstil", price: 900 },
-      { id: "gator", name: "GATOR – Bluze polo 180 GSM", category: "Tekstil", price: 1000 },
-      { id: "spring", name: "SPRING – Sweatshirt 300 GSM", category: "Tekstil", price: 1700 },
-      { id: "hoodie300", name: "HOODIE – Hoodie 300 GSM", category: "Tekstil", price: 1900 },
-      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 },
-      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta", price: 350 },
-      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta", price: 250 },
-      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta", price: 300 },
-      { id: "camposPlus", name: "CAMPOS PLUS – Çadër", category: "Çadra", price: 750 },
-      { id: "nimbus", name: "NIMBUS – Çadër", category: "Çadra", price: 800 },
-      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850 }
-    ];
+    <div class="drawer-footer">
+      <div class="drawer-total" id="drawerTotal">Totali: —</div>
+      <div style="display:flex;gap:8px">
+        <button class="mini-btn" onclick="clearCart()">Pastro</button>
+        <button class="btn btn-primary" onclick="checkout()">Kërko ofertë / Porosit</button>
+      </div>
+    </div>
+  </aside>
 
-    // Paketa – preset që mbush listën
-    const packagePresets = {
-      "starter-personal": {
-        name: "Starter Pack Personal",
-        items: [
-          { productId: "hoodie300", qty: 1, prints: 2 },
-          { productId: "premium180", qty: 1, prints: 1 },
-          { productId: "naturella", qty: 1, prints: 1 }
-        ]
-      },
-      "brand-pack": {
-        name: "Brand Starter Pack",
-        items: [
-          { productId: "hoodie300", qty: 5, prints: 2 },
-          { productId: "premium180", qty: 10, prints: 1 },
-          { productId: "campusMat", qty: 20, prints: 1 }
-        ]
-      },
-      "office-pack": {
-        name: "Office Promo Pack",
-        items: [
-          { productId: "camposPlus", qty: 20, prints: 1 }
-        ]
-      }
-    };
-
-    let currentSegment = "normal";    // "normal" ose "reseller"
-    let cartItems = [];               // lista e produkteve në ofertë
-    let cartLabel = "Oferta aktuale (multi-produkte)";
-
-    // ------------------- FUNKSIONE NDIHMËSE -------------------
-
-    function formatALL(value) {
-      if (isNaN(value)) return "–";
-      try {
-        return value.toLocaleString("sq-AL", {
-          style: "currency",
-          currency: "ALL",
-          maximumFractionDigits: 0
-        });
-      } catch (e) {
-        return value.toLocaleString("sq-AL") + " Lekë";
-      }
+<script>
+  /* ====== KONFIGURIM ====== */
+  const EXTRA_PRINT_PRICE = 200;
+  const quantityTiers = [
+    {max:5,mult:1},{max:10,mult:0.95},{max:20,mult:0.90},{max:50,mult:0.85},{max:Infinity,mult:0.8}
+  ];
+  const resellerMultiplier = 0.90;
+  const products = [
+    {id:"hoodie300", name:"HOODIE – Hoodie 300 GSM", price:1900},
+    {id:"premium180", name:"PREMIUM 180 – Bluze 180 GSM", price:700},
+    {id:"naturella", name:"NATURELLA 120 – Totebag", price:250},
+    {id:"campusMat", name:"CAMPUS MAT – Mouse pad", price:450}
+  ];
+  const packagePresets = {
+    "starter-personal":{
+      name:"Starter Pack Personal",
+      items:[
+        {productId:"hoodie300", qty:1, prints:2},
+        {productId:"premium180", qty:1, prints:1},
+        {productId:"naturella", qty:1, prints:1}
+      ]
+    },
+    "brand-pack":{
+      name:"Brand Starter",
+      items:[
+        {productId:"hoodie300", qty:5, prints:2},
+        {productId:"premium180", qty:10, prints:1},
+        {productId:"campusMat", qty:20, prints:1}
+      ]
     }
+  };
 
-    function getQuantityTier(qty) {
-      for (const tier of quantityTiers) {
-        if (qty <= tier.max) return tier;
-      }
-      return quantityTiers[quantityTiers.length - 1];
+  /* ====== STATE ====== */
+  let currentSegment = 'normal';
+  let cartItems = []; // {productId, qty, prints}
+
+  /* ====== HELPERS ====== */
+  function formatALL(v){ return new Intl.NumberFormat('sq-AL',{style:'currency',currency:'ALL',maximumFractionDigits:0}).format(v); }
+  function findProduct(id){ return products.find(p=>p.id===id) || null; }
+  function getTier(q){ for(const t of quantityTiers) if(q<=t.max) return t; return quantityTiers[quantityTiers.length-1]; }
+
+  function computeLine(productId, qty, prints){
+    const p = findProduct(productId); if(!p) return null;
+    qty = Math.max(1, Math.floor(qty||1)); prints = Math.max(1, Math.floor(prints||1));
+    const extraPrints = Math.max(prints-1,0);
+    const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
+    const baseUnit = p.price;
+    const unitWithPrints = baseUnit + extraPerUnit;
+    const tier = getTier(qty);
+    const segMul = currentSegment==='reseller' ? resellerMultiplier : 1;
+    const finalUnit = Math.round(unitWithPrints * tier.mult * segMul);
+    const total = finalUnit * qty;
+    return {product:p, qty, prints, finalUnit, total, tier};
+  }
+
+  /* ====== UI POPULATE ====== */
+  function populateProductSelect(){
+    const sel = document.getElementById('productSelect'); sel.innerHTML='';
+    products.forEach(p=>{
+      const opt=document.createElement('option'); opt.value=p.id; opt.textContent=`${p.name} — ${formatALL(p.price)}`;
+      sel.appendChild(opt);
+    });
+  }
+
+  function calculateSingle(){
+    const sel = document.getElementById('productSelect').value;
+    const qty = parseInt(document.getElementById('quantityInput').value||1,10);
+    const prints = parseInt(document.getElementById('printsInput').value||1,10);
+    const line = computeLine(sel, qty, prints);
+    if(!line) return;
+    document.getElementById('unitPriceDisplay').textContent = 'Çmimi për copë: ' + formatALL(line.finalUnit);
+    document.getElementById('totalPriceDisplay').textContent = 'Totali për ' + line.qty + ' copë: ' + formatALL(line.total);
+  }
+
+  /* ====== CART OPERATIONS ====== */
+  function updateCartBadge(){
+    const count = cartItems.reduce((s,i)=>s+i.qty,0);
+    const badge = document.getElementById('cartCount');
+    if(count>0){ badge.style.display='inline-block'; badge.textContent = count; } else badge.style.display='none';
+  }
+
+  function renderCartDrawer(){
+    const list = document.getElementById('cartList'); list.innerHTML = '';
+    if(cartItems.length===0){
+      list.innerHTML = '<div class="small-muted" style="padding:12px">Shporta është bosh. Shto produkte nga kalkulatori.</div>';
+      document.getElementById('drawerTotal').textContent = 'Totali: —';
+      updateCartBadge(); return;
     }
-
-    function findProduct(id) {
-      return products.find(p => p.id === id) || null;
-    }
-
-    function computeLine(productId, qty, prints) {
-      const p = findProduct(productId);
-      if (!p) return null;
-
-      const safeQty = Math.max(qty || 1, 1);
-      const safePrints = Math.max(prints || 1, 1);
-
-      const extraPrints = Math.max(safePrints - 1, 0);
-      const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
-      const baseUnitPrice = p.price;
-      const unitWithPrints = baseUnitPrice + extraPerUnit;
-
-      const tier = getQuantityTier(safeQty);
-      const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
-
-      const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
-      const finalUnit = Math.round(unitAfterQty);
-      const total = finalUnit * safeQty;
-
-      return {
-        product: p,
-        qty: safeQty,
-        prints: safePrints,
-        baseUnitPrice,
-        extraPrints,
-        extraPerUnit,
-        unitWithPrints,
-        tier,
-        finalUnit,
-        total
-      };
-    }
-
-    function populatePricesTable() {
-      const tbody = document.getElementById("pricesTableBody");
-      if (!tbody) return;
-      tbody.innerHTML = "";
-      products.forEach((p) => {
-        const tr = document.createElement("tr");
-
-        const nameTd = document.createElement("td");
-        nameTd.className = "name-cell";
-        nameTd.textContent = p.name;
-        tr.appendChild(nameTd);
-
-        const catTd = document.createElement("td");
-        catTd.className = "category-cell";
-        catTd.textContent = p.category;
-        tr.appendChild(catTd);
-
-        const priceTd = document.createElement("td");
-        priceTd.className = "price-cell";
-        priceTd.textContent = formatALL(p.price);
-        tr.appendChild(priceTd);
-
-        tbody.appendChild(tr);
-      });
-    }
-
-    function populateProductSelect() {
-      const select = document.getElementById("productSelect");
-      if (!select) return;
-      select.innerHTML = "";
-      products.forEach((p) => {
-        const opt = document.createElement("option");
-        opt.value = p.id;
-        opt.textContent = `${p.name} – ${formatALL(p.price)}`;
-        select.appendChild(opt);
-      });
-    }
-
-    // ------------------- KALKULATORI SINGLE -------------------
-
-    function calculateSingleTotal() {
-      const select = document.getElementById("productSelect");
-      const quantityInput = document.getElementById("quantityInput");
-      const printsInput = document.getElementById("printsInput");
-
-      const unitDisplay = document.getElementById("unitPriceDisplay");
-      const totalDisplay = document.getElementById("totalPriceDisplay");
-      const breakdownDisplay = document.getElementById("breakdownDisplay");
-      const container = document.getElementById("packageBreakdownContainer");
-
-      if (container && cartItems.length === 0) {
-        container.style.display = "none";
-      }
-
-      if (!select || !quantityInput || !printsInput ||
-          !unitDisplay || !totalDisplay || !breakdownDisplay) {
-        return;
-      }
-
-      const line = computeLine(
-        select.value,
-        parseInt(quantityInput.value, 10),
-        parseInt(printsInput.value, 10)
-      );
-
-      if (!line) {
-        unitDisplay.textContent = "Çmimi për copë: –";
-        totalDisplay.textContent = "Totali: –";
-        breakdownDisplay.textContent = "Zgjidh produktin për të llogaritur.";
-        return;
-      }
-
-      unitDisplay.textContent = "Çmimi për copë: " + formatALL(line.finalUnit);
-      totalDisplay.textContent = "Totali për " + line.qty + " copë: " + formatALL(line.total);
-
-      const qtyDiscountPercent = Math.round((1 - line.tier.multiplier) * 100);
-      const resellerDiscountPercent = currentSegment === "reseller"
-        ? Math.round((1 - resellerMultiplier) * 100)
-        : 0;
-
-      const parts = [
-        `Baza: ${formatALL(line.baseUnitPrice)}`,
-        line.extraPrints > 0
-          ? `+ ${line.extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
-          : "+ pa stampë shtesë",
-        `· Zbritje sasia: ${line.tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
-      ];
-
-      if (resellerDiscountPercent > 0) {
-        parts.push(`· Rishitës: −${resellerDiscountPercent}% ekstra`);
-      }
-
-      breakdownDisplay.textContent = parts.join("  ");
-    }
-
-    // ------------------- CART / MULTI-PRODUKT -------------------
-
-    function calculateCartTotal() {
-      const unitDisplay = document.getElementById("unitPriceDisplay");
-      const totalDisplay = document.getElementById("totalPriceDisplay");
-      const breakdownDisplay = document.getElementById("breakdownDisplay");
-      const container = document.getElementById("packageBreakdownContainer");
-      const titleEl = document.getElementById("packageTitle");
-      const body = document.getElementById("packageBreakdownBody");
-
-      if (!unitDisplay || !totalDisplay || !breakdownDisplay ||
-          !container || !titleEl || !body) return;
-
-      if (cartItems.length === 0) {
-        container.style.display = "none";
-        calculateSingleTotal();
-        return;
-      }
-
-      container.style.display = "block";
-      titleEl.textContent = cartLabel;
-
-      body.innerHTML = "";
-      let grandTotal = 0;
-      let totalQty = 0;
-
-      cartItems.forEach((item, index) => {
-        const line = computeLine(item.productId, item.qty, item.prints);
-        if (!line) return;
-
-        grandTotal += line.total;
-        totalQty += line.qty;
-
-        const tr = document.createElement("tr");
-
-        const nameTd = document.createElement("td");
-        nameTd.className = "name-cell";
-        nameTd.textContent = line.product.name;
-        tr.appendChild(nameTd);
-
-        const qtyTd = document.createElement("td");
-        qtyTd.textContent = line.qty;
-        tr.appendChild(qtyTd);
-
-        const printsTd = document.createElement("td");
-        printsTd.textContent = line.prints;
-        tr.appendChild(printsTd);
-
-        const unitTd = document.createElement("td");
-        unitTd.className = "price-cell";
-        unitTd.textContent = formatALL(line.finalUnit);
-        tr.appendChild(unitTd);
-
-        const totalTd = document.createElement("td");
-        totalTd.className = "price-cell";
-        totalTd.textContent = formatALL(line.total);
-        tr.appendChild(totalTd);
-
-        const removeTd = document.createElement("td");
-        const btn = document.createElement("button");
-        btn.className = "btn-mini-danger";
-        btn.textContent = "Hiq";
-        btn.onclick = () => removeCartItem(index);
-        removeTd.appendChild(btn);
-        tr.appendChild(removeTd);
-
-        body.appendChild(tr);
-      });
-
-      const trTotal = document.createElement("tr");
-      const tdLabel = document.createElement("td");
-      tdLabel.colSpan = 4;
-      tdLabel.textContent = "Totali i ofertës";
-      tdLabel.style.fontWeight = "600";
-      tdLabel.style.textAlign = "right";
-      trTotal.appendChild(tdLabel);
-
-      const tdTotal = document.createElement("td");
-      tdTotal.className = "price-cell";
-      tdTotal.style.fontWeight = "600";
-      tdTotal.textContent = formatALL(grandTotal);
-      trTotal.appendChild(tdTotal);
-
-      const tdEmpty = document.createElement("td");
-      trTotal.appendChild(tdEmpty);
-
-      body.appendChild(trTotal);
-
-      const avg = totalQty > 0 ? Math.round(grandTotal / totalQty) : 0;
-
-      unitDisplay.textContent = "Çmimi mesatar për copë (ofertë): " + formatALL(avg);
-      totalDisplay.textContent = "Totali i ofertës për " + totalQty + " copë: " + formatALL(grandTotal);
-      breakdownDisplay.textContent =
-        "Ofertë me disa produkte: çdo rresht ka zbritjen e vet sipas sasisë + rishitës; më pas mblidhen të gjitha.";
-    }
-
-    function addCurrentToCart() {
-      const select = document.getElementById("productSelect");
-      const quantityInput = document.getElementById("quantityInput");
-      const printsInput = document.getElementById("printsInput");
-      if (!select || !quantityInput || !printsInput) return;
-
-      const item = {
-        productId: select.value,
-        qty: Math.max(parseInt(quantityInput.value, 10) || 1, 1),
-        prints: Math.max(parseInt(printsInput.value, 10) || 1, 1)
-      };
-
-      cartItems.push(item);
-      cartLabel = "Oferta aktuale (multi-produkte)";
-      calculateCartTotal();
-    }
-
-    function clearCart() {
-      cartItems = [];
-      cartLabel = "Oferta aktuale (multi-produkte)";
-      const container = document.getElementById("packageBreakdownContainer");
-      if (container) container.style.display = "none";
-      calculateSingleTotal();
-    }
-
-    function removeCartItem(index) {
-      cartItems.splice(index, 1);
-      calculateCartTotal();
-    }
-
-    // ------------------- SEGMENTI & PRESET -------------------
-
-    function setSegment(segment) {
-      currentSegment = segment === "reseller" ? "reseller" : "normal";
-      const normalBtn = document.getElementById("segmentNormalBtn");
-      const resellerBtn = document.getElementById("segmentResellerBtn");
-      const segmentInfo = document.getElementById("segmentInfo");
-
-      if (normalBtn && resellerBtn) {
-        normalBtn.classList.toggle("active", currentSegment === "normal");
-        resellerBtn.classList.toggle("active", currentSegment === "reseller");
-      }
-
-      if (segmentInfo) {
-        if (currentSegment === "normal") {
-          segmentInfo.textContent =
-            "Segment: Klient normal – cmim standard për 1–5 copë, zbritje graduale për sasira më të mëdha.";
-        } else {
-          segmentInfo.textContent =
-            "Segment: Rishitës – zbritje ekstra −10% mbi cmimin me pakicë + zbritjet nga sasia.";
-        }
-      }
-
-      if (cartItems.length > 0) {
-        calculateCartTotal();
-      } else {
-        calculateSingleTotal();
-      }
-    }
-
-    function scrollToCalculator() {
-      const el = document.getElementById("kalkulatori");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
-    function scrollToPrices() {
-      const el = document.getElementById("cmimet");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
-    function presetForSingle() {
-      clearCart();
-      const quantityInput = document.getElementById("quantityInput");
-      const printsInput = document.getElementById("printsInput");
-      if (quantityInput) quantityInput.value = 1;
-      if (printsInput) printsInput.value = 1;
-      calculateSingleTotal();
-    }
-
-    function presetForReseller() {
-      clearCart();
-      const quantityInput = document.getElementById("quantityInput");
-      if (quantityInput) quantityInput.value = 20;
-      calculateSingleTotal();
-    }
-
-    function applyPreset(presetId) {
-      const preset = packagePresets[presetId];
-      const productSelect = document.getElementById("productSelect");
-      const quantityInput = document.getElementById("quantityInput");
-      const printsInput = document.getElementById("printsInput");
-
-      if (!preset || !productSelect || !quantityInput || !printsInput) return;
-
-      cartItems = preset.items.map(i => ({ ...i }));
-      cartLabel = "Paketa e zgjedhur: " + preset.name;
-
-      // vendos si default rreshtin e parë te inputet
-      const first = preset.items[0];
-      productSelect.value = first.productId;
-      quantityInput.value = first.qty;
-      printsInput.value = first.prints;
-
-      calculateCartTotal();
-    }
-
-    // bëji funksionet accesible nga HTML
-    window.setSegment = setSegment;
-    window.scrollToCalculator = scrollToCalculator;
-    window.scrollToPrices = scrollToPrices;
-    window.presetForSingle = presetForSingle;
-    window.presetForReseller = presetForReseller;
+    let grand = 0;
+    cartItems.forEach((it, idx)=>{
+      const ln = computeLine(it.productId, it.qty, it.prints);
+      if(!ln) return;
+      grand += ln.total;
+      const wrapper = document.createElement('div'); wrapper.className='cart-item';
+      wrapper.innerHTML = `
+        <div class="info">
+          <div style="font-weight:700">${ln.product.name}</div>
+          <div class="small-muted" style="margin-top:6px">${formatALL(ln.finalUnit)} / copë — Tot: ${formatALL(ln.total)}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div class="q">
+            <button class="mini-btn" onclick="changeQty(${idx}, ${Math.max(1, it.qty-1)})">−</button>
+            <div style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.02)">${it.qty}</div>
+            <button class="mini-btn" onclick="changeQty(${idx}, ${it.qty+1})">+</button>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="mini-btn" onclick="removeItem(${idx})">Hiq</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(wrapper);
+    });
+    document.getElementById('drawerTotal').textContent = 'Totali: ' + formatALL(grand);
+    updateCartBadge();
+  }
+
+  function addCurrentToCart(){
+    const pid = document.getElementById('productSelect').value;
+    const qty = Math.max(1, parseInt(document.getElementById('quantityInput').value||1,10));
+    const prints = Math.max(1, parseInt(document.getElementById('printsInput').value||1,10));
+    // merge if same product+prints -> increase qty
+    const existing = cartItems.findIndex(i=>i.productId===pid && i.prints===prints);
+    if(existing>=0){ cartItems[existing].qty += qty; } else cartItems.push({productId:pid, qty, prints});
+    renderCartDrawer();
+    openCart();
+  }
+
+  function changeQty(index, newQty){
+    if(newQty<1) return;
+    cartItems[index].qty = newQty;
+    renderCartDrawer();
+  }
+  function removeItem(index){ cartItems.splice(index,1); renderCartDrawer(); }
+  function clearCart(){ cartItems = []; renderCartDrawer(); }
+
+  function applyPreset(id){
+    const preset = packagePresets[id];
+    if(!preset) return;
+    cartItems = preset.items.map(it=>({productId:it.productId, qty:it.qty, prints:it.prints}));
+    renderCartDrawer();
+    openCart();
+  }
+
+  /* ====== SEGMENT ====== */
+  function setSegment(seg){
+    currentSegment = seg==='reseller' ? 'reseller' : 'normal';
+    document.getElementById('segNormal').style.background = currentSegment==='normal' ? 'rgba(56,189,248,0.10)' : 'transparent';
+    document.getElementById('segReseller').style.background = currentSegment==='reseller' ? 'rgba(139,92,246,0.10)' : 'transparent';
+    // refresh displays
+    if(cartItems.length) renderCartDrawer(); else calculateSingle();
+  }
+
+  /* ====== CART DRAWER BEHAVIOR ====== */
+  const cartBtn = document.getElementById('cartBtn');
+  const drawer = document.getElementById('cartDrawer');
+  cartBtn.addEventListener('click', ()=>{ toggleCart(); });
+
+  function openCart(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+  function closeCart(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+  function toggleCart(){ drawer.classList.toggle('open'); const open = drawer.classList.contains('open'); drawer.setAttribute('aria-hidden', !open); }
+
+  /* ====== CHECKOUT (shembull) ====== */
+  function checkout(){
+    if(cartItems.length===0){ alert('Shporta është bosh. Shto produkte për të kërkuar ofertë.'); return; }
+    // për shembull: përgatit një përmbledhje dhe shfaq në alert (mund ta dërgosh në server ose të hapësh modal)
+    let msg = 'Përmbledhje e ofertës:\n\n';
+    cartItems.forEach(it=>{
+      const ln = computeLine(it.productId, it.qty, it.prints);
+      msg += `${ln.product.name} — ${it.qty} copë × ${formatALL(ln.finalUnit)} = ${formatALL(ln.total)}\n`;
+    });
+    const grand = cartItems.reduce((s,it)=>s + computeLine(it.productId,it.qty,it.prints).total, 0);
+    msg += `\nTotali: ${formatALL(grand)}\n\n(ky është një shembull; përsubmit, dërgo te email/CRM ose form kontakti.)`;
+    alert(msg);
+  }
+
+  /* ====== INIT ====== */
+  document.addEventListener('DOMContentLoaded', ()=>{
+    populateProductSelect();
+    calculateSingle();
+    renderCartDrawer();
+    // local events
+    document.getElementById('productSelect').addEventListener('change', ()=>{ if(!cartItems.length) calculateSingle(); });
+    document.getElementById('quantityInput').addEventListener('input', ()=>{ if(!cartItems.length) calculateSingle(); });
+    document.getElementById('printsInput').addEventListener('input', ()=>{ if(!cartItems.length) calculateSingle(); });
+    // expose for presets
     window.applyPreset = applyPreset;
     window.addCurrentToCart = addCurrentToCart;
     window.clearCart = clearCart;
-
-    // ------------------- INIT -------------------
-
-    document.addEventListener("DOMContentLoaded", () => {
-      populatePricesTable();
-      populateProductSelect();
-      setSegment("normal");
-      calculateSingleTotal();
-
-      const select = document.getElementById("productSelect");
-      const quantityInput = document.getElementById("quantityInput");
-      const printsInput = document.getElementById("printsInput");
-
-      if (select) {
-        select.addEventListener("change", () => {
-          if (cartItems.length === 0) calculateSingleTotal();
-        });
-      }
-      if (quantityInput) {
-        quantityInput.addEventListener("input", () => {
-          if (cartItems.length === 0) calculateSingleTotal();
-        });
-      }
-      if (printsInput) {
-        printsInput.addEventListener("input", () => {
-          if (cartItems.length === 0) calculateSingleTotal();
-        });
-      }
-    });
-  </script>
+    window.removeItem = removeItem;
+    window.changeQty = changeQty;
+    window.setSegment = setSegment;
+  });
+</script>
 </body>
 </html>
