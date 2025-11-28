@@ -1342,7 +1342,7 @@
 
       // Promo, karta, mousepad
       { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 }
-      // KARTA PLASTIKE & stilolapsat mund t'i shtosh më vonë nëse do t'i përdorësh në ofertë
+      // Mund të shtosh edhe produkte të tjera nga dtfprint.al në të njëjtin format
     ];
 
     // Paketa – preset që mbush listën
@@ -1516,7 +1516,6 @@
           if (select) {
             select.value = p.id;
           }
-          // rikalkulo për produktin e zgjedhur aktual
           if (cartItems.length === 0) {
             calculateSingleTotal();
           } else {
@@ -1787,7 +1786,6 @@
       cartItems = preset.items.map(i => ({ ...i }));
       cartLabel = "Paketa e zgjedhur: " + preset.name;
 
-      // vendos si default rreshtin e parë te inputet
       const first = preset.items[0];
       productSelect.value = first.productId;
       quantityInput.value = first.qty;
@@ -1803,8 +1801,7 @@
       if (!p) return;
       const baseName = p.name.split("–")[0].trim();
       const query = encodeURIComponent(baseName);
-      // Përdor kërkim te iPrint për të hapur faqen me foton e produktit
-      const url = "https://iprint.al/?s=" + query;
+      const url = "https://www.dtfprint.al/?s=" + query;
       window.open(url, "_blank");
     }
 
@@ -1813,7 +1810,6 @@
     function buildWhatsAppMessage() {
       const segmentLabel = currentSegment === "reseller" ? "Rishitës / B2B" : "Klient normal";
 
-      // Nëse nuk ka shportë, dërgo vetëm produktin aktual
       if (cartItems.length === 0) {
         const select = document.getElementById("productSelect");
         const quantityInput = document.getElementById("quantityInput");
