@@ -901,7 +901,7 @@
         </div>
         <div class="pill-soft">
           <span class="pill-dot"></span>
-          Shtesa për stampë shtesë: 200 Lekë / copë (fiks, e vendosur nga ti).
+          Shtesa për stampë shtesë: 200 Lekë / stampë shtesë (fiks, e vendosur nga ti).
         </div>
       </div>
 
@@ -950,6 +950,10 @@
               </button>
               <button class="btn btn-outline btn-xs" onclick="clearCart();">
                 Pastro ofertën
+              </button>
+              <!-- WhatsApp send button -->
+              <button class="btn btn-primary btn-xs" onclick="sendCartToWhatsApp();">
+                Dërgo në WhatsApp
               </button>
             </div>
           </div>
@@ -1254,6 +1258,9 @@
     let cartItems = [];               // lista e produkteve në ofertë
     let cartLabel = "Oferta aktuale (multi-produkte)";
 
+    // WhatsApp business number (international, no +): 355693789100
+    const WHATSAPP_NUMBER = "355693789100";
+
     // ------------------- FUNKSIONE NDIHMËSE -------------------
 
     function formatALL(value) {
@@ -1533,6 +1540,67 @@
       cartItems.splice(index, 1);
       calculateCartTotal();
     }
+
+    // ------------------- WHATSAPP INTEGRATION -------------------
+    // Krijon dhe dërgon mesazhin e porosisë në WhatsApp biznesit.
+    function buildOrderMessage() {
+      let lines = [];
+      lines.push("Porosia nga dtfprint.al");
+      lines.push("------------------------");
+
+      let grandTotal = 0;
+      let totalQty = 0;
+
+      if (cartItems.length > 0) {
+        cartItems.forEach((it, idx) => {
+          const line = computeLine(it.productId, it.qty, it.prints);
+          if (!line) return;
+          lines.push(
+            ${idx+1}. ${line.product.name} — ${line.qty} copë, ${line.prints} stampë(ra) — Totali: ${formatALL(line.total)}
+          );
+          grandTotal += line.total;
+          totalQty += line.qty;
+        });
+      } else {
+        // fallback: përdor rreshtin aktual nga select/inputs
+        const select = document.getElementById("productSelect");
+        const quantityInput = document.getElementById("quantityInput");
+        const printsInput = document.getElementById("printsInput");
+        const prodId = select ? select.value : null;
+        const qty = quantityInput ? Math.max(parseInt(quantityInput.value,10)||1,1) : 1;
+        const prints = printsInput ? Math.max(parseInt(printsInput.value,10)||1,1) : 1;
+
+        const line = computeLine(prodId, qty, prints);
+        if (line) {
+          lines.push(1. ${line.product.name} — ${line.qty} copë, ${line.prints} stampë(ra) — Totali: ${formatALL(line.total)});
+          grandTotal = line.total;
+          totalQty = line.qty;
+        } else {
+          lines.push("Asnjë produkt i zgjedhur.");
+        }
+      }
+
+      lines.push("------------------------");
+      lines.push(Sasia totale: ${totalQty} copë);
+      lines.push(Totali i porosisë: ${formatALL(grandTotal)});
+      lines.push("");
+      lines.push("Ju lutem konfirmoni disponueshmërinë dhe kohën e prodhimit.");
+      lines.push("Emri & Kontakti klientit:"); // bosh për të plotësuar nga klienti në WhatsApp
+
+      return lines.join("\n");
+    }
+
+    function sendCartToWhatsApp() {
+      const message = buildOrderMessage();
+      const encoded = encodeURIComponent(message);
+      const waUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encoded};
+
+      // Open in new tab (desktop) or new window (mobile)
+      window.open(waUrl, "_blank");
+    }
+
+    // bëji funksionet accesible nga HTML
+    window.sendCartToWhatsApp = sendCartToWhatsApp;
 
     // ------------------- SEGMENTI & PRESET -------------------
 
