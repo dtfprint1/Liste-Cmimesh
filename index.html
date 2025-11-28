@@ -26,11 +26,7 @@
       --transition-fast: 0.18s ease-out;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -40,772 +36,109 @@
       padding: 32px 16px 48px;
     }
 
-    .page-wrapper {
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
-      gap: 32px;
-      padding: 28px 28px 24px;
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.05), transparent 55%),
-        rgba(15, 23, 42, 0.9);
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(15, 118, 110, 0.15), transparent 55%);
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 2;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px 4px 4px;
-      border-radius: var(--radius-full);
-      background: rgba(15, 23, 42, 0.78);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      margin-bottom: 14px;
-      backdrop-filter: blur(12px);
-    }
-
-    .badge-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #f9fafb, #22c55e 55%, #15803d 100%);
-      box-shadow:
-        0 0 18px rgba(34, 197, 94, 0.9),
-        0 0 35px rgba(16, 185, 129, 0.55);
-      border: 2px solid rgba(15, 23, 42, 0.85);
-    }
-
-    .badge-text {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-      color: var(--text-muted);
-    }
-
-    .hero-title {
-      font-size: clamp(26px, 4vw, 34px);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-
-    .hero-title span {
-      background: linear-gradient(120deg, #38bdf8, #a855f7, #22c55e);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 500px;
-      margin-bottom: 20px;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .tag {
-      font-size: 11px;
-      padding: 5px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      color: var(--text-muted);
-    }
-
-    .tag strong {
-      color: var(--accent-strong);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 9px 16px;
-      border-radius: var(--radius-full);
-      font-size: 13px;
-      font-weight: 500;
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #020617;
-      box-shadow: 0 13px 30px rgba(8, 47, 73, 0.9);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 45px rgba(8, 47, 73, 1);
-    }
-
-    .btn-outline {
-      background: rgba(15, 23, 42, 0.85);
-      color: var(--text-main);
-      border-color: rgba(148, 163, 184, 0.5);
-    }
-
-    .btn-outline:hover {
-      background: rgba(15, 23, 42, 1);
-      border-color: var(--accent);
-      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9);
-      transform: translateY(-1px);
-      color: var(--accent);
-    }
-
-    .btn-pill-note {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-pricing-card {
-      width: 100%;
-      max-width: 360px;
-      background: rgba(2, 6, 23, 0.95);
-      border-radius: var(--radius-xl);
-      padding: 16px 16px 14px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: var(--shadow-card);
-      backdrop-filter: blur(14px);
-    }
-
-    .hpc-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .hpc-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-    }
-
-    .hpc-pill {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(22, 163, 74, 0.12);
-      color: #4ade80;
-      border: 1px solid rgba(34, 197, 94, 0.45);
-    }
-
-    .hpc-toggle {
-      display: inline-flex;
-      padding: 3px;
-      border-radius: var(--radius-full);
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      margin-bottom: 10px;
-    }
-
-    .hpc-toggle span {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast);
-    }
-
-    .hpc-toggle span.active {
-      background: var(--accent-soft);
-      color: var(--accent-strong);
-    }
-
-    .hpc-main {
-      border-radius: 16px;
-      padding: 10px 12px 10px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      margin-bottom: 10px;
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
-    }
-
-    .hpc-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 4px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .hpc-row strong {
-      color: var(--text-main);
-      font-size: 13px;
-    }
-
-    .hpc-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .hpc-label {
-      opacity: 0.9;
-    }
-
-    .hpc-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .hpc-footer-note {
-      font-size: 10px;
-      color: var(--text-muted);
-      max-width: 180px;
-    }
-
-    .btn-xs {
-      padding: 6px 10px;
-      font-size: 11px;
-      border-radius: 999px;
-    }
-
-    /* ================= COMMON SECTIONS ================= */
-
-    .section {
-      margin-top: 32px;
-      padding: 22px 20px 20px;
-      border-radius: 22px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(30, 64, 175, 0.5);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .section-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-      max-width: 360px;
-    }
-
-    .pill-soft {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      color: var(--text-muted);
-    }
-
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #16a34a);
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.85);
-    }
-
-    /* ================= KLIENTËT ================= */
-
-    .client-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .client-card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      padding: 16px 15px 14px;
-      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 55%), #020617;
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      overflow: hidden;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
-    }
-
-    .client-card.reseller {
-      background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.18), transparent 55%), #020617;
-      border-color: rgba(22, 163, 74, 0.65);
-    }
-
-    .client-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.95);
-      border-color: var(--accent);
-    }
-
-    .client-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 3px;
-    }
-
-    .client-name {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .client-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      max-width: 300px;
-    }
-
-    .client-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .client-pill {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(55, 65, 81, 0.8);
-      color: var(--text-muted);
-    }
-
-    .client-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .client-note {
-      font-size: 10px;
-      color: var(--text-muted);
-      max-width: 160px;
-    }
-
-    /* ================= KATEGORITË ================= */
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .category-card {
-      border-radius: 14px;
-      padding: 10px 10px 9px;
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.06), transparent 60%);
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      font-size: 12px;
-      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-    }
-
-    .category-card:hover {
-      transform: translateY(-1px);
-      border-color: var(--accent);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.95);
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%);
-    }
-
-    .category-title {
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .category-list {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* ================= PAKETAT ================= */
-
-    .packages-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .package-card {
-      border-radius: 16px;
-      padding: 13px 12px 12px;
-      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.18), transparent 60%), #020617;
-      border: 1px solid rgba(79, 70, 229, 0.7);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.95);
-      font-size: 12px;
-      position: relative;
-      overflow: hidden;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-    }
-
-    .package-card:nth-child(2) {
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%), #020617;
-      border-color: rgba(56, 189, 248, 0.9);
-    }
-
-    .package-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
-      border-color: var(--accent-strong);
-    }
-
-    .package-badge {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .package-name {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .package-items {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .package-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .package-note {
-      font-size: 10px;
-      color: var(--text-muted);
-      max-width: 140px;
-    }
-
-    /* ================= PRICES & CALCULATOR ================= */
-
-    .prices-section {
-      margin-top: 32px;
-    }
-
-    .prices-card {
-      border-radius: 18px;
-      padding: 14px 14px 12px;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%), #020617;
-      border: 1px solid rgba(55, 65, 81, 0.85);
-    }
-
-    .prices-card h3 {
-      font-size: 14px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .prices-card p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .prices-table-wrapper {
-      max-height: 260px;
-      overflow: auto;
-      border-radius: 12px;
-      border: 1px solid rgba(31, 41, 55, 0.9);
-      background: rgba(15, 23, 42, 0.85);
-    }
-
-    .prices-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-      min-width: 100%;
-    }
-
-    .prices-table thead {
-      position: sticky;
-      top: 0;
-      background: rgba(15, 23, 42, 0.98);
-      z-index: 1;
-    }
-
-    .prices-table th,
-    .prices-table td {
-      padding: 6px 8px;
-      text-align: left;
-      border-bottom: 1px solid rgba(31, 41, 55, 0.7);
-      white-space: nowrap;
-    }
-
-    .prices-table th {
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 10px;
-    }
-
-    .prices-table td.name-cell {
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    .prices-table td.category-cell {
-      color: var(--accent);
-    }
-
-    .prices-table td.price-cell {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .prices-table tr:nth-child(even) td {
-      background: rgba(15, 23, 42, 0.65);
-    }
-
-    /* ===== Kalkulator ===== */
-
-    .calc-card {
-      border-radius: 18px;
-      padding: 14px 14px 12px;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9);
-      background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.15), transparent 55%), #020617;
-      border: 1px solid rgba(79, 70, 229, 0.85);
-    }
-
-    .calc-card h3 {
-      font-size: 14px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .calc-card p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .calc-form {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .calc-field {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      font-size: 11px;
-    }
-
-    .calc-label {
-      color: var(--text-muted);
-    }
-
-    .calc-input,
-    .calc-select {
-      padding: 6px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: rgba(15, 23, 42, 0.95);
-      color: var(--text-main);
-      font-size: 11px;
-      outline: none;
-      transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
-    }
-
-    .calc-input:focus,
-    .calc-select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
-    }
-
-    .calc-actions {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-
-    .calc-result {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent-strong);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .calc-note {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .calc-pill {
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      color: var(--text-muted);
-    }
-
-    #cartButtons {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      margin-top: 6px;
-    }
-
-    /* multi-oferta */
-
-    #packageBreakdownContainer {
-      margin-top: 10px;
-    }
-
-    .btn-mini-danger {
-      border-radius: 999px;
-      border: 1px solid rgba(248, 113, 113, 0.8);
-      background: rgba(127, 29, 29, 0.9);
-      color: #fee2e2;
-      font-size: 10px;
-      padding: 2px 8px;
-      cursor: pointer;
-    }
-
-    /* ================= RESPONSIVE ================= */
-
-    @media (max-width: 960px) {
-      body {
-        padding: 20px 14px 28px;
-      }
-
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 22px 18px 18px;
-      }
-
-      .hero-pricing-card {
-        max-width: 100%;
-      }
-
-      .section {
-        padding: 18px 16px 16px;
-      }
-
-      .category-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .packages-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .client-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .category-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .packages-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .section-subtitle {
-        max-width: 100%;
-      }
-
-      .calc-form {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .calc-actions {
-        flex-direction: column;
-      }
-
-      #cartButtons {
-        justify-content: flex-start;
-      }
-    }
+    .page-wrapper { max-width: 1120px; margin: 0 auto; }
+
+    /* HERO + other styles (kept from orig) */
+    .hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr); gap: 32px; padding: 28px 28px 24px; border-radius: 24px; border: 1px solid rgba(148, 163, 184, 0.25); background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%), radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.05), transparent 55%), rgba(15, 23, 42, 0.9); box-shadow: var(--shadow-soft); position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(15, 118, 110, 0.15), transparent 55%); opacity: 0.5; pointer-events: none; }
+    .hero-left { position: relative; z-index: 2; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: var(--radius-full); background: rgba(15, 23, 42, 0.78); border: 1px solid rgba(148, 163, 184, 0.5); margin-bottom: 14px; backdrop-filter: blur(12px); }
+    .badge-dot { width: 22px; height: 22px; border-radius: 999px; background: radial-gradient(circle at 30% 30%, #f9fafb, #22c55e 55%, #15803d 100%); box-shadow: 0 0 18px rgba(34, 197, 94, 0.9), 0 0 35px rgba(16, 185, 129, 0.55); border: 2px solid rgba(15, 23, 42, 0.85); }
+    .badge-text { font-size: 12px; text-transform: uppercase; letter-spacing: 0.11em; color: var(--text-muted); }
+    .hero-title { font-size: clamp(26px, 4vw, 34px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 10px; }
+    .hero-title span { background: linear-gradient(120deg, #38bdf8, #a855f7, #22c55e); -webkit-background-clip: text; color: transparent; }
+    .hero-subtitle { font-size: 14px; color: var(--text-muted); max-width: 500px; margin-bottom: 20px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .tag { font-size: 11px; padding: 5px 10px; border-radius: var(--radius-full); background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(148, 163, 184, 0.35); color: var(--text-muted); }
+    .tag strong { color: var(--accent-strong); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 16px; border-radius: var(--radius-full); font-size: 13px; font-weight: 500; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast); white-space: nowrap; }
+    .btn-primary { background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #020617; box-shadow: 0 13px 30px rgba(8, 47, 73, 0.9); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 18px 45px rgba(8, 47, 73, 1); }
+    .btn-outline { background: rgba(15, 23, 42, 0.85); color: var(--text-main); border-color: rgba(148, 163, 184, 0.5); }
+    .btn-outline:hover { background: rgba(15, 23, 42, 1); border-color: var(--accent); box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9); transform: translateY(-1px); color: var(--accent); }
+    .btn-pill-note { font-size: 11px; color: var(--text-muted); }
+    .hero-right { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
+    .hero-pricing-card { width: 100%; max-width: 360px; background: rgba(2, 6, 23, 0.95); border-radius: var(--radius-xl); padding: 16px 16px 14px; border: 1px solid rgba(148, 163, 184, 0.6); box-shadow: var(--shadow-card); backdrop-filter: blur(14px); }
+    .hpc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .hpc-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-muted); }
+    .hpc-pill { font-size: 11px; padding: 4px 10px; border-radius: var(--radius-full); background: rgba(22, 163, 74, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.45); }
+    .hpc-toggle { display: inline-flex; padding: 3px; border-radius: var(--radius-full); background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(148, 163, 184, 0.5); margin-bottom: 10px; }
+    .hpc-toggle span { font-size: 11px; padding: 4px 10px; border-radius: 999px; color: var(--text-muted); cursor: pointer; transition: background var(--transition-fast), color var(--transition-fast); }
+    .hpc-toggle span.active { background: var(--accent-soft); color: var(--accent-strong); }
+    .hpc-main { border-radius: 16px; padding: 10px 12px 10px; border: 1px solid rgba(148, 163, 184, 0.35); margin-bottom: 10px; background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%); }
+    .hpc-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; font-size: 12px; color: var(--text-muted); }
+    .hpc-row strong { color: var(--text-main); font-size: 13px; }
+    .hpc-footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .hpc-footer-note { font-size: 10px; color: var(--text-muted); max-width: 180px; }
+    .btn-xs { padding: 6px 10px; font-size: 11px; border-radius: 999px; }
+    .section { margin-top: 32px; padding: 22px 20px 20px; border-radius: 22px; background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(30, 64, 175, 0.5); box-shadow: var(--shadow-soft); }
+    .section-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .section-title { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+    .section-subtitle { font-size: 12px; color: var(--text-muted); max-width: 360px; }
+    .pill-soft { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 4px 10px; border-radius: 999px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(55, 65, 81, 0.85); color: var(--text-muted); }
+    .pill-dot { width: 8px; height: 8px; border-radius: 999px; background: radial-gradient(circle, #22c55e, #16a34a); box-shadow: 0 0 8px rgba(34, 197, 94, 0.85); }
+    .client-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .client-card { position: relative; border-radius: var(--radius-lg); padding: 16px 15px 14px; background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 55%), #020617; border: 1px solid rgba(55, 65, 81, 0.85); overflow: hidden; transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast); }
+    .client-card.reseller { background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.18), transparent 55%), #020617; border-color: rgba(22, 163, 74, 0.65); }
+    .client-card:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.95); border-color: var(--accent); }
+    .client-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 3px; }
+    .client-name { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .client-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; max-width: 300px; }
+    .client-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .client-pill { font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(55, 65, 81, 0.8); color: var(--text-muted); }
+    .client-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .client-note { font-size: 10px; color: var(--text-muted); max-width: 160px; }
+    .category-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+    .category-card { border-radius: 14px; padding: 10px 10px 9px; background: radial-gradient(circle at top, rgba(56, 189, 248, 0.06), transparent 60%); border: 1px solid rgba(55, 65, 81, 0.85); font-size: 12px; transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast); }
+    .category-card:hover { transform: translateY(-1px); border-color: var(--accent); box-shadow: 0 12px 28px rgba(15, 23, 42, 0.95); background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%); }
+    .category-title { font-weight: 500; margin-bottom: 4px; }
+    .category-list { font-size: 11px; color: var(--text-muted); }
+    .packages-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+    .package-card { border-radius: 16px; padding: 13px 12px 12px; background: radial-gradient(circle at top, rgba(129, 140, 248, 0.18), transparent 60%), #020617; border: 1px solid rgba(79, 70, 229, 0.7); box-shadow: 0 12px 30px rgba(15, 23, 42, 0.95); font-size: 12px; position: relative; overflow: hidden; transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast); }
+    .package-card:nth-child(2) { background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%), #020617; border-color: rgba(56, 189, 248, 0.9); }
+    .package-card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95); border-color: var(--accent-strong); }
+    .package-badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 4px; }
+    .package-name { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .package-items { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    .package-footer { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .package-note { font-size: 10px; color: var(--text-muted); max-width: 140px; }
+    .prices-section { margin-top: 32px; }
+    .prices-card { border-radius: 18px; padding: 14px 14px 12px; box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9); background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%), #020617; border: 1px solid rgba(55, 65, 81, 0.85); }
+    .prices-card h3 { font-size: 14px; margin-bottom: 6px; font-weight: 600; }
+    .prices-card p { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    .prices-table-wrapper { max-height: 260px; overflow: auto; border-radius: 12px; border: 1px solid rgba(31, 41, 55, 0.9); background: rgba(15, 23, 42, 0.85); }
+    .prices-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 100%; }
+    .prices-table thead { position: sticky; top: 0; background: rgba(15, 23, 42, 0.98); z-index: 1; }
+    .prices-table th, .prices-table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid rgba(31, 41, 55, 0.7); white-space: nowrap; }
+    .prices-table th { font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; }
+    .prices-table td.name-cell { font-weight: 500; color: var(--text-main); }
+    .prices-table td.category-cell { color: var(--accent); }
+    .prices-table td.price-cell { text-align: right; font-variant-numeric: tabular-nums; }
+    .prices-table tr:nth-child(even) td { background: rgba(15, 23, 42, 0.65); }
+    .calc-card { border-radius: 18px; padding: 14px 14px 12px; box-shadow: 0 14px 34px rgba(15, 23, 42, 0.9); background: radial-gradient(circle at top right, rgba(129, 140, 248, 0.15), transparent 55%), #020617; border: 1px solid rgba(79, 70, 229, 0.85); }
+    .calc-card h3 { font-size: 14px; margin-bottom: 6px; font-weight: 600; }
+    .calc-card p { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+    .calc-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+    .calc-field { display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
+    .calc-label { color: var(--text-muted); }
+    .calc-input, .calc-select { padding: 6px 8px; border-radius: 999px; border: 1px solid rgba(55, 65, 81, 0.9); background: rgba(15, 23, 42, 0.95); color: var(--text-main); font-size: 11px; outline: none; transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out; }
+    .calc-input:focus, .calc-select:focus { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4); }
+    .calc-actions { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .calc-result { font-size: 12px; font-weight: 500; color: var(--accent-strong); font-variant-numeric: tabular-nums; }
+    .calc-note { font-size: 10px; color: var(--text-muted); }
+    .calc-pill { font-size: 10px; padding: 4px 8px; border-radius: 999px; background: rgba(15, 23, 42, 0.9); border: 1px dashed rgba(148, 163, 184, 0.5); color: var(--text-muted); }
+    #cartButtons { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-top: 6px; }
+    #packageBreakdownContainer { margin-top: 10px; }
+    .btn-mini-danger { border-radius: 999px; border: 1px solid rgba(248, 113, 113, 0.8); background: rgba(127, 29, 29, 0.9); color: #fee2e2; font-size: 10px; padding: 2px 8px; cursor: pointer; }
+    @media (max-width: 960px) { body { padding: 20px 14px 28px; } .hero { grid-template-columns: minmax(0, 1fr); padding: 22px 18px 18px; } .hero-pricing-card { max-width: 100%; } .section { padding: 18px 16px 16px; } .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .packages-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px) { .hero-actions { flex-direction: column; align-items: stretch; } .client-grid { grid-template-columns: minmax(0, 1fr); } .category-grid { grid-template-columns: minmax(0, 1fr); } .packages-grid { grid-template-columns: minmax(0, 1fr); } .section-header { flex-direction: column; align-items: flex-start; } .section-subtitle { max-width: 100%; } .calc-form { grid-template-columns: minmax(0, 1fr); } .calc-actions { flex-direction: column; } #cartButtons { justify-content: flex-start; } }
+
+    /* ========== ADDED: thumbnails & preview ========== */
+    .product-thumb { width: 48px; height: 36px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06); }
+    .product-preview { width: 120px; height: 90px; object-fit: contain; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); display:inline-block; vertical-align: middle; margin-right: 10px; }
+    .product-preview-placeholder { width: 120px; height: 90px; display:inline-flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:12px; border-radius:8px; border:1px dashed rgba(255,255,255,0.03); background: rgba(255,255,255,0.01); margin-right: 10px; }
+    .thumb-cell { padding:6px 8px; width:64px; text-align:center; }
   </style>
 </head>
 <body>
@@ -915,6 +248,7 @@
         <div class="calc-form">
           <div class="calc-field">
             <label class="calc-label" for="productSelect">Produkti</label>
+            <div id="productSelectWrapper"></div>
             <select id="productSelect" class="calc-select"></select>
           </div>
 
@@ -945,16 +279,10 @@
               Formula: baza e produktit + stampat shtesë + zbritja nga sasia/segmenti.
             </div>
             <div id="cartButtons">
-              <button class="btn btn-outline btn-xs" onclick="addCurrentToCart();">
-                Shto këtë produkt në ofertë
-              </button>
-              <button class="btn btn-outline btn-xs" onclick="clearCart();">
-                Pastro ofertën
-              </button>
-              <!-- WhatsApp send button -->
-              <button class="btn btn-primary btn-xs" onclick="sendCartToWhatsApp();">
-                Dërgo në WhatsApp
-              </button>
+              <button class="btn btn-outline btn-xs" onclick="addCurrentToCart();">Shto këtë produkt në ofertë</button>
+              <button class="btn btn-outline btn-xs" onclick="clearCart();">Pastro ofertën</button>
+              <button id="importBtn" class="btn btn-outline btn-xs" style="display:none;" onclick="importProductsFromSite();">Importo produktet</button>
+              <button class="btn btn-primary btn-xs" onclick="sendCartToWhatsApp();">Dërgo në WhatsApp</button>
             </div>
           </div>
         </div>
@@ -964,11 +292,8 @@
           21–50 (−15%), 51+ (−20%). Segmenti Rishitës merr edhe −10% ekstra mbi total.
         </p>
 
-        <!-- Oferta me disa produkte -->
         <div id="packageBreakdownContainer" style="display:none;">
-          <div class="calc-pill" id="packageTitle">
-            Oferta aktuale (multi-produkte):
-          </div>
+          <div class="calc-pill" id="packageTitle">Oferta aktuale (multi-produkte):</div>
           <div class="prices-table-wrapper" style="max-height:220px;">
             <table class="prices-table">
               <thead>
@@ -988,7 +313,7 @@
       </article>
     </section>
 
-    <!-- ================= KLIENTËT ================= -->
+    <!-- ================= KLIENTËT (kept) ================= -->
     <section class="section" id="klientet">
       <div class="section-header">
         <div>
@@ -997,195 +322,79 @@
             Dy seksione të qarta: një për porosi personale dhe një për rishitës / biznese me çmim me shumicë.
           </p>
         </div>
-        <div class="pill-soft">
-          <span class="pill-dot"></span>
-          Përdor kalkulatorin si bazë për ofertat.
-        </div>
+        <div class="pill-soft"><span class="pill-dot"></span> Përdor kalkulatorin si bazë për ofertat.</div>
       </div>
 
       <div class="client-grid">
         <article class="client-card">
           <p class="client-label">Segmenti 1</p>
           <h3 class="client-name">Klientë normal</h3>
-          <p class="client-desc">
-            Fokusuar te porositë personale, dhuratat, porositë e vogla dhe të mesme për përdorim individual.
-          </p>
+          <p class="client-desc">Fokusuar te porositë personale, dhuratat, porositë e vogla dhe të mesme për përdorim individual.</p>
           <div class="client-meta">
             <span class="client-pill">Sasi tipike: 1–10 copë</span>
             <span class="client-pill">Çmim bazë + zbritje të vogla</span>
             <span class="client-pill">Ideal për: dhurata, evente, personalizim individual</span>
           </div>
           <div class="client-footer">
-            <a href="#kalkulatori"
-               class="btn btn-primary btn-xs"
-               onclick="setSegment('normal'); presetForSingle(); scrollToCalculator(); return false;">
-              Shiko cmimin për 1 copë
-            </a>
-            <p class="client-note">
-              Vendoset automatikisht sasia 1 dhe segmenti Klient normal në kalkulator.
-            </p>
+            <a href="#kalkulatori" class="btn btn-primary btn-xs" onclick="setSegment('normal'); presetForSingle(); scrollToCalculator(); return false;">Shiko cmimin për 1 copë</a>
+            <p class="client-note">Vendoset automatikisht sasia 1 dhe segmenti Klient normal në kalkulator.</p>
           </div>
         </article>
 
         <article class="client-card reseller">
           <p class="client-label">Segmenti 2</p>
           <h3 class="client-name">Rishitës & Biznese (B2B)</h3>
-          <p class="client-desc">
-            Dyqane, brand-e dhe kompani që porosisin sasi më të mëdha me çmime të personalizuara me shumicë.
-          </p>
+          <p class="client-desc">Dyqane, brand-e dhe kompani që porosisin sasi më të mëdha me çmime të personalizuara me shumicë.</p>
           <div class="client-meta">
             <span class="client-pill">Sasi tipike: 10+ copë</span>
             <span class="client-pill">Çmime të diferencuara sipas sasisë</span>
             <span class="client-pill">Paketa & oferta afatgjata</span>
           </div>
           <div class="client-footer">
-            <a href="#kalkulatori"
-               class="btn btn-outline btn-xs"
-               onclick="setSegment('reseller'); presetForReseller(); scrollToCalculator(); return false;">
-              Bazohu te cmimet & bëj ofertë
-            </a>
-            <p class="client-note">
-              Aktivizohet modu Rishitës dhe vendoset automatikisht sasi më e madhe.
-            </p>
+            <a href="#kalkulatori" class="btn btn-outline btn-xs" onclick="setSegment('reseller'); presetForReseller(); scrollToCalculator(); return false;">Bazohu te cmimet & bëj ofertë</a>
+            <p class="client-note">Aktivizohet modu Rishitës dhe vendoset automatikisht sasi më e madhe.</p>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- ================= KATEGORITË ================= -->
+    <!-- ================= KATEGORITË & PAKETAT & CMIMET (kept) ================= -->
     <section class="section" id="kategorite">
       <div class="section-header">
-        <div>
-          <h2 class="section-title">Kategoritë e produkteve</h2>
-          <p class="section-subtitle">
-            Të njëjtat kategori për klientë normal dhe rishitës – ndryshon vetëm çmimi dhe tekstet sipas segmentit.
-          </p>
-        </div>
+        <div><h2 class="section-title">Kategoritë e produkteve</h2><p class="section-subtitle">Të njëjtat kategori për klientë normal dhe rishitës – ndryshon vetëm çmimi dhe tekstet sipas segmentit.</p></div>
       </div>
 
       <div class="category-grid">
-        <article class="category-card">
-          <h3 class="category-title">Veshje</h3>
-          <p class="category-list">
-            PREMIUM 180, AZZURO POLO, GATOR, SPRING, HOODIE 300 GSM, veshje pune.
-          </p>
-        </article>
-
-        <article class="category-card">
-          <h3 class="category-title">Produkte promocionale</h3>
-          <p class="category-list">
-            CAMPUS MAT, stilolapsa, blloqe shënimesh, USB, gota & termus.
-          </p>
-        </article>
-
-        <article class="category-card">
-          <h3 class="category-title">Aksesorë & çanta</h3>
-          <p class="category-list">
-            NATURELLA 120, DOCUMENTO, LAGER, çanta shpine, çanta dokumentash.
-          </p>
-        </article>
-
-        <article class="category-card">
-          <h3 class="category-title">Çadra & të tjera</h3>
-          <p class="category-list">
-            CAMPOS PLUS, NIMBUS, ROSSI dhe çadra të tjera promocionale.
-          </p>
-        </article>
+        <article class="category-card"><h3 class="category-title">Veshje</h3><p class="category-list">PREMIUM 180, AZZURO POLO, GATOR, SPRING, HOODIE 300 GSM, veshje pune.</p></article>
+        <article class="category-card"><h3 class="category-title">Produkte promocionale</h3><p class="category-list">CAMPUS MAT, stilolapsa, blloqe shënimesh, USB, gota & termus.</p></article>
+        <article class="category-card"><h3 class="category-title">Aksesorë & çanta</h3><p class="category-list">NATURELLA 120, DOCUMENTO, LAGER, çanta shpine, çanta dokumentash.</p></article>
+        <article class="category-card"><h3 class="category-title">Çadra & të tjera</h3><p class="category-list">CAMPOS PLUS, NIMBUS, ROSSI dhe çadra të tjera promocionale.</p></article>
       </div>
     </section>
 
-    <!-- ================= PAKETAT ================= -->
     <section class="section" id="paketat">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Paketa të gatshme për shitje</h2>
-          <p class="section-subtitle">
-            Paketat i bëjnë rishitësit të marrin vendim më shpejt dhe klientët normal të zgjedhin kombo me vlerë më të lartë.
-          </p>
-        </div>
-      </div>
-
+      <div class="section-header"><div><h2 class="section-title">Paketa të gatshme për shitje</h2><p class="section-subtitle">Paketat i bëjnë rishitësit të marrin vendim më shpejt dhe klientët normal të zgjedhin kombo me vlerë më të lartë.</p></div></div>
       <div class="packages-grid">
-        <article class="package-card">
-          <p class="package-badge">Për klientë normal</p>
-          <h3 class="package-name">Starter Pack Personal</h3>
-          <p class="package-items">
-            1 HOODIE 300 GSM · 1 PREMIUM 180 · 1 NATURELLA 120 totebag me dizajn personal.
-          </p>
-          <div class="package-footer">
-            <p class="package-note">
-              Llogarit automatikisht gjithë paketën me një klik.
-            </p>
-            <button class="btn btn-primary btn-xs"
-                    onclick="setSegment('normal'); applyPreset('starter-personal'); scrollToCalculator();">
-              Shto në ofertë
-            </button>
-          </div>
-        </article>
+        <article class="package-card"><p class="package-badge">Për klientë normal</p><h3 class="package-name">Starter Pack Personal</h3><p class="package-items">1 HOODIE 300 GSM · 1 PREMIUM 180 · 1 NATURELLA 120 totebag me dizajn personal.</p><div class="package-footer"><p class="package-note">Llogarit automatikisht gjithë paketën me një klik.</p><button class="btn btn-primary btn-xs" onclick="setSegment('normal'); applyPreset('starter-personal'); scrollToCalculator();">Shto në ofertë</button></div></article>
 
-        <article class="package-card">
-          <p class="package-badge">Për rishitës & brand-e</p>
-          <h3 class="package-name">Brand Starter Pack</h3>
-          <p class="package-items">
-            5 HOODIE 300 GSM + 10 PREMIUM 180 + 20 CAMPUS MAT.
-          </p>
-          <div class="package-footer">
-            <p class="package-note">
-              Llogaritet total-i i gjithë paketës për rishitës, me zbritje ekstra.
-            </p>
-            <button class="btn btn-outline btn-xs"
-                    onclick="setSegment('reseller'); applyPreset('brand-pack'); scrollToCalculator();">
-              Kërko ofertë
-            </button>
-          </div>
-        </article>
+        <article class="package-card"><p class="package-badge">Për rishitës & brand-e</p><h3 class="package-name">Brand Starter Pack</h3><p class="package-items">5 HOODIE 300 GSM + 10 PREMIUM 180 + 20 CAMPUS MAT.</p><div class="package-footer"><p class="package-note">Llogaritet total-i i gjithë paketës për rishitës, me zbritje ekstra.</p><button class="btn btn-outline btn-xs" onclick="setSegment('reseller'); applyPreset('brand-pack'); scrollToCalculator();">Kërko ofertë</button></div></article>
 
-        <article class="package-card">
-          <p class="package-badge">Për kompani & zyra</p>
-          <h3 class="package-name">Office Promo Pack</h3>
-          <p class="package-items">
-            20 CAMPOS PLUS (çadra) + promo të tjera sipas kërkesës.
-          </p>
-          <div class="package-footer">
-            <p class="package-note">
-              Merr cmimin total për çadrat dhe shto pastaj produktet e tjera.
-            </p>
-            <button class="btn btn-outline btn-xs"
-                    onclick="setSegment('reseller'); applyPreset('office-pack'); scrollToCalculator();">
-              Personalizo paketën
-            </button>
-          </div>
-        </article>
+        <article class="package-card"><p class="package-badge">Për kompani & zyra</p><h3 class="package-name">Office Promo Pack</h3><p class="package-items">20 CAMPOS PLUS (çadra) + promo të tjera sipas kërkesës.</p><div class="package-footer"><p class="package-note">Merr cmimin total për çadrat dhe shto pastaj produktet e tjera.</p><button class="btn btn-outline btn-xs" onclick="setSegment('reseller'); applyPreset('office-pack'); scrollToCalculator();">Personalizo paketën</button></div></article>
       </div>
     </section>
 
-    <!-- ================= LISTA E CMIMEVE ================= -->
     <section class="section prices-section" id="cmimet">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Lista bazë e cmimeve (1 copë)</h2>
-          <p class="section-subtitle">
-            Cmime orientuese për 1 copë, bazuar në listën e cmimeve dtfprint.al.
-            Kalkulatori përdor këto vlera si bazë për përllogaritje.
-          </p>
-        </div>
-        <div class="pill-soft">
-          <span class="pill-dot"></span>
-          Përditëso shifrat në kod sa herë ndryshon PDF-i i cmimeve.
-        </div>
-      </div>
+      <div class="section-header"><div><h2 class="section-title">Lista bazë e cmimeve (1 copë)</h2><p class="section-subtitle">Cmime orientuese për 1 copë, bazuar në listën e cmimeve dtfprint.al. Kalkulatori përdor këto vlera si bazë për përllogaritje.</p></div><div class="pill-soft"><span class="pill-dot"></span> Përditëso shifrat në kod sa herë ndryshon PDF-i i cmimeve.</div></div>
 
       <article class="prices-card">
         <h3>Produktet kryesore</h3>
-        <p>
-          Këto janë disa nga produktet që përdoren më shpesh në oferta. Mund të shtosh ose të ndryshosh cmimet
-          direkt te seksioni <code>products</code> në fund të kësaj faqeje.
-        </p>
+        <p>Këto janë disa nga produktet që përdoren më shpesh në oferta. Mund të shtosh ose të ndryshosh cmimet direkt te seksioni <code>products</code> në fund të kësaj faqeje.</p>
 
         <div class="prices-table-wrapper">
           <table class="prices-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Produkti</th>
                 <th>Kategoria</th>
                 <th>Çmimi / copë</th>
@@ -1213,119 +422,85 @@
 
     const resellerMultiplier = 0.90; // −10% për rishitës
 
+    // ========== PRODUCTS (me image) ==========
+    // Sigurohu që imazhet t'i ngarkosh në repo:n tënde në folder public/product-images/
     const products = [
-      { id: "premium180", name: "PREMIUM 180 – Bluze 180 GSM", category: "Tekstil", price: 700 },
-      { id: "azzuroPolo", name: "AZZURO POLO – Bluze polo 180 GSM", category: "Tekstil", price: 900 },
-      { id: "gator", name: "GATOR – Bluze polo 180 GSM", category: "Tekstil", price: 1000 },
-      { id: "spring", name: "SPRING – Sweatshirt 300 GSM", category: "Tekstil", price: 1700 },
-      { id: "hoodie300", name: "HOODIE – Hoodie 300 GSM", category: "Tekstil", price: 1900 },
-      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 },
-      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta", price: 350 },
-      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta", price: 250 },
-      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta", price: 300 },
-      { id: "camposPlus", name: "CAMPOS PLUS – Çadër", category: "Çadra", price: 750 },
-      { id: "nimbus", name: "NIMBUS – Çadër", category: "Çadra", price: 800 },
-      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850 }
+      { id: "premium180", name: "PREMIUM 180 – Bluze 180 GSM", category: "Tekstil", price: 700, image: "/product-images/premium180.jpg" },
+      { id: "azzuroPolo", name: "AZZURO POLO – Bluze polo 180 GSM", category: "Tekstil", price: 900, image: "/product-images/azzuroPolo.jpg" },
+      { id: "gator", name: "GATOR – Bluze polo 180 GSM", category: "Tekstil", price: 1000, image: "/product-images/gator.jpg" },
+      { id: "spring", name: "SPRING – Sweatshirt 300 GSM", category: "Tekstil", price: 1700, image: "/product-images/spring.jpg" },
+      { id: "hoodie300", name: "HOODIE – Hoodie 300 GSM", category: "Tekstil", price: 1900, image: "/product-images/hoodie300.jpg" },
+      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450, image: "/product-images/campusMat.jpg" },
+      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta", price: 350, image: "/product-images/lager.jpg" },
+      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta", price: 250, image: "/product-images/naturella.jpg" },
+      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta", price: 300, image: "/product-images/documento.jpg" },
+      { id: "camposPlus", name: "CAMPOS PLUS – Çadër", category: "Çadra", price: 750, image: "/product-images/camposPlus.jpg" },
+      { id: "nimbus", name: "NIMBUS – Çadër", category: "Çadra", price: 800, image: "/product-images/nimbus.jpg" },
+      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850, image: "/product-images/rossi.jpg" }
     ];
 
-    // Paketa – preset që mbush listën
     const packagePresets = {
-      "starter-personal": {
-        name: "Starter Pack Personal",
-        items: [
-          { productId: "hoodie300", qty: 1, prints: 2 },
-          { productId: "premium180", qty: 1, prints: 1 },
-          { productId: "naturella", qty: 1, prints: 1 }
-        ]
-      },
-      "brand-pack": {
-        name: "Brand Starter Pack",
-        items: [
-          { productId: "hoodie300", qty: 5, prints: 2 },
-          { productId: "premium180", qty: 10, prints: 1 },
-          { productId: "campusMat", qty: 20, prints: 1 }
-        ]
-      },
-      "office-pack": {
-        name: "Office Promo Pack",
-        items: [
-          { productId: "camposPlus", qty: 20, prints: 1 }
-        ]
-      }
+      "starter-personal": { name: "Starter Pack Personal", items: [{ productId: "hoodie300", qty: 1, prints: 2 }, { productId: "premium180", qty: 1, prints: 1 }, { productId: "naturella", qty: 1, prints: 1 }] },
+      "brand-pack": { name: "Brand Starter Pack", items: [{ productId: "hoodie300", qty: 5, prints: 2 }, { productId: "premium180", qty: 10, prints: 1 }, { productId: "campusMat", qty: 20, prints: 1 }] },
+      "office-pack": { name: "Office Promo Pack", items: [{ productId: "camposPlus", qty: 20, prints: 1 }] }
     };
 
-    let currentSegment = "normal";    // "normal" ose "reseller"
-    let cartItems = [];               // lista e produkteve në ofertë
+    let currentSegment = "normal";
+    let cartItems = [];
     let cartLabel = "Oferta aktuale (multi-produkte)";
+    const WHATSAPP_NUMBER = "355693789100"; // pa +
 
-    // WhatsApp business number (international, no +): 355693789100
-    const WHATSAPP_NUMBER = "355693789100";
-
-    // ------------------- FUNKSIONE NDIHMËSE -------------------
-
+    // ------------------- HELPERS -------------------
     function formatALL(value) {
       if (isNaN(value)) return "–";
       try {
-        return value.toLocaleString("sq-AL", {
-          style: "currency",
-          currency: "ALL",
-          maximumFractionDigits: 0
-        });
+        return value.toLocaleString("sq-AL", { style: "currency", currency: "ALL", maximumFractionDigits: 0 });
       } catch (e) {
         return value.toLocaleString("sq-AL") + " Lekë";
       }
     }
 
     function getQuantityTier(qty) {
-      for (const tier of quantityTiers) {
-        if (qty <= tier.max) return tier;
-      }
+      for (const tier of quantityTiers) if (qty <= tier.max) return tier;
       return quantityTiers[quantityTiers.length - 1];
     }
 
-    function findProduct(id) {
-      return products.find(p => p.id === id) || null;
-    }
+    function findProduct(id) { return products.find(p => p.id === id) || null; }
 
     function computeLine(productId, qty, prints) {
       const p = findProduct(productId);
       if (!p) return null;
-
       const safeQty = Math.max(qty || 1, 1);
       const safePrints = Math.max(prints || 1, 1);
-
       const extraPrints = Math.max(safePrints - 1, 0);
       const extraPerUnit = extraPrints * EXTRA_PRINT_PRICE;
       const baseUnitPrice = p.price;
       const unitWithPrints = baseUnitPrice + extraPerUnit;
-
       const tier = getQuantityTier(safeQty);
       const segmentMultiplier = currentSegment === "reseller" ? resellerMultiplier : 1;
-
       const unitAfterQty = unitWithPrints * tier.multiplier * segmentMultiplier;
       const finalUnit = Math.round(unitAfterQty);
       const total = finalUnit * safeQty;
-
-      return {
-        product: p,
-        qty: safeQty,
-        prints: safePrints,
-        baseUnitPrice,
-        extraPrints,
-        extraPerUnit,
-        unitWithPrints,
-        tier,
-        finalUnit,
-        total
-      };
+      return { product: p, qty: safeQty, prints: safePrints, baseUnitPrice, extraPrints, extraPerUnit, unitWithPrints, tier, finalUnit, total };
     }
 
+    // ------------------- UI POPULATE (modified for thumbs + preview) -------------------
     function populatePricesTable() {
       const tbody = document.getElementById("pricesTableBody");
       if (!tbody) return;
       tbody.innerHTML = "";
+
       products.forEach((p) => {
         const tr = document.createElement("tr");
+
+        const thumbTd = document.createElement("td");
+        thumbTd.className = "thumb-cell";
+        const img = document.createElement("img");
+        img.className = "product-thumb";
+        img.alt = p.name;
+        img.src = p.image || "/product-images/default.png";
+        thumbTd.appendChild(img);
+        tr.appendChild(thumbTd);
 
         const nameTd = document.createElement("td");
         nameTd.className = "name-cell";
@@ -1350,41 +525,72 @@
       const select = document.getElementById("productSelect");
       if (!select) return;
       select.innerHTML = "";
+
       products.forEach((p) => {
         const opt = document.createElement("option");
         opt.value = p.id;
         opt.textContent = `${p.name} – ${formatALL(p.price)}`;
         select.appendChild(opt);
       });
+
+      // create preview container once
+      const wrapper = document.getElementById("productSelectWrapper");
+      wrapper.innerHTML = "";
+      const previewWrap = document.createElement("div");
+      previewWrap.style.display = "flex"; previewWrap.style.alignItems = "center"; previewWrap.style.gap = "8px"; previewWrap.style.marginBottom = "8px";
+
+      const imgEl = document.createElement("img");
+      imgEl.id = "productPreviewImg";
+      imgEl.className = "product-preview";
+      imgEl.src = products.length ? (products[0].image || "/product-images/default.png") : "";
+      imgEl.alt = "Preview";
+
+      const label = document.createElement("div");
+      label.id = "productPreviewLabel";
+      label.className = "product-preview-placeholder";
+      label.textContent = products.length ? products[0].name : "Foto produkti";
+
+      previewWrap.appendChild(imgEl);
+      previewWrap.appendChild(label);
+      wrapper.appendChild(previewWrap);
+
+      // set change listener
+      select.addEventListener("change", () => {
+        const id = select.value;
+        const p = products.find(x => x.id === id);
+        const imgElLocal = document.getElementById("productPreviewImg");
+        const labelLocal = document.getElementById("productPreviewLabel");
+        if (p && imgElLocal) {
+          imgElLocal.src = p.image || "/product-images/default.png";
+          imgElLocal.alt = p.name;
+          labelLocal.textContent = p.name;
+        }
+        if (cartItems.length === 0) calculateSingleTotal();
+      });
+
+      // init selection
+      if (select.options.length > 0) {
+        select.value = select.options[0].value;
+        const ev = new Event('change');
+        select.dispatchEvent(ev);
+      }
     }
 
-    // ------------------- KALKULATORI SINGLE -------------------
-
+    // ------------------- SINGLE CALC -------------------
     function calculateSingleTotal() {
       const select = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
-
       const unitDisplay = document.getElementById("unitPriceDisplay");
       const totalDisplay = document.getElementById("totalPriceDisplay");
       const breakdownDisplay = document.getElementById("breakdownDisplay");
       const container = document.getElementById("packageBreakdownContainer");
 
-      if (container && cartItems.length === 0) {
-        container.style.display = "none";
-      }
+      if (container && cartItems.length === 0) container.style.display = "none";
 
-      if (!select || !quantityInput || !printsInput ||
-          !unitDisplay || !totalDisplay || !breakdownDisplay) {
-        return;
-      }
+      if (!select || !quantityInput || !printsInput || !unitDisplay || !totalDisplay || !breakdownDisplay) return;
 
-      const line = computeLine(
-        select.value,
-        parseInt(quantityInput.value, 10),
-        parseInt(printsInput.value, 10)
-      );
-
+      const line = computeLine(select.value, parseInt(quantityInput.value, 10), parseInt(printsInput.value, 10));
       if (!line) {
         unitDisplay.textContent = "Çmimi për copë: –";
         totalDisplay.textContent = "Totali: –";
@@ -1396,27 +602,19 @@
       totalDisplay.textContent = "Totali për " + line.qty + " copë: " + formatALL(line.total);
 
       const qtyDiscountPercent = Math.round((1 - line.tier.multiplier) * 100);
-      const resellerDiscountPercent = currentSegment === "reseller"
-        ? Math.round((1 - resellerMultiplier) * 100)
-        : 0;
+      const resellerDiscountPercent = currentSegment === "reseller" ? Math.round((1 - resellerMultiplier) * 100) : 0;
 
       const parts = [
         `Baza: ${formatALL(line.baseUnitPrice)}`,
-        line.extraPrints > 0
-          ? `+ ${line.extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}`
-          : "+ pa stampë shtesë",
+        line.extraPrints > 0 ? `+ ${line.extraPrints} stamp. shtesë × ${formatALL(EXTRA_PRINT_PRICE)}` : "+ pa stampë shtesë",
         `· Zbritje sasia: ${line.tier.label}${qtyDiscountPercent > 0 ? ` (${qtyDiscountPercent}% -)` : ""}`
       ];
 
-      if (resellerDiscountPercent > 0) {
-        parts.push(`· Rishitës: −${resellerDiscountPercent}% ekstra`);
-      }
-
+      if (resellerDiscountPercent > 0) parts.push(`· Rishitës: −${resellerDiscountPercent}% ekstra`);
       breakdownDisplay.textContent = parts.join("  ");
     }
 
-    // ------------------- CART / MULTI-PRODUKT -------------------
-
+    // ------------------- CART -------------------
     function calculateCartTotal() {
       const unitDisplay = document.getElementById("unitPriceDisplay");
       const totalDisplay = document.getElementById("totalPriceDisplay");
@@ -1424,9 +622,7 @@
       const container = document.getElementById("packageBreakdownContainer");
       const titleEl = document.getElementById("packageTitle");
       const body = document.getElementById("packageBreakdownBody");
-
-      if (!unitDisplay || !totalDisplay || !breakdownDisplay ||
-          !container || !titleEl || !body) return;
+      if (!unitDisplay || !totalDisplay || !breakdownDisplay || !container || !titleEl || !body) return;
 
       if (cartItems.length === 0) {
         container.style.display = "none";
@@ -1436,7 +632,6 @@
 
       container.style.display = "block";
       titleEl.textContent = cartLabel;
-
       body.innerHTML = "";
       let grandTotal = 0;
       let totalQty = 0;
@@ -1444,7 +639,6 @@
       cartItems.forEach((item, index) => {
         const line = computeLine(item.productId, item.qty, item.prints);
         if (!line) return;
-
         grandTotal += line.total;
         totalQty += line.qty;
 
@@ -1507,8 +701,7 @@
 
       unitDisplay.textContent = "Çmimi mesatar për copë (ofertë): " + formatALL(avg);
       totalDisplay.textContent = "Totali i ofertës për " + totalQty + " copë: " + formatALL(grandTotal);
-      breakdownDisplay.textContent =
-        "Ofertë me disa produkte: çdo rresht ka zbritjen e vet sipas sasisë + rishitës; më pas mblidhen të gjitha.";
+      breakdownDisplay.textContent = "Ofertë me disa produkte: çdo rresht ka zbritjen e vet sipas sasisë + rishitës; më pas mblidhen të gjitha.";
     }
 
     function addCurrentToCart() {
@@ -1517,12 +710,7 @@
       const printsInput = document.getElementById("printsInput");
       if (!select || !quantityInput || !printsInput) return;
 
-      const item = {
-        productId: select.value,
-        qty: Math.max(parseInt(quantityInput.value, 10) || 1, 1),
-        prints: Math.max(parseInt(printsInput.value, 10) || 1, 1)
-      };
-
+      const item = { productId: select.value, qty: Math.max(parseInt(quantityInput.value, 10) || 1, 1), prints: Math.max(parseInt(printsInput.value, 10) || 1, 1) };
       cartItems.push(item);
       cartLabel = "Oferta aktuale (multi-produkte)";
       calculateCartTotal();
@@ -1541,13 +729,11 @@
       calculateCartTotal();
     }
 
-    // ------------------- WHATSAPP INTEGRATION -------------------
-    // Krijon dhe dërgon mesazhin e porosisë në WhatsApp biznesit.
+    // ------------------- WHATSAPP -------------------
     function buildOrderMessage() {
       let lines = [];
       lines.push("Porosia nga dtfprint.al");
       lines.push("------------------------");
-
       let grandTotal = 0;
       let totalQty = 0;
 
@@ -1555,29 +741,23 @@
         cartItems.forEach((it, idx) => {
           const line = computeLine(it.productId, it.qty, it.prints);
           if (!line) return;
-          lines.push(
-            `${idx+1}. ${line.product.name} — ${line.qty} copë, ${line.prints} stampë(ra) — Totali: ${formatALL(line.total)}`
-          );
+          lines.push(`${idx+1}. ${line.product.name} — ${line.qty} copë, ${line.prints} stampë(ra) — Totali: ${formatALL(line.total)}`);
           grandTotal += line.total;
           totalQty += line.qty;
         });
       } else {
-        // fallback: përdor rreshtin aktual nga select/inputs
         const select = document.getElementById("productSelect");
         const quantityInput = document.getElementById("quantityInput");
         const printsInput = document.getElementById("printsInput");
         const prodId = select ? select.value : null;
         const qty = quantityInput ? Math.max(parseInt(quantityInput.value,10)||1,1) : 1;
         const prints = printsInput ? Math.max(parseInt(printsInput.value,10)||1,1) : 1;
-
         const line = computeLine(prodId, qty, prints);
         if (line) {
           lines.push(`1. ${line.product.name} — ${line.qty} copë, ${line.prints} stampë(ra) — Totali: ${formatALL(line.total)}`);
           grandTotal = line.total;
           totalQty = line.qty;
-        } else {
-          lines.push("Asnjë produkt i zgjedhur.");
-        }
+        } else lines.push("Asnjë produkt i zgjedhur.");
       }
 
       lines.push("------------------------");
@@ -1585,8 +765,7 @@
       lines.push(`Totali i porosisë: ${formatALL(grandTotal)}`);
       lines.push("");
       lines.push("Ju lutem konfirmoni disponueshmërinë dhe kohën e prodhimit.");
-      lines.push("Emri & Kontakti klientit:"); // bosh për të plotësuar nga klienti në WhatsApp
-
+      lines.push("Emri & Kontakti klientit:");
       return lines.join("\n");
     }
 
@@ -1594,106 +773,91 @@
       const message = buildOrderMessage();
       const encoded = encodeURIComponent(message);
       const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
-
-      // Open in new tab (desktop) or new window (mobile)
       window.open(waUrl, "_blank");
     }
 
-    // bëji funksionet accesible nga HTML
-    window.sendCartToWhatsApp = sendCartToWhatsApp;
-
     // ------------------- SEGMENTI & PRESET -------------------
-
     function setSegment(segment) {
       currentSegment = segment === "reseller" ? "reseller" : "normal";
       const normalBtn = document.getElementById("segmentNormalBtn");
       const resellerBtn = document.getElementById("segmentResellerBtn");
       const segmentInfo = document.getElementById("segmentInfo");
-
-      if (normalBtn && resellerBtn) {
-        normalBtn.classList.toggle("active", currentSegment === "normal");
-        resellerBtn.classList.toggle("active", currentSegment === "reseller");
-      }
-
+      if (normalBtn && resellerBtn) { normalBtn.classList.toggle("active", currentSegment === "normal"); resellerBtn.classList.toggle("active", currentSegment === "reseller"); }
       if (segmentInfo) {
-        if (currentSegment === "normal") {
-          segmentInfo.textContent =
-            "Segment: Klient normal – cmim standard për 1–5 copë, zbritje graduale për sasira më të mëdha.";
-        } else {
-          segmentInfo.textContent =
-            "Segment: Rishitës – zbritje ekstra −10% mbi cmimin me pakicë + zbritjet nga sasia.";
-        }
+        if (currentSegment === "normal") segmentInfo.textContent = "Segment: Klient normal – cmim standard për 1–5 copë, zbritje graduale për sasira më të mëdha.";
+        else segmentInfo.textContent = "Segment: Rishitës – zbritje ekstra −10% mbi cmimin me pakicë + zbritjet nga sasia.";
       }
-
-      if (cartItems.length > 0) {
-        calculateCartTotal();
-      } else {
-        calculateSingleTotal();
-      }
+      if (cartItems.length > 0) calculateCartTotal(); else calculateSingleTotal();
     }
 
-    function scrollToCalculator() {
-      const el = document.getElementById("kalkulatori");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
+    function scrollToCalculator() { const el = document.getElementById("kalkulatori"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    function scrollToPrices() { const el = document.getElementById("cmimet"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
 
-    function scrollToPrices() {
-      const el = document.getElementById("cmimet");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
-    function presetForSingle() {
-      clearCart();
-      const quantityInput = document.getElementById("quantityInput");
-      const printsInput = document.getElementById("printsInput");
-      if (quantityInput) quantityInput.value = 1;
-      if (printsInput) printsInput.value = 1;
-      calculateSingleTotal();
-    }
-
-    function presetForReseller() {
-      clearCart();
-      const quantityInput = document.getElementById("quantityInput");
-      if (quantityInput) quantityInput.value = 20;
-      calculateSingleTotal();
-    }
+    function presetForSingle() { clearCart(); const quantityInput = document.getElementById("quantityInput"); const printsInput = document.getElementById("printsInput"); if (quantityInput) quantityInput.value = 1; if (printsInput) printsInput.value = 1; calculateSingleTotal(); }
+    function presetForReseller() { clearCart(); const quantityInput = document.getElementById("quantityInput"); if (quantityInput) quantityInput.value = 20; calculateSingleTotal(); }
 
     function applyPreset(presetId) {
       const preset = packagePresets[presetId];
       const productSelect = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
-
       if (!preset || !productSelect || !quantityInput || !printsInput) return;
-
       cartItems = preset.items.map(i => ({ ...i }));
       cartLabel = "Paketa e zgjedhur: " + preset.name;
-
-      // vendos si default rreshtin e parë te inputet
       const first = preset.items[0];
       productSelect.value = first.productId;
       quantityInput.value = first.qty;
       printsInput.value = first.prints;
-
       calculateCartTotal();
     }
 
-    // bëji funksionet accesible nga HTML
-    window.setSegment = setSegment;
-    window.scrollToCalculator = scrollToCalculator;
-    window.scrollToPrices = scrollToPrices;
-    window.presetForSingle = presetForSingle;
-    window.presetForReseller = presetForReseller;
-    window.applyPreset = applyPreset;
-    window.addCurrentToCart = addCurrentToCart;
-    window.clearCart = clearCart;
+    // ------------------- OPTIONAL: simple importer (hidden) -------------------
+    // Since site is yours, you can enable this to fetch product pages automatically.
+    async function importProductsFromSite() {
+      const importBtn = document.getElementById('importBtn');
+      if (importBtn) { importBtn.textContent = "Duke importuar..."; importBtn.disabled = true; }
+      try {
+        // attempt to fetch /produktet (only works if same-origin or CORS allowed)
+        const listResp = await fetch("/produktet");
+        if (!listResp.ok) throw new Error("Nuk u arrit: " + listResp.status);
+        const listHtml = await listResp.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(listHtml, "text/html");
+        const anchors = Array.from(doc.querySelectorAll("a[href]"));
+        const base = location.origin;
+        const productLinks = Array.from(new Set(anchors.map(a => a.href).filter(href => href && href.startsWith(base))));
+        const imported = [];
+        for (let i = 0; i < productLinks.length; i++) {
+          const url = productLinks[i];
+          try {
+            const resp = await fetch(url);
+            if (!resp.ok) continue;
+            const html = await resp.text();
+            const d = parser.parseFromString(html, "text/html");
+            let name = (d.querySelector('h1') && d.querySelector('h1').textContent.trim()) || (d.querySelector('meta[property=\"og:title\"]') && d.querySelector('meta[property=\"og:title\"]').content) || url.split('/').pop().replace(/-/g,' ');
+            let image = null;
+            const og = d.querySelector('meta[property=\"og:image\"]');
+            if (og && og.getAttribute('content')) image = og.getAttribute('content');
+            if (!image) { const img = d.querySelector('img'); if (img) image = img.src; }
+            if (image && image.startsWith('/')) image = new URL(image, url).href;
+            imported.push({ id: (url.split('/').pop()||'prod-'+i).replace(/[^a-z0-9\-_]/gi,'-'), name, category: "Produkt", price: 0, image });
+          } catch (e) { console.warn("err import", url, e); }
+        }
+        if (imported.length) {
+          // simple replace products array (not persisted)
+          while(products.length) products.pop();
+          imported.forEach(p => products.push({ id: p.id, name: p.name, category: p.category || 'Produkt', price: p.price || 0, image: p.image || '/product-images/default.png' }));
+          populateProductSelect(); populatePricesTable(); alert("Importi lokal përfundoi: " + products.length + " produkte.");
+        } else alert("Nuk u importua asgjë. Kontrollo CORS/domain.");
+      } catch (err) {
+        console.error(err);
+        alert("Importi dështoi: " + (err.message || err));
+      } finally {
+        if (importBtn) { importBtn.textContent = "Importo produktet"; importBtn.disabled = false; }
+      }
+    }
 
     // ------------------- INIT -------------------
-
     document.addEventListener("DOMContentLoaded", () => {
       populatePricesTable();
       populateProductSelect();
@@ -1704,21 +868,9 @@
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
 
-      if (select) {
-        select.addEventListener("change", () => {
-          if (cartItems.length === 0) calculateSingleTotal();
-        });
-      }
-      if (quantityInput) {
-        quantityInput.addEventListener("input", () => {
-          if (cartItems.length === 0) calculateSingleTotal();
-        });
-      }
-      if (printsInput) {
-        printsInput.addEventListener("input", () => {
-          if (cartItems.length === 0) calculateSingleTotal();
-        });
-      }
+      if (select) select.addEventListener("change", () => { if (cartItems.length === 0) calculateSingleTotal(); });
+      if (quantityInput) quantityInput.addEventListener("input", () => { if (cartItems.length === 0) calculateSingleTotal(); });
+      if (printsInput) printsInput.addEventListener("input", () => { if (cartItems.length === 0) calculateSingleTotal(); });
     });
   </script>
 </body>
