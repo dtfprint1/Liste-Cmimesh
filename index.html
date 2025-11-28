@@ -200,6 +200,12 @@
       color: var(--text-muted);
     }
 
+    .btn-xs {
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+    }
+
     .hero-right {
       position: relative;
       z-index: 1;
@@ -306,12 +312,6 @@
       font-size: 10px;
       color: var(--text-muted);
       max-width: 180px;
-    }
-
-    .btn-xs {
-      padding: 6px 10px;
-      font-size: 11px;
-      border-radius: 999px;
     }
 
     /* ================= COMMON SECTIONS ================= */
@@ -626,6 +626,24 @@
       background: rgba(15, 23, 42, 0.65);
     }
 
+    /* Klikueshmëria e emrave të produkteve */
+
+    .product-link {
+      border: none;
+      background: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .product-link:hover {
+      color: var(--accent-strong);
+      text-decoration: underline;
+    }
+
     /* ===== Kalkulator ===== */
 
     .calc-card {
@@ -646,6 +664,57 @@
       font-size: 11px;
       color: var(--text-muted);
       margin-bottom: 10px;
+    }
+
+    /* Search bar */
+
+    .calc-search {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .calc-search-input {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-main);
+      font-size: 11px;
+      outline: none;
+      transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
+    }
+
+    .calc-search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+
+    .calc-search-results {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      min-height: 0;
+    }
+
+    .calc-search-chip {
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .calc-search-chip strong {
+      color: var(--accent-strong);
+    }
+
+    .calc-search-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
     }
 
     .calc-form {
@@ -912,6 +981,18 @@
           Segmentin (Klient normal / Rishitës) e zgjedh lart në seksionin “Segmenti aktiv”.
         </p>
 
+        <!-- Search produktesh -->
+        <div class="calc-search">
+          <label class="calc-label" for="productSearchInput">Kërko produkt</label>
+          <input
+            id="productSearchInput"
+            type="text"
+            class="calc-search-input"
+            placeholder="Shkruaj p.sh. 'bluzen', 'hoodie', 'campus'..."
+          />
+          <div id="productSearchResults" class="calc-search-results"></div>
+        </div>
+
         <div class="calc-form">
           <div class="calc-field">
             <label class="calc-label" for="productSelect">Produkti</label>
@@ -950,6 +1031,9 @@
               </button>
               <button class="btn btn-outline btn-xs" onclick="clearCart();">
                 Pastro ofertën
+              </button>
+              <button class="btn btn-primary btn-xs" onclick="sendCartToWhatsApp();">
+                Dërgo ofertën në WhatsApp
               </button>
             </div>
           </div>
@@ -1198,6 +1282,7 @@
   <script>
     // ------------------- KONFIGURIM -------------------
     const EXTRA_PRINT_PRICE = 200; // Lekë / stampë shtesë për copë
+    const WHATSAPP_PHONE = "355693789100"; // pa plus
 
     const quantityTiers = [
       { max: 5, label: "1–5 copë", multiplier: 1.0 },
@@ -1209,19 +1294,55 @@
 
     const resellerMultiplier = 0.90; // −10% për rishitës
 
+    // Këtu shton / ndryshon produktet & cmimet
     const products = [
+      // Tekstil
       { id: "premium180", name: "PREMIUM 180 – Bluze 180 GSM", category: "Tekstil", price: 700 },
       { id: "azzuroPolo", name: "AZZURO POLO – Bluze polo 180 GSM", category: "Tekstil", price: 900 },
       { id: "gator", name: "GATOR – Bluze polo 180 GSM", category: "Tekstil", price: 1000 },
       { id: "spring", name: "SPRING – Sweatshirt 300 GSM", category: "Tekstil", price: 1700 },
       { id: "hoodie300", name: "HOODIE – Hoodie 300 GSM", category: "Tekstil", price: 1900 },
-      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 },
-      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta", price: 350 },
-      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta", price: 250 },
-      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta", price: 300 },
+
+      // Çanta, totebag, backpack
+      { id: "lager", name: "LAGER – Thermal Bag", category: "Çanta & aksesorë", price: 450 },
+      { id: "naturella", name: "NATURELLA 120 – Totebag 120 gr", category: "Çanta & aksesorë", price: 350 },
+      { id: "documento", name: "DOCUMENTO – Çantë dokumentash", category: "Çanta & aksesorë", price: 400 },
+      { id: "melonColor", name: "MELON COLOR 140 – Çantë shpine", category: "Çanta & aksesorë", price: 400 },
+      { id: "cityRpet", name: "CITY RPET – Çantë shpine", category: "Çanta & aksesorë", price: 400 },
+      { id: "robin", name: "ROBIN – Çantë shpine", category: "Çanta & aksesorë", price: 900 },
+      { id: "bet", name: "BET – Çantë shpine", category: "Çanta & aksesorë", price: 1000 },
+      { id: "martin", name: "MARTIN – Çantë shpine", category: "Çanta & aksesorë", price: 2350 },
+      { id: "welter", name: "WELTER – Çantë shpine", category: "Çanta & aksesorë", price: 2600 },
+
+      // Blloqe shënimesh / agenda
+      { id: "organicA6", name: "ORGANIC – Bllok shënimesh A6", category: "Blloqe & agenda", price: 300 },
+      { id: "ozoneA6", name: "OZONE – Bllok shënimesh A6", category: "Blloqe & agenda", price: 350 },
+      { id: "noteA5", name: "NOTE – Bllok shënimesh A5", category: "Blloqe & agenda", price: 400 },
+      { id: "toto", name: "TOTO – Bllok shënimesh A5", category: "Blloqe & agenda", price: 550 },
+      { id: "mondo", name: "MONDO – Bllok shënimesh A5", category: "Blloqe & agenda", price: 580 },
+      { id: "pino", name: "PINO – Bllok shënimesh A5", category: "Blloqe & agenda", price: 700 },
+      { id: "axhenda", name: "AXHENDA – Bllok shënimesh 2025", category: "Blloqe & agenda", price: 750 },
+      { id: "noteCork", name: "NOTE CORK – Bllok shënimesh A5", category: "Blloqe & agenda", price: 800 },
+
+      // Gota & termus
+      { id: "ada", name: "ADA – Termus 650 ml", category: "Gota & termus", price: 650 },
+      { id: "cacao", name: "CACAO – Termus 650 ml", category: "Gota & termus", price: 650 },
+      { id: "fluid", name: "FLUID – Termus 500 ml", category: "Gota & termus", price: 700 },
+      { id: "elementSmart", name: "ELEMENT SMART – Termus me ekran LED", category: "Gota & termus", price: 1000 },
+      { id: "frio", name: "FRIO – Termus 300 ml", category: "Gota & termus", price: 1100 },
+      { id: "diamond", name: "DIAMOND – Termus 500 ml", category: "Gota & termus", price: 1700 },
+
+      // Çadra
       { id: "camposPlus", name: "CAMPOS PLUS – Çadër", category: "Çadra", price: 750 },
       { id: "nimbus", name: "NIMBUS – Çadër", category: "Çadra", price: 800 },
-      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850 }
+      { id: "rossi", name: "ROSSI – Çadër", category: "Çadra", price: 850 },
+      { id: "blackLine", name: "BLACK LINE – Çadër", category: "Çadra", price: 900 },
+      { id: "masterMan", name: "MASTER MAN – Bluze 150 GSM", category: "Tekstil", price: 1600 },
+      { id: "classic", name: "CLASSIC – Çadër", category: "Çadra", price: 650 },
+
+      // Promo, karta, mousepad
+      { id: "campusMat", name: "CAMPUS MAT – Mouse Pad", category: "Promo", price: 450 }
+      // KARTA PLASTIKE & stilolapsat mund t'i shtosh më vonë nëse do t'i përdorësh në ofertë
     ];
 
     // Paketa – preset që mbush listën
@@ -1322,7 +1443,12 @@
 
         const nameTd = document.createElement("td");
         nameTd.className = "name-cell";
-        nameTd.textContent = p.name;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "product-link";
+        btn.textContent = p.name;
+        btn.onclick = () => openProductPhoto(p.id);
+        nameTd.appendChild(btn);
         tr.appendChild(nameTd);
 
         const catTd = document.createElement("td");
@@ -1348,6 +1474,57 @@
         opt.value = p.id;
         opt.textContent = `${p.name} – ${formatALL(p.price)}`;
         select.appendChild(opt);
+      });
+    }
+
+    // ------------------- SEARCH PRODUKTI -------------------
+
+    function getProductSearchMatches(term) {
+      const normalized = term.trim().toLowerCase();
+      if (!normalized) return [];
+      return products.filter(p => p.name.toLowerCase().includes(normalized));
+    }
+
+    function renderProductSearchResults(term) {
+      const container = document.getElementById("productSearchResults");
+      const select = document.getElementById("productSelect");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const trimmed = term.trim();
+      if (!trimmed) {
+        return;
+      }
+
+      const matches = getProductSearchMatches(trimmed).slice(0, 8);
+      if (matches.length === 0) {
+        const span = document.createElement("span");
+        span.style.fontSize = "10px";
+        span.style.color = "#6b7280";
+        span.textContent = "Asnjë produkt nuk u gjet për këtë fjalë.";
+        container.appendChild(span);
+        return;
+      }
+
+      matches.forEach(p => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "calc-search-chip";
+        const shortName = p.name.split("–")[0].trim();
+        chip.innerHTML = "<strong>" + shortName + "</strong>";
+        chip.onclick = () => {
+          if (select) {
+            select.value = p.id;
+          }
+          // rikalkulo për produktin e zgjedhur aktual
+          if (cartItems.length === 0) {
+            calculateSingleTotal();
+          } else {
+            calculateCartTotal();
+          }
+          select && select.scrollIntoView({ behavior: "smooth", block: "center" });
+        };
+        container.appendChild(chip);
       });
     }
 
@@ -1445,7 +1622,12 @@
 
         const nameTd = document.createElement("td");
         nameTd.className = "name-cell";
-        nameTd.textContent = line.product.name;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "product-link";
+        btn.textContent = line.product.name;
+        btn.onclick = () => openProductPhoto(line.product.id);
+        nameTd.appendChild(btn);
         tr.appendChild(nameTd);
 
         const qtyTd = document.createElement("td");
@@ -1467,11 +1649,11 @@
         tr.appendChild(totalTd);
 
         const removeTd = document.createElement("td");
-        const btn = document.createElement("button");
-        btn.className = "btn-mini-danger";
-        btn.textContent = "Hiq";
-        btn.onclick = () => removeCartItem(index);
-        removeTd.appendChild(btn);
+        const btnRemove = document.createElement("button");
+        btnRemove.className = "btn-mini-danger";
+        btnRemove.textContent = "Hiq";
+        btnRemove.onclick = () => removeCartItem(index);
+        removeTd.appendChild(btnRemove);
         tr.appendChild(removeTd);
 
         body.appendChild(tr);
@@ -1614,6 +1796,97 @@
       calculateCartTotal();
     }
 
+    // ------------------- HAP FOTO/FAQE PRODUKTI -------------------
+
+    function openProductPhoto(productId) {
+      const p = findProduct(productId);
+      if (!p) return;
+      const baseName = p.name.split("–")[0].trim();
+      const query = encodeURIComponent(baseName);
+      // Përdor kërkim te iPrint për të hapur faqen me foton e produktit
+      const url = "https://iprint.al/?s=" + query;
+      window.open(url, "_blank");
+    }
+
+    // ------------------- WHATSAPP -------------------
+
+    function buildWhatsAppMessage() {
+      const segmentLabel = currentSegment === "reseller" ? "Rishitës / B2B" : "Klient normal";
+
+      // Nëse nuk ka shportë, dërgo vetëm produktin aktual
+      if (cartItems.length === 0) {
+        const select = document.getElementById("productSelect");
+        const quantityInput = document.getElementById("quantityInput");
+        const printsInput = document.getElementById("printsInput");
+        if (!select || !quantityInput || !printsInput) return "";
+
+        const line = computeLine(
+          select.value,
+          parseInt(quantityInput.value, 10),
+          parseInt(printsInput.value, 10)
+        );
+        if (!line) return "";
+
+        const lines = [
+          "Kërkesë nga faqja dtfprint.al",
+          "",
+          "Segmenti: " + segmentLabel,
+          "",
+          "Produkti:",
+          "- " + line.product.name,
+          "Sasia: " + line.qty + " copë",
+          "Stampat për copë: " + line.prints,
+          "Çmimi / copë: " + formatALL(line.finalUnit),
+          "Totali: " + formatALL(line.total),
+          "",
+          "Ju lutem konfirmoni çmimin dhe afatin e prodhimit. Faleminderit!"
+        ];
+        return lines.join("\n");
+      }
+
+      let grandTotal = 0;
+      let totalQty = 0;
+      const lines = [];
+
+      lines.push("Kërkesë nga faqja dtfprint.al");
+      lines.push("");
+      lines.push("Segmenti: " + segmentLabel);
+      lines.push("");
+      lines.push("Lista e produkteve:");
+
+      cartItems.forEach(item => {
+        const line = computeLine(item.productId, item.qty, item.prints);
+        if (!line) return;
+        grandTotal += line.total;
+        totalQty += line.qty;
+
+        lines.push(
+          "- " + line.product.name +
+          " | " + line.qty + " copë" +
+          " | " + line.prints + " stampë/copë" +
+          " | " + formatALL(line.finalUnit) + " / copë" +
+          " | Totali: " + formatALL(line.total)
+        );
+      });
+
+      lines.push("");
+      lines.push("Totali i ofertës (" + totalQty + " copë): " + formatALL(grandTotal));
+      lines.push("");
+      lines.push("Ju lutem konfirmoni çmimin dhe afatin e prodhimit. Faleminderit!");
+
+      return lines.join("\n");
+    }
+
+    function sendCartToWhatsApp() {
+      const message = buildWhatsAppMessage();
+      if (!message) {
+        alert("Së pari shto të paktën një produkt në ofertë ose llogarit një produkt.");
+        return;
+      }
+      const url = "https://wa.me/" + WHATSAPP_PHONE + "?text=" + encodeURIComponent(message);
+      window.open(url, "_blank");
+    }
+
     // bëji funksionet accesible nga HTML
     window.setSegment = setSegment;
     window.scrollToCalculator = scrollToCalculator;
@@ -1623,6 +1896,8 @@
     window.applyPreset = applyPreset;
     window.addCurrentToCart = addCurrentToCart;
     window.clearCart = clearCart;
+    window.openProductPhoto = openProductPhoto;
+    window.sendCartToWhatsApp = sendCartToWhatsApp;
 
     // ------------------- INIT -------------------
 
@@ -1635,6 +1910,7 @@
       const select = document.getElementById("productSelect");
       const quantityInput = document.getElementById("quantityInput");
       const printsInput = document.getElementById("printsInput");
+      const searchInput = document.getElementById("productSearchInput");
 
       if (select) {
         select.addEventListener("change", () => {
@@ -1649,6 +1925,11 @@
       if (printsInput) {
         printsInput.addEventListener("input", () => {
           if (cartItems.length === 0) calculateSingleTotal();
+        });
+      }
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          renderProductSearchResults(e.target.value);
         });
       }
     });
